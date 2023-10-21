@@ -86,6 +86,24 @@ main {
     padding: 5px;
 }
 
+/* Style the footer */
+.footer {
+    text-align: center;
+    background-color: #fff; /* Set the background color */
+    padding: 10px;
+    position: sticky;
+    bottom: 0;
+    z-index: 1;
+}
+
+/* Style the heart emoticon */
+.heart {
+    color: red; /* Make the heart red */
+    font-size: 18px; /* Adjust the size as needed */
+    vertical-align: middle;
+}
+
+
 /* Apply responsive styles to the container for mobile devices */
 @media (max-width: 768px) {
     /* Adjust styles for smaller screens */
