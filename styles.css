@@ -95,7 +95,7 @@ main {
     bottom: 0;
     z-index: 1;
     display: flex;
- 
+  margin-top: 30vh;
   flex-direction: row;
   justify-content: center;
 }
