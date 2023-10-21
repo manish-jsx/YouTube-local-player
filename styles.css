@@ -94,6 +94,10 @@ main {
     position: sticky;
     bottom: 0;
     z-index: 1;
+    display: flex;
+ 
+  flex-direction: column;
+  justify-content: flex-end;
 }
 
 /* Style the heart emoticon */
