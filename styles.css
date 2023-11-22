@@ -1,139 +1,52 @@
-/* Reset default margin and padding for all elements */
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
+/* Add a style for the directory and subdirectory names */
+li.folder {
+    font-weight: bold;
+    color: #333; /* Dark text color for folders */
 }
 
-/* Set a default font for the entire page */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
+/* Style the sublist to create a nested effect */
+ul ul {
+    margin-left: 20px; /* Adjust the left margin to create a nested effect */
+    display: none; /* Hide sublists by default */
 }
 
-/* Center the heading */
-.centered-heading {
-    text-align: center;
-    background-color: #fff;
-    padding: 10px 0;
-    position: sticky;
-    top: 0;
-    z-index: 1;
-}
-
-/* Add styles for the video container */
-.videodiv {
-    margin: 0 auto;
-    max-width: 80%;
-    overflow: hidden;
-}
-
-/* Style the button */
-button {
-    margin-bottom: 20px;
-    background-color: #ff0000; /* YouTube red */
-    color: #fff;
-    border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+/* Style the folder name to indicate it's clickable */
+li.folder span {
     cursor: pointer;
-    border-radius: 2px;
-    outline: none;
+    text-decoration: underline;
 }
 
-/* Style the playlist */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    max-height: calc(100vh - 87px);/* Limit the height of the playlist */
-    overflow-y: auto; /* Add vertical scroll if necessary */
+/* Show sublist when the folder name is clicked */
+li.folder:hover > ul {
+    display: block;
 }
 
-/* Style list items */
+/* Adjust playlist item padding for better spacing */
 li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
+    padding: 8px 10px;
 }
 
-/* Highlight the currently playing list item */
-li.playing {
-    background-color: #ff0000; /* YouTube red */
-    color: #fff;
+/* Style the folder and subfolder names in the heading */
+#folderName {
+    font-size: 18px;
+    color: #333; /* Dark text color for folder names */
 }
 
-/* Style the video */
-video {
-    max-width: 100%; /* Adjust the width as needed */
-    height: 67vh;
-    object-fit: contain;
-    background-color: #000; /* Black background for video */
-    position: sticky;
-    top: 0;
-    z-index: 0;
-}
-
-/* Center the main content */
-main {
-    display: flex;
-    flex-wrap: inherit;
-    justify-content: space-around;
-    background-color: #fff;
-    padding: 5px;
-}
-
-/* Style the footer */
-.footer {
-    text-align: center;
-    background-color: #fff; /* Set the background color */
-    padding: 10px;
-    position: sticky;
-    bottom: 0;
-    z-index: 1;
-    display: flex;
-  margin-top: 30vh;
-  flex-direction: row;
-  justify-content: center;
-}
-
-/* Style the heart emoticon */
-.heart {
-    color: red; /* Make the heart red */
-    font-size: 18px; /* Adjust the size as needed */
-    vertical-align: middle;
-}
-
-
-/* Apply responsive styles to the container for mobile devices */
+/* Adjust the max-width for smaller screens */
 @media (max-width: 768px) {
-    /* Adjust styles for smaller screens */
-    .centered-heading {
-        text-align: center;
-        font-size: 25px;
-        background-color: #fff;
-        padding: 10px 0;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-    main {
-        flex-direction: column;
-    }
-    video {
-        max-width: 100%; /* Adjust the width as needed */
-        height: auto;
-        object-fit: contain;
-        background-color: #000; /* Black background for video */
-        position: sticky;
-        top: 0;
-        z-index: 0;
+    .videodiv {
+        max-width: 100%; /* Adjust for smaller screens */
     }
 
     ul {
-        max-height: 40vh;  /* Remove height limit for the playlist */
+        max-height: none; /* Allow playlist to grow on smaller screens */
+    }
+
+    li.folder span {
+        font-size: 16px; /* Adjust font size for smaller screens */
+    }
+
+    li {
+        padding: 8px 5px; /* Adjust padding for smaller screens */
     }
 }
