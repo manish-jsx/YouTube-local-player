@@ -1,5 +1,3 @@
-
-
 document.getElementById('chooseFolder').addEventListener('click', async () => {
     const dirHandle = await window.showDirectoryPicker();
     const playlist = document.getElementById('playlist');
@@ -7,18 +5,23 @@ document.getElementById('chooseFolder').addEventListener('click', async () => {
     const folderNameHeading = document.getElementById('folderName');
     const videoNameFooter = document.getElementById('videoName'); // New line
 
-    let firstFile = null;
-
     // Clear the existing list
     playlist.innerHTML = '';
 
     const videoFiles = [];
 
-    for await (const entry of dirHandle.values()) {
-        if (entry.kind === 'file' && entry.name.endsWith('.mp4')) {
-            videoFiles.push(entry);
+    // Recursive function to scan folders and subfolders
+    async function scanDirectory(directoryHandle) {
+        for await (const entry of directoryHandle.values()) {
+            if (entry.kind === 'file' && entry.name.endsWith('.mp4')) {
+                videoFiles.push(entry);
+            } else if (entry.kind === 'directory') {
+                await scanDirectory(entry);
+            }
         }
     }
+
+    await scanDirectory(dirHandle);
 
     // Custom sorting function to handle numeric part of filenames
     videoFiles.sort((a, b) => {
@@ -42,13 +45,6 @@ document.getElementById('chooseFolder').addEventListener('click', async () => {
         });
         playlist.appendChild(li);
     });
-
-    if (firstFile) {
-        const file = await firstFile.getFile();
-        const url = URL.createObjectURL(file);
-        videoPlayer.src = url;
-        videoPlayer.load();
-    }
 
     // Set the folder name as the heading text
     folderNameHeading.textContent = dirHandle.name;
