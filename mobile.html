@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>File System Access API Example</title>
+  <!-- Import the File System Access Polyfill -->
+  <script type="module" src="https://cdn.jsdelivr.net/npm/file-system-access/polyfill.js"></script>
+  <style>
+    /* Reset default margin and padding for all elements */
+    * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+    }
+
+    /* Set a default font for the entire page */
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f9f9f9;
+    }
+
+    /* Center the heading */
+    .centered-heading {
+        text-align: center;
+        background-color: #fff;
+        padding: 10px 0;
+        position: sticky;
+        top: 0;
+        z-index: 1;
+    }
+
+    /* Add styles for the video container */
+    .videodiv {
+        margin: 0 auto;
+        max-width: 80%;
+        overflow: hidden;
+    }
+
+    /* Style the button */
+    button {
+        margin-bottom: 20px;
+        background-color: #ff0000; /* YouTube red */
+        color: #fff;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        cursor: pointer;
+        border-radius: 2px;
+        outline: none;
+    }
+
+    /* Style the playlist */
+    ul {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+
+        max-height: calc(100vh - 87px);/* Limit the height of the playlist */
+        overflow-y: auto; /* Add vertical scroll if necessary */
+    }
+
+    /* Style list items */
+    li {
+        display: flex;
+        align-items: center;
+        padding: 10px;
+        border-bottom: 1px solid #ddd;
+        cursor: pointer;
+    }
+
+    /* Highlight the currently playing list item */
+    li.playing {
+        background-color: #ff0000; /* YouTube red */
+        color: #fff;
+    }
+
+    /* Style the video */
+    video {
+        max-width: 100%; /* Adjust the width as needed */
+        height: 67vh;
+        object-fit: contain;
+        background-color: #000; /* Black background for video */
+        position: sticky;
+        top: 0;
+        z-index: 0;
+    }
+
+    /* Center the main content */
+    main {
+        display: flex;
+        flex-wrap: inherit;
+        justify-content: space-around;
+        background-color: #fff;
+        padding: 5px;
+    }
+
+    /* Style the footer */
+    .footer {
+        text-align: center;
+        background-color: #fff; /* Set the background color */
+        padding: 10px;
+        position: sticky;
+        bottom: 0;
+        z-index: 1;
+        display: flex;
+        margin-top: 30vh;
+        flex-direction: row;
+        justify-content: center;
+    }
+
+    /* Style the heart emoticon */
+    .heart {
+        color: red; /* Make the heart red */
+        font-size: 18px; /* Adjust the size as needed */
+        vertical-align: middle;
+    }
+
+    /* Apply responsive styles to the container for mobile devices */
+    @media (max-width: 768px) {
+        /* Adjust styles for smaller screens */
+        .centered-heading {
+            text-align: center;
+            font-size: 25px;
+            background-color: #fff;
+            padding: 10px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1;
+        }
+        main {
+            flex-direction: column;
+        }
+        video {
+            max-width: 100%; /* Adjust the width as needed */
+            height: auto;
+            object-fit: contain;
+            background-color: #000; /* Black background for video */
+            position: sticky;
+            top: 0;
+            z-index: 0;
+        }
+
+        ul {
+            max-height: 40vh;  /* Remove height limit for the playlist */
+        }
+    }
+  </style>
+</head>
+<body>
+
+<button id="chooseFolder">Choose Folder</button>
+
+<main>
+  <div class="videodiv">
+    <video id="videoPlayer" controls></video>
+  </div>
+  <ul id="playlist"></ul>
+</main>
+
+<!-- Additional elements for video playlist and player -->
+<h2 id="folderName" class="centered-heading"></h2>
+<p id="videoName" class="centered-heading"></p>
+
+<!-- Footer -->
+<div class="footer">
+  <span class="heart">&hearts;</span> Happy Coding <span class="heart">&hearts;</span>
+</div>
+
+<script type="module">
+  // Function to handle directory selection
+  const handleDirectorySelection = async () => {
+    try {
+      // Use showDirectoryPicker as an alternative method
+      const dirHandle = await showDirectoryPicker();
+
+      // Rest of your code to process the directory
+      const playlist = document.getElementById('playlist');
+      const videoPlayer = document.getElementById('videoPlayer');
+      const folderNameHeading = document.getElementById('folderName');
+      const videoNameFooter = document.getElementById('videoName'); // New line
+
+      // Clear the existing list
+      playlist.innerHTML = '';
+
+      const videoFiles = [];
+
+      // Recursive function to scan folders and subfolders
+      async function scanDirectory(directoryHandle) {
+        for await (const entry of directoryHandle.values()) {
+          if (entry.kind === 'file' && entry.name.endsWith('.mp4')) {
+            videoFiles.push(entry);
+          } else if (entry.kind === 'directory') {
+            await scanDirectory(entry);
+          }
+        }
+      }
+
+      await scanDirectory(dirHandle);
+
+      // Custom sorting function to handle numeric part of filenames
+      videoFiles.sort((a, b) => {
+        const numA = parseInt(a.name.match(/\d+/)[0], 10);
+        const numB = parseInt(b.name.match(/\d+/)[0], 10);
+        return numA - numB;
+      });
+
+      videoFiles.forEach((entry) => {
+        const li = document.createElement('li');
+        li.textContent = entry.name;
+        li.addEventListener('click', async () => {
+          const file = await entry.getFile();
+          const url = URL.createObjectURL(file);
+          videoPlayer.src = url;
+          videoPlayer.load();
+          videoPlayer.play();
+
+          // Update the video name in the footer
+          videoNameFooter.textContent = entry.name; // New line
+        });
+        playlist.appendChild(li);
+      });
+
+      // Set the folder name as the heading text
+      folderNameHeading.textContent = dirHandle.name;
+
+    } catch (error) {
+      console.error('Error selecting directory:', error);
+    }
+  };
+
+  // Attach the event listener to the button
+  document.getElementById('chooseFolder').addEventListener('click', handleDirectorySelection);
+</script>
+
+</body>
+</html>
