@@ -3,69 +3,79 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="icon" href="https://www.youtube.com/s/desktop/1ef425ed/img/favicon_32x32.png" type="image/png">
   <title>Video Playlist Example</title>
   <style>
-    /* Reset default margin and padding for all elements */
     * {
-        margin: 0;
-        padding: 0;
-        box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
     }
 
-    /* Set a default font for the entire page */
     body {
-        font-family: Arial, sans-serif;
-        background-color: #f9f9f9;
-        text-align: center;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f9f9f9;
+      color: #030303;
+      text-align: center;
     }
 
-    /* Center the main content */
     main {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        background-color: #fff;
-        padding: 10px;
-        margin-top: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background-color: #fff;
+      padding: 10px;
+      margin-top: 20px;
     }
 
-    /* Style the input element */
     #fileInput {
-        margin-bottom: 20px;
+      margin-bottom: 20px;
+      display: none;
     }
 
-    /* Style the playlist */
+    label {
+      background-color: #ff0000;
+      color: #fff;
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border-radius: 2px;
+      display: inline-block;
+      transition: background-color 0.3s ease;
+    }
+
+    label:hover {
+      background-color: #cc0000;
+    }
+
     ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
+      list-style-type: none;
+      padding: 0;
+      margin: 0;
 
-        max-height: calc(100vh - 137px);/* Limit the height of the playlist */
-        overflow-y: auto; /* Add vertical scroll if necessary */
+      max-height: calc(100vh - 137px);
+      overflow-y: auto;
     }
 
-    /* Style list items */
     li {
-        display: flex;
-        align-items: center;
-        padding: 10px;
-        border-bottom: 1px solid #ddd;
-        cursor: pointer;
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+      cursor: pointer;
     }
 
-    /* Highlight the currently playing list item */
     li.playing {
-        background-color: #ff0000; /* YouTube red */
-        color: #fff;
+      background-color: #ff0000;
+      color: #fff;
     }
 
-    /* Style the video */
     video {
-        max-width: 100%; /* Adjust the width as needed */
-        height: auto;
-        object-fit: contain;
-        background-color: #000; /* Black background for video */
-        margin-top: 20px;
+      max-width: 100%;
+      height: auto;
+      object-fit: contain;
+      background-color: #000;
+      margin-top: 20px;
     }
   </style>
 </head>
@@ -73,6 +83,7 @@
 
 <main>
   <input type="file" accept=".mp4" id="fileInput" multiple />
+  <label for="fileInput">Choose Video</label>
   <ul id="playlist"></ul>
   <video id="videoPlayer" controls></video>
 </main>
@@ -103,10 +114,7 @@
   });
 
   function highlightCurrentItem(clickedItem) {
-    // Remove 'playing' class from all items
     Array.from(playlist.children).forEach(item => item.classList.remove('playing'));
-
-    // Add 'playing' class to the clicked item
     clickedItem.classList.add('playing');
   }
 </script>
