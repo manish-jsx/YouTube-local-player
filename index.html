@@ -1,35 +1,42 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Offline Video Player</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube-like Video Player</title>
+  <link rel="stylesheet" href="styles.css">
 </head>
 <body>
-    <div class="container"></div>
-    <h1 id="folderName" class="centered-heading"></h1>
-    <button id="chooseFolder">Choose Folder</button>
-    <main>
-        
-       <div class="videodiv">
-        <video id="videoPlayer" controls></video>
-        <p id="videoName"></p>
-       </div>
-       <ul id="playlist"></ul>
-        
+  <div class="min-h-screen flex flex-col">
+    <header class="bg-base-100 p-4 shadow-md">
+      <h1 id="folderName" class="text-2xl font-semibold"></h1>
+      <button id="chooseFolder" class="btn btn-primary">Choose Folder</button>
+    </header>
+
+    <main class="flex-1 p-4">
+      <div class="flex flex-col md:flex-row gap-4">
+        <div class="w-full md:w-1/4 lg:w-1/5 bg-base-200 p-4 rounded-lg shadow-md">
+          <h2 class="text-lg font-semibold mb-2">Playlist</h2>
+          <ul id="playlist" class="menu rounded-box"></ul>
+        </div>
+
+        <div class="w-full md:w-3/4 lg:w-4/5">
+          <div class="aspect-video rounded-lg shadow-md overflow-hidden">
+            <video id="videoPlayer" controls class="w-full h-full object-contain"></video>
+          </div>
+          <p id="videoName" class="mt-2 text-lg font-medium"></p>
+        </div>
+      </div>
     </main>
-   
-</div>
-    <span></span>
-    <span></span>
-     <footer class="footer">
-    Made with love by <span class="heart">&#10084;&#65039;</span> 
-        <a href="https://www.linkedin.com/in/manish-kumar-474b54244/">Manish</a> 
-</footer>
-   
-    <script src="scripts.js"></script>
+
+    <footer class="bg-base-100 p-4 text-center">
+      Made with ❤️ by <a href="https://www.linkedin.com/in/manish-code/" class="link link-hover">Manish</a>
+    </footer>
+  </div>
+
+  <script src="scripts.js"></script>
 </body>
 </html>
+
 
 
