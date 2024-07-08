@@ -8,132 +8,91 @@
 /* Set a default font for the entire page */
 body {
     font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
 }
 
-/* Center the heading */
+/* Center the heading and add some spacing */
 .centered-heading {
     text-align: center;
-    background-color: #fff;
     padding: 10px 0;
+}
+
+/* Header styling */
+header {
+    background-color: white; /* White background for the header */
+    padding: 1rem;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Subtle shadow */
     position: sticky;
     top: 0;
-    z-index: 1;
+    z-index: 10; /* Ensure the header stays on top */
 }
 
-/* Add styles for the video container */
-.videodiv {
-    margin: 0 auto;
-    max-width: 80%;
-    overflow: hidden;
-}
-
-/* Style the button */
+/* Button styling */
 button {
-    margin-bottom: 20px;
     background-color: #ff0000; /* YouTube red */
-    color: #fff;
+    color: white;
     border: none;
-    padding: 10px 20px;
-    font-size: 16px;
+    padding: 0.5rem 1rem;
+    font-size: 1rem;
     cursor: pointer;
-    border-radius: 2px;
-    outline: none;
+    border-radius: 0.25rem; /* Rounded corners */
 }
 
-/* Style the playlist */
-ul {
-    list-style-type: none;
-    padding: 0;
-    margin: 0;
-
-    max-height: calc(100vh - 87px);/* Limit the height of the playlist */
-    overflow-y: auto; /* Add vertical scroll if necessary */
-}
-
-/* Style list items */
-li {
-    display: flex;
-    align-items: center;
-    padding: 10px;
-    border-bottom: 1px solid #ddd;
-    cursor: pointer;
-}
-
-/* Highlight the currently playing list item */
-li.playing {
-    background-color: #ff0000; /* YouTube red */
-    color: #fff;
-}
-
-/* Style the video */
-video {
-    max-width: 100%; /* Adjust the width as needed */
-    height: 67vh;
-    object-fit: contain;
-    background-color: #000; /* Black background for video */
-    position: sticky;
-    top: 0;
-    z-index: 0;
-}
-
-/* Center the main content */
+/* Main content area */
 main {
     display: flex;
-    flex-wrap: inherit;
-    justify-content: space-around;
-    background-color: #fff;
-    padding: 5px;
+    gap: 1rem;
+    padding: 1rem;
+    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
 
-/* Style the footer */
-.footer {
+/* Playlist styling */
+.playlist-container { /* Add a container for the playlist */
+    width: 250px; /* Adjust width as needed */
+    background-color: #f0f0f0; /* Light gray background */
+    padding: 1rem;
+    border-radius: 0.5rem; /* Rounded corners */
+    overflow-y: auto; /* Enable scrolling if the playlist is too long */
+}
+
+ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+li {
+    padding: 0.5rem;
+    cursor: pointer;
+    transition: background-color 0.2s; /* Smooth transition on hover */
+}
+
+li:hover {
+    background-color: #e0e0e0; /* Slightly darker on hover */
+}
+
+li.active { /* Style for the active/playing video */
+    background-color: #ff0000;
+    color: white;
+}
+
+/* Video area styling */
+.video-container {
+    flex-grow: 1; /* Take up remaining space */
+}
+
+video {
+    width: 100%;
+    height: auto;
+    border-radius: 0.5rem;
+}
+
+/* Footer styling */
+footer {
+    background-color: white;
+    padding: 1rem;
     text-align: center;
-    background-color: #fff; /* Set the background color */
-    padding: 10px;
     position: sticky;
     bottom: 0;
-    z-index: 1;
-    display: flex;
-  margin-top: 30vh;
-  flex-direction: row;
-  justify-content: center;
-}
-
-/* Style the heart emoticon */
-.heart {
-    color: red; /* Make the heart red */
-    font-size: 18px; /* Adjust the size as needed */
-    vertical-align: middle;
-}
-
-
-/* Apply responsive styles to the container for mobile devices */
-@media (max-width: 768px) {
-    /* Adjust styles for smaller screens */
-    .centered-heading {
-        text-align: center;
-        font-size: 25px;
-        background-color: #fff;
-        padding: 10px 0;
-        position: sticky;
-        top: 0;
-        z-index: 1;
-    }
-    main {
-        flex-direction: column;
-    }
-    video {
-        max-width: 100%; /* Adjust the width as needed */
-        height: auto;
-        object-fit: contain;
-        background-color: #000; /* Black background for video */
-        position: sticky;
-        top: 0;
-        z-index: 0;
-    }
-
-    ul {
-        max-height: 40vh;  /* Remove height limit for the playlist */
-    }
+    z-index: 10; /* Ensure the footer stays on top */
+    margin-top: 30vh;
 }
