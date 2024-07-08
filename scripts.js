@@ -3,14 +3,11 @@ document.getElementById('chooseFolder').addEventListener('click', async () => {
     const playlist = document.getElementById('playlist');
     const videoPlayer = document.getElementById('videoPlayer');
     const folderNameHeading = document.getElementById('folderName');
-    const videoNameFooter = document.getElementById('videoName'); // New line
+    const videoNameFooter = document.getElementById('videoName');
 
-    // Clear the existing list
-    playlist.innerHTML = '';
+    playlist.innerHTML = ''; // Clear the playlist
 
     const videoFiles = [];
-
-    // Recursive function to scan folders and subfolders
     async function scanDirectory(directoryHandle) {
         for await (const entry of directoryHandle.values()) {
             if (entry.kind === 'file' && entry.name.endsWith('.mp4')) {
@@ -23,29 +20,48 @@ document.getElementById('chooseFolder').addEventListener('click', async () => {
 
     await scanDirectory(dirHandle);
 
-    // Custom sorting function to handle numeric part of filenames
+    // Sort video files (custom sorting to handle numbers in filenames)
     videoFiles.sort((a, b) => {
-        const numA = parseInt(a.name.match(/\d+/)[0], 10);
-        const numB = parseInt(b.name.match(/\d+/)[0], 10);
+        const numA = parseInt(a.name.match(/\d+/)[0], 10) || 0; // Default to 0 if no number
+        const numB = parseInt(b.name.match(/\d+/)[0], 10) || 0; 
         return numA - numB;
     });
 
-    videoFiles.forEach((entry) => {
+    videoFiles.forEach((entry, index) => {
         const li = document.createElement('li');
-        li.textContent = entry.name;
-        li.addEventListener('click', async () => {
-            const file = await entry.getFile();
-            const url = URL.createObjectURL(file);
-            videoPlayer.src = url;
-            videoPlayer.load();
-            videoPlayer.play();
+        const a = document.createElement('a');
+        a.textContent = entry.name;
+        a.href = '#'; // Add this line
 
-            // Update the video name in the footer
-            videoNameFooter.textContent = entry.name; // New line
+        // Event delegation for click handling
+        playlist.addEventListener('click', async (event) => {
+            if (event.target.tagName === 'A') { // Check if the click is on the anchor tag
+                // Remove 'active' class from all items
+                const listItems = playlist.querySelectorAll('li');
+                listItems.forEach(item => item.classList.remove('active'));
+
+                // Add 'active' class to the clicked item
+                event.target.parentElement.classList.add('active');
+
+                const file = await entry.getFile();
+                const url = URL.createObjectURL(file);
+                videoPlayer.src = url;
+                videoPlayer.load();
+                videoPlayer.play();
+
+                videoNameFooter.textContent = entry.name; 
+            }
         });
+
+        li.appendChild(a); // Append the anchor tag to the list item
         playlist.appendChild(li);
+
+        // Autoplay the first video
+        if (index === 0) {
+            li.classList.add('active');
+            a.click(); // Trigger the click event to start playback
+        }
     });
 
-    // Set the folder name as the heading text
     folderNameHeading.textContent = dirHandle.name;
 });
