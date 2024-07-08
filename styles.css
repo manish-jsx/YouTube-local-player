@@ -37,21 +37,18 @@ button {
     border-radius: 0.25rem; /* Rounded corners */
 }
 
-/* Main content area */
 main {
     display: flex;
     gap: 1rem;
     padding: 1rem;
-    flex-wrap: wrap; /* Allow wrapping for smaller screens */
 }
-
-/* Playlist styling */
-.playlist-container { /* Add a container for the playlist */
-    width: 250px; /* Adjust width as needed */
-    background-color: #f0f0f0; /* Light gray background */
+.playlist-container {
+    width: 250px; /* Adjust the width as needed */
+    min-height: 80vh;
+    background-color: #f0f0f0;
     padding: 1rem;
-    border-radius: 0.5rem; /* Rounded corners */
-    overflow-y: auto; /* Enable scrolling if the playlist is too long */
+    border-radius: 0.5rem;
+    overflow-y: auto;
 }
 
 ul {
