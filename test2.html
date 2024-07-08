@@ -1,38 +1,40 @@
 <!DOCTYPE html>
 <html lang="en" class="dark">
 <head>
-    </head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YouTube-like Video Player</title>
+  <link href="https://cdn.jsdelivr.net/npm/daisyui@3.9.4/dist/full.css" rel="stylesheet" type="text/css" />
+  <script src="https://cdn.tailwindcss.com"></script> 
+</head>
 <body>
-    <div class="drawer">
-        <input id="my-drawer" type="checkbox" class="drawer-toggle" />
-        <div class="drawer-content">
-            <header class="bg-base-100 p-4 shadow-md">
-                <label for="my-drawer" class="btn btn-primary drawer-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
-                  </svg>
-                  </label>
-                <h1 id="folderName" class="text-2xl font-semibold"></h1>
-                <button id="chooseFolder" class="btn btn-primary ml-auto">Choose Folder</button>
-            </header>
-            <main class="p-4">
-                <div class="video-container">
-                    <div class="aspect-video rounded-lg shadow-md overflow-hidden">
-                        <video id="videoPlayer" controls class="w-full h-full object-contain"></video>
-                    </div>
-                    <p id="videoName" class="mt-2 text-lg font-medium"></p>
-                </div>
-            </main>
-        </div> 
-        <div class="drawer-side">
-            <label for="my-drawer" class="drawer-overlay"></label> 
-            <ul id="playlist" class="menu p-4 w-80 bg-base-100 text-base-content">
-                
-            </ul>
+  <div class="drawer">
+    <input id="my-drawer" type="checkbox" class="drawer-toggle" />
+    <div class="drawer-content">
+      <header class="bg-base-100 p-4 shadow-md flex justify-between items-center"> 
+        <label for="my-drawer" class="btn btn-primary drawer-button"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+          <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 6.75h16.5M3.75 12h16.5m-16.5 5.25h16.5" />
+        </svg>
+        </label>
+        <h1 id="folderName" class="text-2xl font-semibold"></h1>
+        <button id="chooseFolder" class="btn btn-primary">Choose Folder</button>
+      </header>
+
+      <main class="p-4">
+        <div class="video-container">
+          <div class="aspect-video rounded-lg shadow-md overflow-hidden">
+            <video id="videoPlayer" controls class="w-full h-full object-contain"></video>
           </div>
+          <p id="videoName" class="mt-2 text-lg font-medium"></p>
+        </div>
+      </main>
     </div>
-  
+    <div class="drawer-side">
+      <label for="my-drawer" class="drawer-overlay"></label> 
+      <ul id="playlist" class="menu p-4 w-80 bg-base-100 text-base-content"></ul>
+    </div>
+  </div>
 
   <script src="scripts.js"></script>
 </body>
 </html>
-
