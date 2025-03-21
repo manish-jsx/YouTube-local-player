@@ -541,3 +541,850 @@
         animation: none !important;
     }
 }
+
+/* CRITICAL SLIDER LAYOUT FIXES - Ensure the slider works properly */
+.app-features-carousel {
+    overflow: hidden !important;
+    position: relative;
+    padding: 40px 0 60px; /* Increased bottom padding for progress bar */
+    width: 100%;
+}
+
+.features-slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    transition: transform 0.8s cubic-bezier(0.25, 1, 0.5, 1) !important; /* Smoother easing */
+    width: 500% !important; /* 5 slides × 100% */
+    transform: translateX(0%);
+    position: relative;
+    z-index: 1;
+    touch-action: pan-y; /* Better touch handling */
+    will-change: transform; /* Performance optimization */
+}
+
+.feature-slide {
+    min-width: 20% !important; /* 100% ÷ 5 slides */
+    width: 20% !important;
+    flex: 0 0 20% !important;
+    padding: 0 15px;
+    visibility: visible !important;
+    opacity: 1 !important;
+    overflow: visible !important;
+    position: relative !important;
+    transition: opacity 0.5s ease !important; /* Fade transition */
+    will-change: opacity; /* Performance optimization */
+}
+
+/* Improved slider controls for better UX */
+.slider-controls {
+    display: flex !important;
+    align-items: center;
+    justify-content: center;
+    margin-top: 30px;
+    z-index: 2;
+    position: relative;
+}
+
+.slider-nav {
+    display: flex !important;
+    justify-content: center;
+    gap: 12px; /* Slightly increased for better touch targets */
+    margin: 0 15px;
+}
+
+.slider-dot {
+    width: 12px !important;
+    height: 12px !important;
+    border-radius: 50% !important;
+    background-color: #dee2e6 !important;
+    cursor: pointer !important;
+    border: none !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transition: transform 0.3s ease, background-color 0.3s ease !important;
+    position: relative;
+}
+
+.slider-dot:hover, 
+.slider-dot:focus {
+    transform: scale(1.2) !important;
+}
+
+.slider-dot.active {
+    background-color: var(--primary) !important;
+    transform: scale(1.2) !important;
+    /* Add subtle pulse animation */
+    animation: dotPulse 2s infinite;
+}
+
+@keyframes dotPulse {
+    0% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0.4); }
+    70% { box-shadow: 0 0 0 6px rgba(13, 110, 253, 0); }
+    100% { box-shadow: 0 0 0 0 rgba(13, 110, 253, 0); }
+}
+
+.slider-arrow {
+    background: var(--light) !important;
+    width: 44px !important; /* Slightly larger for better touch targets */
+    height: 44px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    cursor: pointer !important;
+    color: var(--primary) !important;
+    margin: 0 12px !important;
+    box-shadow: 0 3px 12px rgba(0,0,0,0.15) !important; /* Enhanced shadow */
+    transition: all 0.3s ease !important;
+    border: none !important;
+    z-index: 5 !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+    transform: translateZ(0); /* Force GPU acceleration */
+}
+
+.slider-arrow:hover, 
+.slider-arrow:focus {
+    background: var(--primary) !important;
+    color: white !important;
+    transform: scale(1.1) translateZ(0) !important;
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3) !important;
+}
+
+.slider-arrow:active {
+    transform: scale(0.95) translateZ(0) !important; /* Button press effect */
+}
+
+/* Progress indicator for autoplay feedback */
+.slider-progress-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 4px;
+    background-color: rgba(222, 226, 230, 0.3);
+    overflow: hidden;
+    z-index: 5;
+}
+
+.slider-progress-indicator {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 0;
+    background-color: var(--primary);
+    transition: width 0.3s linear;
+}
+
+/* Touch feedback indicator */
+.app-features-carousel::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: transparent;
+    z-index: 4;
+    pointer-events: none;
+    transition: background-color 0.3s ease;
+}
+
+.app-features-carousel.touch-active::after {
+    background-color: rgba(var(--primary-rgb, 13, 110, 253), 0.05);
+}
+
+/* Improved tooltip for navigation dots */
+.slider-dot .slider-tooltip {
+    position: absolute;
+    bottom: 100%;
+    left: 50%;
+    transform: translateX(-50%) translateY(5px);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: white;
+    font-size: 0.75rem;
+    padding: 0.4rem 0.6rem;
+    border-radius: 4px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s ease;
+    margin-bottom: 10px;
+    pointer-events: none;
+    z-index: 100;
+    font-weight: 500;
+}
+
+.slider-dot .slider-tooltip::after {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 50%;
+    margin-left: -5px;
+    border-width: 5px;
+    border-style: solid;
+    border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+}
+
+.slider-dot:hover .slider-tooltip {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+/* Improved focus states for accessibility */
+.slider-dot:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 13, 110, 253), 0.4);
+}
+
+.slider-arrow:focus-visible {
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(var(--primary-rgb, 13, 110, 253), 0.4), 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+
+/* Reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .features-slider {
+        transition: transform 0.4s ease-in-out !important;
+    }
+    
+    .slider-dot.active {
+        animation: none !important;
+    }
+    
+    .slider-progress-indicator {
+        transition: none !important;
+    }
+}
+
+/* Explicitly override any hidden states for slider elements */
+.app-features-carousel *,
+.features-slider *,
+.slider-controls * {
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Fix row structure for slide content */
+.feature-slide .row {
+    margin-left: 0 !important;
+    margin-right: 0 !important;
+    width: 100% !important;
+}
+
+/* Enhanced Hero Section Styles */
+.hero-content {
+    max-width: 600px;
+}
+
+.hero-badges {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.hero-badges .badge {
+    padding: 8px 15px;
+    font-weight: 500;
+    border-radius: 20px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-badges .badge:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.hero-buttons {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.schedule-call-btn {
+    position: relative;
+    overflow: hidden;
+    z-index: 1;
+}
+
+.schedule-call-btn::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+    z-index: -1;
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+    transition: transform 0.5s ease;
+}
+
+.schedule-call-btn:hover::after {
+    transform: scaleX(1);
+}
+
+.schedule-call-btn:hover {
+    color: white;
+    border-color: transparent;
+}
+
+/* Enhanced How It Works Section */
+.how-it-works .step-line {
+    height: 85%; /* Increase height for 4 steps */
+}
+
+.how-it-works ul {
+    list-style-type: none;
+    padding-left: 0;
+}
+
+.how-it-works ul li {
+    position: relative;
+    padding-left: 25px;
+    margin-bottom: 10px;
+}
+
+.how-it-works ul li::before {
+    content: '✓';
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: var(--primary);
+    font-weight: bold;
+}
+
+.activity-bar {
+    border-radius: 4px 4px 0 0;
+    transition: height 1s ease;
+}
+
+.achievement-item {
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.achievement-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+}
+
+/* Infinite Scrolling Testimonials */
+.testimonial-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+}
+
+.testimonial-track {
+    will-change: transform;
+}
+
+.testimonial-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 280px; /* Fixed height for consistency */
+    display: flex;
+    flex-direction: column;
+}
+
+.testimonial-card:hover {
+    transform: translateY(-5px) !important;
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1) !important;
+}
+
+.trust-indicators {
+    margin-top: 60px;
+}
+
+.trust-stat {
+    text-align: center;
+    padding: 0 20px;
+}
+
+.trust-stat h3 {
+    color: var(--primary);
+    margin-bottom: 0;
+}
+
+/* Optimize the modal styles for Schedule Call */
+.modal-header {
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.modal-footer {
+    border-top: none;
+    padding-top: 0;
+}
+
+/* Progress bar animation for the demo */
+@keyframes progress {
+    0% { width: 0; }
+    100% { width: 100%; }
+}
+
+.activity-bar {
+    animation: fadeInUp 1s forwards;
+    opacity: 0;
+    transform: translateY(20px);
+}
+
+@keyframes fadeInUp {
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.activity-bars .activity-bar:nth-child(1) { animation-delay: 0.1s; }
+.activity-bars .activity-bar:nth-child(2) { animation-delay: 0.2s; }
+.activity-bars .activity-bar:nth-child(3) { animation-delay: 0.3s; }
+.activity-bars .activity-bar:nth-child(4) { animation-delay: 0.4s; }
+.activity-bars .activity-bar:nth-child(5) { animation-delay: 0.5s; }
+.activity-bars .activity-bar:nth-child(6) { animation-delay: 0.6s; }
+.activity-bars .activity-bar:nth-child(7) { animation-delay: 0.7s; }
+
+/* Fixed and Enhanced Infinite Scrolling Testimonials */
+.testimonial-scroll-container {
+    width: 100%;
+    overflow: hidden;
+    padding: 20px 0;
+    position: relative;
+}
+
+.testimonial-track {
+    display: flex;
+    flex-wrap: nowrap;
+    will-change: transform; /* Performance optimization */
+    transition: transform 0.2s ease-out; /* Smooth movement when pausing */
+}
+
+.testimonial-card {
+    background-color: white;
+    border-radius: 12px;
+    padding: 2rem;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 350px;
+    max-width: 350px;
+    margin: 0 12px;
+    height: 280px; /* Fixed height for consistency */
+    display: flex;
+    flex-direction: column;
+}
+
+/* Enhanced hover state with subtle elevation */
+.testimonial-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 15px 30px rgba(0,0,0,0.1);
+}
+
+/* Visual state when container is being hovered */
+.testimonial-scroll-container.hovered {
+    position: relative;
+}
+
+.testimonial-scroll-container.hovered::after {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(var(--primary-rgb, 13, 110, 253), 0.03);
+    pointer-events: none;
+    z-index: 1;
+    border-radius: 16px;
+}
+
+/* Add pagination controls for mobile */
+.testimonial-pagination {
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    margin-top: 15px;
+}
+
+.testimonial-pagination-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background-color: #dee2e6;
+    transition: background-color 0.3s, transform 0.3s;
+    cursor: pointer;
+}
+
+.testimonial-pagination-dot.active {
+    background-color: var(--primary);
+    transform: scale(1.3);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .testimonial-card {
+        min-width: 280px;
+        max-width: 280px;
+        padding: 1.5rem;
+        height: auto;
+        min-height: 250px;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-card {
+        min-width: 90%;
+        max-width: 90%;
+        margin: 0 5%;
+    }
+    
+    /* On small screens, don't autoscroll as it might be hard to read */
+    .testimonial-scroll-container {
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        scrollbar-width: none; /* Firefox */
+    }
+    
+    .testimonial-scroll-container::-webkit-scrollbar {
+        display: none; /* Chrome, Safari, Edge */
+    }
+    
+    .testimonial-card {
+        scroll-snap-align: center;
+    }
+}
+
+/* Optimizations for reduced motion preferences */
+@media (prefers-reduced-motion: reduce) {
+    .testimonial-card {
+        transition: none;
+    }
+    
+    /* Don't autoscroll for users who prefer reduced motion */
+    .testimonial-track {
+        transition: none;
+    }
+}
+
+/* Enhanced Modal Styles for Schedule Demo Call */
+.modal-content {
+    border: none;
+    border-radius: 16px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    overflow: hidden;
+}
+
+.modal-header {
+    border-bottom: 1px solid rgba(0,0,0,0.05);
+    padding: 1.5rem 1.75rem 1rem;
+    position: relative;
+}
+
+.modal-header .modal-title {
+    font-weight: 600;
+    color: var(--dark);
+}
+
+.modal-header .btn-close {
+    padding: 1rem;
+    margin: -0.5rem -0.5rem -0.5rem auto;
+    opacity: 0.5;
+    transition: opacity 0.2s ease;
+}
+
+.modal-header .btn-close:hover {
+    opacity: 1;
+}
+
+.modal-body {
+    padding: 1.75rem;
+}
+
+.modal-footer {
+    border-top: 1px solid rgba(0,0,0,0.05);
+    padding: 1rem 1.75rem 1.5rem;
+    justify-content: space-between;
+}
+
+/* Form controls with improved styling */
+#scheduleCallForm .form-label {
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    color: var(--dark);
+}
+
+#scheduleCallForm .form-control,
+#scheduleCallForm .form-select {
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
+    border: 1px solid rgba(0,0,0,0.1);
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.02);
+    font-size: 0.95rem;
+}
+
+#scheduleCallForm .form-control:focus,
+#scheduleCallForm .form-select:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+#scheduleCallForm .form-control::placeholder {
+    color: #adb5bd;
+    opacity: 0.8;
+}
+
+#scheduleCallForm .form-select {
+    background-position: right 1rem center;
+}
+
+#scheduleCallForm textarea.form-control {
+    min-height: 100px;
+    resize: vertical;
+}
+
+/* Schedule call button styling */
+#submitScheduleForm {
+    padding: 0.75rem 1.75rem;
+    font-weight: 500;
+    border-radius: 8px;
+    transition: all 0.3s ease;
+}
+
+#submitScheduleForm:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(13, 110, 253, 0.3);
+}
+
+/* Confirmation modal enhancements */
+#confirmationModal .modal-content {
+    text-align: center;
+}
+
+#confirmationModal .modal-header {
+    background-color: #198754; /* Bootstrap success color */
+    color: white;
+    border-bottom: none;
+    padding: 1.5rem;
+}
+
+#confirmationModal .modal-body {
+    padding: 2.5rem 1.75rem;
+}
+
+#confirmationModal .fa-check-circle {
+    font-size: 3.5rem;
+    color: #198754;
+    margin-bottom: 1rem;
+}
+
+#confirmationModal .modal-footer {
+    border-top: none;
+    justify-content: center;
+    padding-bottom: 2rem;
+}
+
+#confirmationModal .btn {
+    min-width: 120px;
+    border-radius: 8px;
+    font-weight: 500;
+}
+
+/* Add slide-in animation for modals */
+.modal.fade .modal-dialog {
+    transform: translateY(-20px);
+    transition: transform 0.3s ease-out;
+}
+
+.modal.show .modal-dialog {
+    transform: translateY(0);
+}
+
+/* Form validation visual feedback */
+#scheduleCallForm .form-control.is-invalid,
+#scheduleCallForm .form-select.is-invalid {
+    border-color: #dc3545;
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12' width='12' height='12' fill='none' stroke='%23dc3545'%3e%3ccircle cx='6' cy='6' r='4.5'/%3e%3cpath stroke-linejoin='round' d='M5.8 3.6h.4L6 6.5z'/%3e%3ccircle cx='6' cy='8.2' r='.6' fill='%23dc3545' stroke='none'/%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right calc(0.375em + 0.1875rem) center;
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+}
+
+#scheduleCallForm .invalid-feedback {
+    display: none;
+    color: #dc3545;
+    font-size: 80%;
+    margin-top: 0.25rem;
+}
+
+/* Fix broken div structure in the form */
+#scheduleCallForm .mb-3 {
+    margin-bottom: 1rem !important;
+}
+
+/* Calendly Badge Widget Customization */
+.calendly-badge-widget {
+    z-index: 999 !important; /* Ensure it's above most other elements but below modals */
+    bottom: 20px !important; /* Position slightly higher than default */
+    right: 20px !important; /* Position slightly more inward than default */
+    transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.calendly-badge-widget:hover {
+    transform: translateY(-3px) !important;
+    box-shadow: 0 10px 20px rgba(0, 105, 255, 0.2) !important;
+}
+
+.calendly-badge-widget .calendly-badge-content {
+    border-radius: 50px !important; /* More rounded corners */
+    padding: 10px 20px !important; /* More horizontal padding */
+    font-weight: 600 !important; /* Slightly bolder text */
+    font-family: 'Poppins', sans-serif !important; /* Match our site font */
+    box-shadow: 0 5px 15px rgba(0, 105, 255, 0.15) !important; /* Add subtle shadow */
+}
+
+/* Hide the badge on very small screens to avoid clutter */
+@media (max-width: 480px) {
+    .calendly-badge-widget {
+        transform: scale(0.85);
+        bottom: 10px !important;
+        right: 10px !important;
+    }
+}
+
+/* Make the Calendly overlay play nicely with our site */
+.calendly-overlay .calendly-popup {
+    z-index: 10000 !important;
+}
+
+.calendly-overlay .calendly-popup-close {
+    color: #0069ff !important;
+    background: white !important;
+    border-radius: 50% !important;
+    box-shadow: 0 3px 10px rgba(0,0,0,0.2) !important;
+    width: 40px !important;
+    height: 40px !important;
+    padding: 0 !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    font-size: 24px !important;
+    top: 15px !important;
+    right: 15px !important;
+    transition: background-color 0.2s, transform 0.2s !important;
+}
+
+.calendly-overlay .calendly-popup-close:hover {
+    background: #f8f9fa !important;
+    transform: scale(1.1) !important;
+}
+
+/* CRITICAL SLIDER FIXES */
+.app-features-carousel {
+    overflow: hidden !important;
+    position: relative;
+    width: 100%;
+}
+
+.features-slider {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: 500% !important; /* For 5 slides */
+    transform: translateX(0%) !important;
+    position: relative;
+    transition: transform 0.5s ease !important;
+}
+
+.feature-slide {
+    min-width: 20% !important; /* 100% ÷ 5 slides */
+    width: 20% !important;
+    flex: 0 0 20% !important;
+    padding: 0 15px;
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+/* Slider controls */
+.slider-arrow {
+    width: 40px !important;
+    height: 40px !important;
+    border-radius: 50% !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    z-index: 10 !important;
+    cursor: pointer !important;
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+.slider-dot {
+    opacity: 1 !important;
+    visibility: visible !important;
+}
+
+/* TESTIMONIAL SCROLL FIXES */
+.testimonial-scroll-container {
+    width: 100%;
+    overflow: hidden !important;
+    position: relative;
+    padding: 20px 0;
+}
+
+.testimonial-track {
+    display: flex !important;
+    flex-wrap: nowrap !important;
+    width: auto !important; /* Let content determine width */
+    visibility: visible !important;
+    opacity: 1 !important;
+}
+
+.testimonial-card {
+    min-width: 350px !important;
+    max-width: 350px !important;
+    margin: 0 12px !important;
+    flex: 0 0 auto !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: flex !important;
+    flex-direction: column !important;
+    height: auto !important;
+    min-height: 280px !important;
+}
+
+/* Fix responsive issues */
+@media (max-width: 768px) {
+    .testimonial-card {
+        min-width: 280px !important;
+        max-width: 280px !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .testimonial-card {
+        min-width: 90% !important;
+        max-width: 90% !important;
+        margin: 0 5% !important;
+    }
+}
+
+/* Important display fixes for all content */
+.app-features-carousel *,
+.testimonial-scroll-container * {
+    visibility: visible !important;
+    opacity: 1 !important;
+    display: block;
+}
+
+.slider-arrow,
+.slider-dot,
+.testimonial-track {
+    display: flex !important;
+}
