@@ -38,41 +38,135 @@ A Udemy-like Learning Management System (LMS) that works with your local video f
 
 ## Features
 
-- **Course Management**: View, add, and resume multiple courses from a dedicated courses page.
-- **Folder-based Course Creation**: Instantly turn any folder of videos into a structured course.
-- **Automatic Playlist Generation**: Creates a playlist from all video files in the selected folder.
-- **Video Progress Tracking**: Remembers your position in each video and marks completed videos.
-- **Course Progress Monitoring**: Shows overall completion percentage of the course.
-- **Professional Video Player**: Using Plyr.js with playback speed control, volume control, and fullscreen mode.
-- **Customizable Interface**: Adjust the sidebar width and video size to your preference.
-- **Responsive Design**: Works on both desktop and mobile devices.
-- **Local Storage**: All progress data is saved to your browser's local storage.
-- **No Internet Required**: Works entirely offline with your local files.
-- **Clean, Intuitive Interface**: Mimics popular online learning platforms for a familiar experience.
-- **Keyboard Shortcuts**: Navigate quickly between videos using keyboard shortcuts.
-- **Notifications**: Toast notifications for important events.
+### Current Features
 
-## Supported Video Formats
+- **Offline Access**: Watch all your courses without an internet connection
+- **Easy Import**: Import entire course folders with one click
+- **Advanced Video Player**: Features include:
+  - Variable speed control (0.5x to 2x)
+  - Smart bookmarking with notes
+  - Auto-resume from where you left off
+- **Progress Tracking**: Never lose your place with automatic progress saving
+- **Clean Organization**: Automatically organize content by course, section, and lecture
+- **Modern UI**: Sleek, user-friendly interface designed to enhance learning
+- **Smart Note-Taking**: Create timestamped notes while watching videos
+- **Dark/Light Mode**: Toggle between themes based on your preference
 
-The application supports all video formats that your browser can play, including:
-- MP4 (.mp4)
-- WebM (.webm)
-- Ogg (.ogg)
-- QuickTime (.mov)
-- Matroska (.mkv) - browser support may vary
+### Key Components
+
+1. **Course Library**: Browse all your imported courses in one place
+2. **Video Player**: Enhanced playback with learning-focused features
+3. **Progress Dashboard**: Track your learning journey with visual metrics
+4. **Content Index**: Easily navigate through course sections and lectures
+5. **Notes System**: Take and organize notes synchronized with video timestamps
+
+## Getting Started
+
+### Prerequisites
+
+- A modern web browser (Chrome, Firefox, Edge recommended)
+- Local video files organized in folders
+
+### Installation
+
+1. Clone the repository:
+   ```
+   git clone https://github.com/yourusername/local-lms-player.git
+   ```
+
+2. Open `index.html` in your web browser
+
+3. Click "Get Started" to begin adding courses
+
+### Adding Your First Course
+
+1. From the Courses page, click "Add New Course"
+2. Select a folder containing your course videos
+3. The app will automatically organize and import your content
+4. Click on the course to start learning!
+
+## Usage Tips
+
+- **Keyboard Shortcuts**:
+  - Space: Play/Pause
+  - Left/Right Arrows: Skip backward/forward
+  - M: Mute/Unmute
+  - F: Toggle fullscreen
+  
+- **Organizing Courses**:
+  - For best results, keep videos in folders named after the course
+  - The app will recognize common naming patterns like "01-Introduction.mp4"
+
+- **Taking Notes**:
+  - Press "B" while watching to add a bookmark at the current timestamp
+  - Add notes to your bookmarks for easy reference later
 
 ## Technical Details
 
-The application is built with:
-- HTML5
-- CSS3
-- JavaScript (ES6+)
-- Bootstrap 5 (for UI components)
-- Font Awesome (for icons)
-- Plyr.js (for professional video playback)
+The Local LMS Player is built with:
 
-No server-side code is required, and all data is stored locally in your browser.
+- HTML5, CSS3, and JavaScript (ES6+)
+- Bootstrap 5 for responsive design
+- GSAP for smooth animations
+- LocalStorage for data persistence
 
-## Privacy & Data Storage
+## Roadmap
 
-All data (including your watch history and progress) is stored only on your device using the browser's localStorage API. No data is sent to any server.
+### Planned Features
+
+- **Cloud Sync** - Sync your progress across devices
+- **Export/Import** - Share courses and progress with others
+- **Enhanced Analytics** - More detailed learning metrics
+- **Custom Themes** - Additional theme options beyond dark/light mode
+- **Mobile App** - Native applications for iOS and Android
+
+### Future Integrations
+
+- **Google Drive Integration** - Access and play courses directly from Google Drive
+- **AWS S3 Storage** - Store and stream your courses from AWS S3 buckets
+- **GCP Storage** - Google Cloud Platform storage integration
+- **Azure Blob Storage** - Microsoft Azure storage support
+- **Dropbox Integration** - Access courses from your Dropbox account
+- **OneDrive Support** - Integration with Microsoft OneDrive
+
+## TODO
+
+- [ ] Implement cloud sync functionality
+- [ ] Add export/import feature for courses and progress
+- [ ] Create mobile app versions
+- [ ] Develop Google Drive integration
+- [ ] Build AWS S3 storage connector
+- [ ] Add GCP storage support
+- [ ] Implement Azure Blob Storage integration
+- [ ] Add support for subtitles/captions
+- [ ] Implement advanced search across all courses
+- [ ] Create collaborative features for shared learning
+- [ ] Add offline quiz/assessment capabilities
+- [ ] Implement machine learning for smart recommendations
+
+## Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the repository
+2. Create your feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add some amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## License
+
+This project is licensed under the MIT License - see the LICENSE file for details.
+
+## Acknowledgments
+
+- Thanks to all the contributors who have helped shape this project
+- Special thanks to the open-source community for the amazing tools that made this possible
+
+## Contact
+
+For questions, feature requests, or support, please open an issue on GitHub or contact us at support@locallmsplayer.com.
+
+---
+
+Made with ❤️ for learners everywhere
