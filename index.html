@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Local LMS Player</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Replace Video.js with Plyr.js which has better UI -->
+    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Sidebar/Navigation with Resizable Width -->
+        <div class="sidebar" id="sidebar">
+            <div class="brand">
+                <h2>Local LMS</h2>
+                <div class="nav-links">
+                    <a href="courses.html" class="nav-link" title="View All Courses">
+                        <i class="fas fa-graduation-cap"></i>
+                    </a>
+                </div>
+            </div>
+            <div class="folder-selection">
+                <button id="folder-selector" class="btn btn-primary">
+                    <i class="fas fa-folder-open"></i> Choose Course Folder
+                </button>
+                <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
+            </div>
+            <div class="course-info">
+                <h3 id="course-title">No Course Selected</h3>
+                <p id="video-count">0 lectures</p>
+            </div>
+            <div class="playlist-container">
+                <h4>Content</h4>
+                <ul id="video-playlist" class="playlist">
+                    <!-- Playlist items will be generated here -->
+                </ul>
+            </div>
+            <div class="resize-handle" id="resize-handle" title="Drag to resize sidebar">
+                <div class="handle-line"></div>
+            </div>
+        </div>
+
+        <!-- Main Content Area -->
+        <div class="main-content" id="main-content">
+            <div class="video-container">
+                <div id="no-video-message">
+                    <i class="fas fa-film fa-5x"></i>
+                    <h2>No video selected</h2>
+                    <p>Choose a course folder and select a video from the playlist</p>
+                </div>
+                <!-- Switch back to standard video element for Plyr -->
+                <video id="video-player" controls style="display: none;">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+            <!-- Add video size controls -->
+            <div class="video-size-controls">
+                <button id="decrease-video-size" class="btn btn-sm btn-outline-secondary" title="Decrease video size">
+                    <i class="fas fa-compress"></i>
+                </button>
+                <button id="reset-video-size" class="btn btn-sm btn-outline-secondary" title="Reset video size">
+                    <i class="fas fa-sync-alt"></i>
+                </button>
+                <button id="increase-video-size" class="btn btn-sm btn-outline-secondary" title="Increase video size">
+                    <i class="fas fa-expand"></i>
+                </button>
+            </div>
+            <div class="video-info">
+                <h2 id="current-video-title">No Video Selected</h2>
+                <div class="video-meta">
+                    <span id="current-video-duration">0:00</span>
+                    <div class="video-controls">
+                        <button id="prev-video" class="btn btn-sm btn-outline-primary" disabled>
+                            <i class="fas fa-step-backward"></i> Previous
+                        </button>
+                        <button id="next-video" class="btn btn-sm btn-outline-primary" disabled>
+                            Next <i class="fas fa-step-forward"></i>
+                        </button>
+                    </div>
+                </div>
+                <div class="progress-container">
+                    <div class="progress-label">
+                        <span>Course Progress:</span>
+                        <span id="progress-percentage">0%</span>
+                    </div>
+                    <div class="progress">
+                        <div id="course-progress" class="progress-bar" role="progressbar" style="width: 0%"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="video-description">
+                <h3>Description</h3>
+                <p id="current-video-description">Select a video to see its description.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toasts for notifications -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+            <div class="toast-header">
+                <strong class="me-auto" id="toast-title">Notification</strong>
+                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+            </div>
+            <div class="toast-body" id="toast-message"></div>
+        </div>
+    </div>
+
+    <!-- Libraries -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Replace Video.js with Plyr.js -->
+    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    
+    <!-- Main Script -->
+    <script src="script.js"></script>
+</body>
+</html>
