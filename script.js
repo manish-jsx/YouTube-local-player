@@ -203,6 +203,12 @@ class FeatureSlider {
         this.createSliderNav = this.createSliderNav.bind(this);
         this.setupAccessibility = this.setupAccessibility.bind(this);
         this.cleanup = this.cleanup.bind(this);
+        
+        // Add debugging for slide visibility issues
+        this.debug = options.debug || false;
+        
+        // Add emergency fix flag
+        this.needsEmergencyFix = true;
     }
     
     init() {
@@ -221,11 +227,18 @@ class FeatureSlider {
             return false;
         }
         
+        if (this.debug) {
+            console.log(`[FeatureSlider] Found ${this.slideCount} slides:`, this.slides);
+        }
+        
         this.nav = document.getElementById(this.options.navId);
         this.prevBtn = document.getElementById(this.options.prevBtnId);
         this.nextBtn = document.getElementById(this.options.nextBtnId);
         
-        // Initialize slider
+        // *** CRITICAL FIX: Apply essential layout styles ***
+        this.fixSliderLayout();
+        
+        // Initialize slider components
         this.createSliderNav();
         this.setupEventListeners();
         this.setupAccessibility();
@@ -234,6 +247,91 @@ class FeatureSlider {
         
         console.log(`[FeatureSlider] Initialized with ${this.slideCount} slides`);
         return true;
+    }
+    
+    // New method to fix slider layout issues
+    fixSliderLayout() {
+        // Fix parent container
+        this.slider.style.display = 'flex';
+        this.slider.style.flexWrap = 'nowrap'; 
+        this.slider.style.width = '100%';
+        this.slider.style.overflow = 'hidden';
+        
+        // Fix slides - ensure they're properly sized
+        this.slides.forEach(slide => {
+            slide.style.flex = '0 0 100%';
+            slide.style.minWidth = '100%';
+            slide.style.maxWidth = '100%';
+            slide.style.overflow = 'visible';
+            slide.style.transition = 'opacity 0.3s ease';
+        });
+        
+        // Create a special inner wrapper if needed
+        if (this.needsEmergencyFix) {
+            // Check if we need to create a wrapper
+            const parentStyles = window.getComputedStyle(this.slider.parentElement);
+            if (parentStyles.overflow === 'hidden') {
+                // The slider's parent already has overflow hidden, which is good
+                this.slider.style.width = `${this.slideCount * 100}%`;
+                
+                // Style each slide to take the correct proportion of space
+                this.slides.forEach(slide => {
+                    slide.style.width = `${100 / this.slideCount}%`;
+                });
+            }
+            
+            console.log('[FeatureSlider] Emergency layout fix applied');
+        }
+    }
+    
+    goToSlide(index, animate = true) {
+        if (this.isAnimating || index < 0 || index >= this.slideCount || index === this.currentSlide) {
+            return;
+        }
+        
+        this.isAnimating = animate;
+        const prevSlide = this.currentSlide;
+        this.currentSlide = index;
+        
+        // Update slides
+        this.slides.forEach((slide, i) => {
+            slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
+        });
+        
+        // Update nav dots
+        if (this.nav) {
+            const dots = this.nav.querySelectorAll('.slider-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
+            });
+        }
+        
+        // *** CRITICAL FIX: Improved transform method for better reliability ***
+        const translateValue = -(index * 100 / this.slideCount);
+        
+        if (this.debug) {
+            console.log(`[FeatureSlider] Moving to slide ${index}, translateX(${translateValue}%)`);
+        }
+        
+        // Use standard transform approach for consistency
+        this.slider.style.transition = animate ? `transform ${this.options.animationDuration}ms ease` : 'none';
+        this.slider.style.transform = `translateX(${translateValue}%)`;
+        
+        if (animate) {
+            const transitionEndHandler = () => {
+                this.isAnimating = false;
+                this.slider.removeEventListener('transitionend', transitionEndHandler);
+            };
+            this.slider.addEventListener('transitionend', transitionEndHandler);
+        } else {
+            this.isAnimating = false;
+        }
+        
+        // Announce slide change for screen readers
+        if (this.liveRegion) {
+            this.liveRegion.textContent = `Showing slide ${index + 1} of ${this.slideCount}`;
+        }
     }
     
     createSliderNav() {
@@ -325,58 +423,6 @@ class FeatureSlider {
         this.liveRegion.setAttribute('aria-atomic', 'true');
         this.liveRegion.className = 'sr-only';
         document.body.appendChild(this.liveRegion);
-    }
-    
-    goToSlide(index, animate = true) {
-        if (this.isAnimating || index < 0 || index >= this.slideCount || index === this.currentSlide) {
-            return;
-        }
-        
-        this.isAnimating = animate;
-        const prevSlide = this.currentSlide;
-        this.currentSlide = index;
-        
-        // Update slides
-        this.slides.forEach((slide, i) => {
-            slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
-        });
-        
-        // Update nav dots
-        if (this.nav) {
-            const dots = this.nav.querySelectorAll('.slider-dot');
-            dots.forEach((dot, i) => {
-                dot.classList.toggle('active', i === index);
-                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
-            });
-        }
-        
-        // Animate transition with GSAP if available, otherwise use CSS
-        if (typeof gsap !== 'undefined' && animate) {
-            gsap.to(this.slider, {
-                duration: this.options.animationDuration / 1000,
-                x: `-${index * 100}%`,
-                ease: "power2.out",
-                onComplete: () => {
-                    this.isAnimating = false;
-                }
-            });
-        } else {
-            this.slider.style.transition = animate ? `transform ${this.options.animationDuration}ms ease` : 'none';
-            this.slider.style.transform = `translateX(-${index * 100}%)`;
-            
-            if (animate) {
-                const transitionEndHandler = () => {
-                    this.isAnimating = false;
-                    this.slider.removeEventListener('transitionend', transitionEndHandler);
-                };
-                this.slider.addEventListener('transitionend', transitionEndHandler);
-            } else {
-                this.isAnimating = false;
-            }
-        }
-        
-        // Announce slide change for screen readers
-        this.liveRegion.textContent = `Showing slide ${index + 1} of ${this.slideCount}`;
     }
     
     handlePrevClick() {
@@ -491,12 +537,44 @@ class FeatureSlider {
     }
 }
 
+// Add emergency slider fix function to handle layout issues immediately
+function fixSliderEmergency() {
+    const slider = document.getElementById('features-slider');
+    if (!slider) return;
+    
+    console.log('Applying emergency slider layout fix');
+    
+    // Get slides
+    const slides = slider.querySelectorAll('.feature-slide');
+    if (slides.length === 0) return;
+    
+    // Fix parent container
+    slider.style.display = 'flex';
+    slider.style.width = `${slides.length * 100}%`;
+    slider.style.overflow = 'visible';
+    slider.style.transition = 'transform 0.5s ease';
+    
+    // Fix slides
+    slides.forEach(slide => {
+        slide.style.flex = `0 0 ${100 / slides.length}%`;
+        slide.style.overflow = 'visible';
+    });
+    
+    // Make sure parent container has proper overflow
+    if (slider.parentElement) {
+        slider.parentElement.style.overflow = 'hidden';
+    }
+}
+
 // Initialize components when DOM is ready
 document.addEventListener('DOMContentLoaded', function() {
+    // Apply immediate emergency fix for slider layout
+    setTimeout(fixSliderEmergency, 100);
+    
     // Initialize navbar with enhanced performance
     initModernNavbar();
     
-    // Initialize feature slider with proper class-based encapsulation
+    // Initialize feature slider with proper class-based encapsulation and debug mode
     const featureSlider = new FeatureSlider({
         sliderId: 'features-slider',
         slideSelector: '.feature-slide',
@@ -504,9 +582,13 @@ document.addEventListener('DOMContentLoaded', function() {
         prevBtnId: 'prev-slide',
         nextBtnId: 'next-slide',
         autoplayInterval: 6000,
-        animationDuration: 500
+        animationDuration: 500,
+        debug: true  // Enable debugging
     });
-    featureSlider.init();
+    
+    // Verify slider is properly initialized
+    const isInitialized = featureSlider.init();
+    console.log('Feature slider initialization status:', isInitialized ? 'Success' : 'Failed');
     
     // Make it globally available for debugging and script extensibility
     window.featureSlider = featureSlider;

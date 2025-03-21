@@ -13,6 +13,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <!-- Add fallback stylesheet -->
     <link rel="stylesheet" href="fallback.css">
+    <!-- Calendly widget CSS -->
+    <link href="https://assets.calendly.com/assets/external/widget.css" rel="stylesheet">
     <script src="script.js"></script>
     <style>
         /* Landing page specific styles */
@@ -23,7 +25,7 @@
             --light: #f8f9fa;
             --dark: #212529;
         }
-        
+
         /* Fix visibility issues */
         body, html {
             visibility: visible !important;
@@ -34,24 +36,24 @@
             scroll-behavior: smooth;
             overflow-x: hidden;
         }
-        
+
         /* Smooth scrolling for whole page */
         html {
             scroll-behavior: smooth;
         }
-        
+
         /* Initial state - make visible by default as fallback */
         .hidden-element {
             opacity: 1 !important; /* Override to ensure visibility */
             transform: translateY(0) !important; /* Reset any transform */
         }
-        
+
         /* Only hide elements if JavaScript is enabled */
         .js-enabled .hidden-element:not(.visible) {
             opacity: 0;
             transform: translateY(30px);
         }
-        
+
         .hero-section {
             min-height: 100vh;
             position: relative;
@@ -60,7 +62,7 @@
             align-items: center;
             overflow: hidden;
         }
-        
+
         .hero-particles {
             position: absolute;
             top: 0;
@@ -69,22 +71,22 @@
             height: 100%;
             pointer-events: none;
         }
-        
+
         .hero-content {
             z-index: 2;
             position: relative;
         }
-        
+
         .floating-element {
             animation: float 6s ease-in-out infinite;
         }
-        
+
         @keyframes float {
             0% { transform: translateY(0px); }
             50% { transform: translateY(-20px); }
             100% { transform: translateY(0px); }
         }
-        
+
         /* Rest of your CSS styles */
         .feature-card {
             border-radius: 12px;
@@ -96,42 +98,42 @@
             overflow: hidden;
             position: relative;
         }
-        
+
         .feature-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 35px rgba(0,0,0,0.12);
         }
-        
+
         .feature-icon {
             font-size: 3rem;
             margin-bottom: 1.5rem;
             color: var(--primary);
         }
-        
+
         .feature-section {
             padding: 6rem 0;
         }
-        
+
         .cta-section {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             padding: 6rem 0;
             color: white;
         }
-        
+
         .device-mockup {
             max-width: 100%;
             border-radius: 10px;
             box-shadow: 0 20px 40px rgba(0,0,0,0.2);
             position: relative;
         }
-        
+
         .testimonial-card {
             border-radius: 12px;
             padding: 2rem;
             background: white;
             box-shadow: 0 5px 15px rgba(0,0,0,0.05);
         }
-        
+
         .scroll-down {
             position: absolute;
             bottom: 40px;
@@ -142,13 +144,13 @@
             cursor: pointer;
             animation: bounce 2s infinite;
         }
-        
+
         @keyframes bounce {
             0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
             40% { transform: translateY(-20px) translateX(-50%); }
             60% { transform: translateY(-10px) translateX(-50%); }
         }
-        
+
         .nav-landing {
             background-color: transparent !important;
             transition: background-color 0.3s ease;
@@ -156,12 +158,12 @@
             width: 100%;
             z-index: 1000;
         }
-        
+
         .nav-landing.scrolled {
             background-color: white !important;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
-        
+
         .btn-get-started {
             padding: 12px 25px;
             border-radius: 30px;
@@ -169,16 +171,16 @@
             letter-spacing: 0.5px;
             transition: all 0.3s ease;
         }
-        
+
         .btn-get-started:hover {
             transform: translateY(-3px);
             box-shadow: 0 7px 14px rgba(0,0,0,0.1);
         }
-        
+
         .how-it-works {
             position: relative;
         }
-        
+
         .step-line {
             position: absolute;
             top: 100px;
@@ -188,7 +190,7 @@
             background-color: var(--primary);
             z-index: -1;
         }
-        
+
         .step-number {
             width: 60px;
             height: 60px;
@@ -202,7 +204,7 @@
             font-weight: bold;
             margin-bottom: 1.5rem;
         }
-        
+
         /* Interactive UI Components */
         .mock-app {
             background-color: white;
@@ -213,7 +215,7 @@
             height: 700px;
             width: 100%;
         }
-        
+
         .mock-header {
             background-color: var(--primary);
             color: white;
@@ -222,13 +224,13 @@
             align-items: center;
             justify-content: space-between;
         }
-        
+
         .mock-content {
             height: calc(100% - 56px);
             overflow: auto;
             padding: 15px;
         }
-        
+
         .mock-course {
             background: #fff;
             border: 1px solid #e7e7e7;
@@ -238,12 +240,12 @@
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .mock-course:hover {
             transform: translateY(-3px);
             box-shadow: 0 5px 15px rgba(0,0,0,0.08);
         }
-        
+
         .mock-video {
             background: #000;
             border-radius: 8px;
@@ -252,7 +254,7 @@
             margin-bottom: 15px;
             aspect-ratio: 16/9;
         }
-        
+
         .mock-video-controls {
             position: absolute;
             bottom: 0;
@@ -263,7 +265,7 @@
             display: flex;
             align-items: center;
         }
-        
+
         .mock-progress {
             flex-grow: 1;
             height: 5px;
@@ -272,7 +274,7 @@
             margin: 0 10px;
             position: relative;
         }
-        
+
         .mock-progress-fill {
             position: absolute;
             left: 0;
@@ -282,7 +284,7 @@
             border-radius: 3px;
             width: 35%;
         }
-        
+
         .mock-lecture {
             display: flex;
             align-items: center;
@@ -292,16 +294,16 @@
             background: #f8f9fa;
             cursor: pointer;
         }
-        
+
         .mock-lecture.active {
             background: rgba(13, 110, 253, 0.1);
             border-left: 3px solid var(--primary);
         }
-        
+
         .mock-lecture:hover {
             background: rgba(13, 110, 253, 0.05);
         }
-        
+
         .mock-lecture-status {
             width: 22px;
             height: 22px;
@@ -313,20 +315,20 @@
             font-size: 12px;
             color: white;
         }
-        
+
         .mock-lecture-status.completed {
             background: #28a745;
         }
-        
+
         .mock-lecture-status.current {
             background: var(--primary);
         }
-        
+
         .mock-lecture-status.pending {
             background: #e9ecef;
             color: #212529;
         }
-        
+
         .mock-folder {
             border: 2px dashed #dee2e6;
             border-radius: 8px;
@@ -336,12 +338,12 @@
             cursor: pointer;
             transition: all 0.3s;
         }
-        
+
         .mock-folder:hover {
             border-color: var(--primary);
             background: rgba(13, 110, 253, 0.03);
         }
-        
+
         .mock-file {
             background: #f8f9fa;
             border-radius: 6px;
@@ -351,18 +353,18 @@
             align-items: center;
             font-size: 14px;
         }
-        
+
         .mock-file i {
             margin-right: 10px;
             color: var(--primary);
         }
-        
+
         .mock-library {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
             gap: 15px;
         }
-        
+
         .mock-course-card {
             border-radius: 8px;
             overflow: hidden;
@@ -373,12 +375,12 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .mock-course-card:hover {
             transform: translateY(-5px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-        
+
         .mock-course-image {
             height: 120px;
             background: linear-gradient(45deg, var(--primary), var(--primary-dark));
@@ -388,7 +390,7 @@
             color: white;
             font-size: 2rem;
         }
-        
+
         .mock-course-details {
             padding: 15px;
             background: white;
@@ -396,7 +398,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .mock-course-progress {
             height: 6px;
             background: #e9ecef;
@@ -405,13 +407,13 @@
             margin-bottom: 10px;
             overflow: hidden;
         }
-        
+
         .mock-progress-value {
             height: 100%;
             background: var(--primary);
             border-radius: 3px;
         }
-        
+
         .hover-reveal {
             position: absolute;
             background: white;
@@ -424,52 +426,52 @@
             z-index: 10;
             transition: opacity 0.3s, transform 0.3s;
         }
-        
+
         .reveal-trigger:hover .hover-reveal {
             opacity: 1;
             transform: translateY(0);
             pointer-events: auto;
         }
-        
+
         .reveal-content {
             max-width: 350px;
         }
-        
+
         /* Player controls for the mock video player */
         .player-controls {
             display: flex;
             gap: 10px;
             color: white;
         }
-        
+
         .player-controls i {
             cursor: pointer;
             transition: color 0.2s;
         }
-        
+
         .player-controls i:hover {
             color: var(--primary);
         }
-        
+
         /* Animation classes */
         .scale-on-hover {
             transition: transform 0.3s ease;
         }
-        
+
         .scale-on-hover:hover {
             transform: scale(1.05);
         }
-        
+
         .pulse-animation {
             animation: pulse 2s infinite;
         }
-        
+
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.05); }
             100% { transform: scale(1); }
         }
-        
+
         .typewriter {
             overflow: hidden;
             border-right: .15em solid var(--primary);
@@ -479,17 +481,17 @@
                 typing 3.5s steps(40, end),
                 blink-caret .75s step-end infinite;
         }
-        
+
         @keyframes typing {
             from { width: 0 }
             to { width: 100% }
         }
-        
+
         @keyframes blink-caret {
             from, to { border-color: transparent }
             50% { border-color: var(--primary); }
         }
-        
+
         /* Player demo styles */
         .player-demo {
             border-radius: 12px;
@@ -499,7 +501,7 @@
             position: relative;
             aspect-ratio: 16/9;
         }
-        
+
         .player-overlay {
             position: absolute;
             top: 0;
@@ -511,24 +513,24 @@
             flex-direction: column;
             justify-content: space-between;
         }
-        
+
         .player-top-controls {
             display: flex;
             justify-content: flex-end;
             padding: 15px;
         }
-        
+
         .player-center-controls {
             display: flex;
             justify-content: center;
             align-items: center;
         }
-        
+
         .player-bottom-controls {
             background: linear-gradient(transparent, rgba(0,0,0,0.8));
             padding: 15px;
         }
-        
+
         .player-big-play {
             width: 80px;
             height: 80px;
@@ -542,12 +544,12 @@
             cursor: pointer;
             transition: transform 0.3s, background-color 0.3s;
         }
-        
+
         .player-big-play:hover {
             transform: scale(1.1);
             background: rgba(13, 110, 253, 1);
         }
-        
+
         .player-progress-container {
             width: 100%;
             height: 5px;
@@ -557,7 +559,7 @@
             position: relative;
             cursor: pointer;
         }
-        
+
         .player-progress-bar {
             position: absolute;
             left: 0;
@@ -567,7 +569,7 @@
             background: var(--primary);
             border-radius: 2.5px;
         }
-        
+
         .player-progress-handle {
             position: absolute;
             top: 50%;
@@ -579,7 +581,7 @@
             transform: translate(-50%, -50%);
             box-shadow: 0 0 5px rgba(0,0,0,0.5);
         }
-        
+
         .player-time-display {
             color: white;
             font-size: 0.9rem;
@@ -587,24 +589,24 @@
             justify-content: space-between;
             margin-bottom: 10px;
         }
-        
+
         .player-controls-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
         }
-        
+
         .player-control-btn {
             color: white;
             cursor: pointer;
             margin: 0 5px;
             transition: color 0.2s;
         }
-        
+
         .player-control-btn:hover {
             color: var(--primary);
         }
-        
+
         /* Contents Index Page */
         .contents-index {
             background: white;
@@ -614,7 +616,7 @@
             height: 400px;
             overflow: auto;
         }
-        
+
         .index-header {
             border-bottom: 1px solid #e9ecef;
             padding-bottom: 15px;
@@ -623,7 +625,7 @@
             justify-content: space-between;
             align-items: center;
         }
-        
+
         .index-search {
             display: flex;
             align-items: center;
@@ -632,7 +634,7 @@
             padding: 8px 15px;
             margin-bottom: 15px;
         }
-        
+
         .index-search input {
             border: none;
             background: transparent;
@@ -641,11 +643,11 @@
             margin-left: 10px;
             font-size: 0.9rem;
         }
-        
+
         .index-section {
             margin-bottom: 15px;
         }
-        
+
         .index-section-header {
             padding: 10px 15px;
             background: #f8f9fa;
@@ -656,21 +658,21 @@
             cursor: pointer;
             font-weight: 500;
         }
-        
+
         .index-section-header:hover {
             background: #e9ecef;
         }
-        
+
         .index-section-content {
             max-height: 0;
             overflow: hidden;
             transition: max-height 0.3s ease;
         }
-        
+
         .index-section.open .index-section-content {
             max-height: 500px;
         }
-        
+
         .index-lecture {
             display: flex;
             align-items: center;
@@ -679,11 +681,11 @@
             transition: background-color 0.2s;
             cursor: pointer;
         }
-        
+
         .index-lecture:hover {
             background-color: rgba(13, 110, 253, 0.05);
         }
-        
+
         .index-lecture-icon {
             width: 24px;
             height: 24px;
@@ -694,43 +696,43 @@
             margin-right: 15px;
             font-size: 0.8rem;
         }
-        
+
         .index-lecture-icon.video {
             background: rgba(13, 110, 253, 0.1);
             color: var(--primary);
         }
-        
+
         .index-lecture-icon.quiz {
             background: rgba(40, 167, 69, 0.1);
             color: #28a745;
         }
-        
+
         .index-lecture-icon.file {
             background: rgba(253, 126, 20, 0.1);
             color: #fd7e14;
         }
-        
+
         .index-lecture-details {
             flex-grow: 1;
         }
-        
+
         .index-lecture-title {
             font-size: 0.9rem;
             margin-bottom: 3px;
         }
-        
+
         .index-lecture-meta {
             display: flex;
             font-size: 0.8rem;
             color: var(--secondary);
         }
-        
+
         .index-lecture-duration {
             margin-left: auto;
             font-size: 0.8rem;
             color: var(--secondary);
         }
-        
+
         /* Progress tracking component */
         .progress-tracking {
             background: white;
@@ -738,38 +740,38 @@
             padding: 25px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
         }
-        
+
         .progress-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 25px;
         }
-        
+
         .progress-detail {
             margin-bottom: 20px;
         }
-        
+
         .progress-label {
             display: flex;
             justify-content: space-between;
             margin-bottom: 8px;
             font-size: 0.9rem;
         }
-        
+
         .progress-bar-container {
             height: 8px;
             background: #e9ecef;
             border-radius: 4px;
             overflow: hidden;
         }
-        
+
         .progress-value {
             height: 100%;
             border-radius: 4px;
             transition: width 1s ease;
         }
-        
+
         .recommended-next {
             background: #f8f9fa;
             border-radius: 8px;
@@ -780,12 +782,12 @@
             cursor: pointer;
             transition: transform 0.3s, box-shadow 0.3s;
         }
-        
+
         .recommended-next:hover {
             transform: translateY(-5px);
             box-shadow: 0 10px 20px rgba(0,0,0,0.05);
         }
-        
+
         .recommended-icon {
             width: 45px;
             height: 45px;
@@ -798,14 +800,14 @@
             margin-right: 15px;
             font-size: 1.2rem;
         }
-        
+
         /* Courses grid component */
         .courses-grid-demo {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
             gap: 20px;
         }
-        
+
         .grid-course-card {
             border-radius: 10px;
             overflow: hidden;
@@ -814,18 +816,18 @@
             transition: transform 0.3s, box-shadow 0.3s;
             cursor: pointer;
         }
-        
+
         .grid-course-card:hover {
             transform: translateY(-10px);
             box-shadow: 0 15px 30px rgba(0,0,0,0.15);
         }
-        
+
         .grid-course-img {
             height: 150px;
             position: relative;
             overflow: hidden;
         }
-        
+
         .grid-course-badge {
             position: absolute;
             top: 10px;
@@ -837,7 +839,7 @@
             font-size: 0.7rem;
             font-weight: 600;
         }
-        
+
         .grid-course-overlay {
             position: absolute;
             bottom: 0;
@@ -848,11 +850,11 @@
             color: white;
             font-weight: 600;
         }
-        
+
         .grid-course-content {
             padding: 15px;
         }
-        
+
         .grid-course-stats {
             display: flex;
             justify-content: space-between;
@@ -862,17 +864,17 @@
             padding-top: 15px;
             border-top: 1px solid #f8f9fa;
         }
-        
+
         .grid-stats-item {
             display: flex;
             align-items: center;
         }
-        
+
         .grid-stats-item i {
             margin-right: 5px;
             color: var(--primary);
         }
-        
+
         /* Notes component */
         .notes-panel {
             background: white;
@@ -883,7 +885,7 @@
             display: flex;
             flex-direction: column;
         }
-        
+
         .notes-header {
             display: flex;
             justify-content: space-between;
@@ -892,13 +894,13 @@
             padding-bottom: 15px;
             border-bottom: 1px solid #e9ecef;
         }
-        
+
         .notes-timestamps {
             flex-grow: 1;
             overflow-y: auto;
             margin-bottom: 15px;
         }
-        
+
         .note-item {
             display: flex;
             padding: 10px 15px;
@@ -907,32 +909,32 @@
             transition: background-color 0.2s;
             cursor: pointer;
         }
-        
+
         .note-item:hover {
             background-color: #f8f9fa;
         }
-        
+
         .note-timestamp {
             color: var(--primary);
             font-weight: 600;
             margin-right: 15px;
             min-width: 50px;
         }
-        
+
         .note-content {
             flex-grow: 1;
             font-size: 0.9rem;
         }
-        
+
         .note-actions {
             opacity: 0;
             transition: opacity 0.2s;
         }
-        
+
         .note-item:hover .note-actions {
             opacity: 1;
         }
-        
+
         .notes-input {
             display: flex;
             align-items: center;
@@ -940,7 +942,7 @@
             border-radius: 8px;
             padding: 10px 15px;
         }
-        
+
         .notes-input input {
             flex-grow: 1;
             border: none;
@@ -948,7 +950,7 @@
             outline: none;
             font-size: 0.9rem;
         }
-        
+
         .notes-input button {
             padding: 5px 15px;
             border: none;
@@ -958,28 +960,28 @@
             cursor: pointer;
             transition: background-color 0.2s;
         }
-        
+
         .notes-input button:hover {
             background: var(--primary-dark);
         }
-        
+
         /* Additional UI Components - these were all fine */
         .app-features-carousel {
             overflow: hidden;
             position: relative;
             padding: 40px 0;
         }
-        
+
         .features-slider {
             display: flex;
             transition: transform 0.5s ease;
         }
-        
+
         .feature-slide {
             min-width: 100%;
             padding: 0 15px;
         }
-        
+
         /* Slider navigation dots */
         .slider-nav {
             display: flex;
@@ -1310,7 +1312,7 @@
             width: 20px;
             height: 20px;
             background-color: white;
-            border: 4px solid var(--primary);
+            border: 4px solid var (--primary);
             border-radius: 50%;
             top: 15px;
             z-index: 1;
@@ -1331,19 +1333,22 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
         }
 
-        /* Page transition overlay// Add these styles to your existing styles section  */
+        /* Page transition overlay */
         .page-transition-overlay {
             position: fixed;
             top: 0;
-            left: 0;       
-            display: flex;
+            left: 0;
             right: 0;
             bottom: 0;
             background-color: var(--primary);
             z-index: 9999;
             opacity: 0;
             pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
+
         /* Fix the broken page transition overlay style */
         .page-transition-overlay {
             position: fixed;
@@ -1359,7 +1364,7 @@
             align-items: center;
             justify-content: center;
         }
-    
+
         /* Fix the slider controls that were missing styles */
         .slider-controls {
             display: flex;
@@ -1367,7 +1372,7 @@
             justify-content: center;
             margin-top: 30px;
         }
-    
+
         .slider-arrow {
             background: var(--light);
             border: none;
@@ -1383,17 +1388,32 @@
             box-shadow: 0 2px 8px rgba(0,0,0,0.1);
             transition: all 0.2s;
         }
-    
+
         .slider-arrow:hover {
             background: var(--primary);
             color: white;
             transform: scale(1.1);
         }
-    
+
         /* Fix slider tooltip display */
         .slider-dot:hover .slider-tooltip {
             opacity: 1;
             transform: translateX(-50%) translateY(-5px);
+        }
+
+        /* Critical inline slider fix styles */
+        .app-features-carousel {
+            overflow: hidden !important;
+        }
+
+        .features-slider {
+            display: flex !important;
+            width: 500% !important; /* 5 slides */
+        }
+
+        .feature-slide {
+            width: 20% !important; /* 100% ÷ 5 */
+            flex: 0 0 20% !important;
         }
     </style>
 </head>
@@ -1410,11 +1430,9 @@
                     <span class="modern-navbar__brand-text">Local LMS</span>
                 </a>
             </div>
-            
             <button class="modern-navbar__toggler" type="button" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggler">
                 <span class="modern-navbar__toggler-icon"></span>
             </button>
-            
             <div class="modern-navbar__menu" id="navbar-menu">
                 <ul class="modern-navbar__nav">
                     <li class="modern-navbar__nav-item modern-navbar__nav-item--active">
@@ -1433,14 +1451,12 @@
                         <a href="courses.html" class="modern-navbar__nav-link">My Courses</a>
                     </li>
                 </ul>
-                
                 <div class="modern-navbar__actions d-block d-lg-none">
                     <a href="courses.html" class="modern-navbar__action-btn">
                         <i class="fas fa-rocket" aria-hidden="true"></i> Get Started
                     </a>
                 </div>
             </div>
-            
             <div class="modern-navbar__actions d-none d-lg-flex">
                 <a href="courses.html" class="modern-navbar__action-btn">
                     <i class="fas fa-rocket" aria-hidden="true"></i> Get Started
@@ -1465,8 +1481,19 @@
                 <div class="col-lg-6 text-center text-lg-start">
                     <div class="hero-content hidden-element">
                         <h1 class="display-4 fw-bold mb-3">Welcome to <span class="text-primary">Local LMS Player</span></h1>
-                        <p class="lead text-muted mb-4">Your personal learning platform for organized, offline course viewing</p>
-                        <a href="#features" class="btn btn-primary btn-lg btn-get-started">Get Started</a>
+                        <p class="lead text-muted mb-4">Your personal learning platform for organized, offline course viewing - perfect for travelers, remote workers, and reliable learning without internet dependency.</p>
+                        <div class="hero-buttons d-flex flex-wrap gap-2">
+                            <a href="#features" class="btn btn-primary btn-lg btn-get-started">Get Started</a>
+                            <button class="btn btn-outline-primary btn-lg schedule-call-btn" data-bs-toggle="modal" data-bs-target="#scheduleCallModal">
+                                <i class="fas fa-calendar-check me-2"></i> Schedule a Demo
+                            </button>
+                        </div>
+                        <!-- Add feature badges -->
+                        <div class="hero-badges mt-4 d-flex flex-wrap gap-2">
+                            <span class="badge bg-light text-dark border"><i class="fas fa-wifi-slash me-1"></i> Works Offline</span>
+                            <span class="badge bg-light text-dark border"><i class="fas fa-shield-alt me-1"></i> Privacy-Focused</span>
+                            <span class="badge bg-light text-dark border"><i class="fas fa-tachometer-alt me-1"></i> Fast Performance</span>
+                        </div>
                     </div>
                 </div>
                 <div class="col-lg-6 d-flex justify-content-center mt-5 mt-lg-0">
@@ -1531,7 +1558,7 @@
                                         <small class="text-muted">15% complete</small>
                                     </div>
                                 </div>
-                                <div class="mock-course-card"></div>
+                                <div class="mock-course-card">
                                     <div class="mock-course-image" style="background: linear-gradient(45deg, #dc3545, #c82333);">
                                         <i class="fas fa-chart-bar"></i>
                                     </div>
@@ -1575,7 +1602,6 @@
                 <h2 class="display-5 fw-bold">Powerful Features</h2>
                 <p class="lead text-muted">Everything you need for a seamless learning experience</p>
             </div>
-            
             <div class="row g-4">
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
@@ -1586,7 +1612,6 @@
                         <p>Import entire course folders with one click. Automatic organization of your video content.</p>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
                         <div class="feature-icon">
@@ -1596,7 +1621,6 @@
                         <p>Enhanced video player with playback speed control, bookmarks, and progress tracking.</p>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
                         <div class="feature-icon">
@@ -1606,7 +1630,6 @@
                         <p>Access all your courses without internet connection. Perfect for learning anywhere.</p>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
                         <div class="feature-icon">
@@ -1616,7 +1639,6 @@
                         <p>Never lose your place again. Auto-save your progress and continue from where you left off.</p>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
                         <div class="feature-icon">
@@ -1626,7 +1648,6 @@
                         <p>Automatically organize your learning materials by course, section, and lecture.</p>
                     </div>
                 </div>
-                
                 <div class="col-md-4">
                     <div class="feature-card hidden-element">
                         <div class="feature-icon">
@@ -1641,16 +1662,15 @@
     </section>
 
     <!-- How It Works Section -->
-    <section class="py-5" id="how-it-works">
+    <section class="py-5" id="how-it-works" style="background-color: #f8f9fa; padding: 80px 0;">
         <div class="container py-5">
             <div class="text-center mb-5 hidden-element">
                 <h2 class="display-5 fw-bold">How It Works</h2>
-                <p class="lead text-muted">Three simple steps to transform your learning experience</p>
+                <p class="lead text-muted">A simple four-step process to transform your learning experience</p>
             </div>
-            
             <div class="how-it-works">
                 <div class="step-line d-none d-md-block"></div>
-                
+                <!-- STEP 1 - Course Import -->
                 <div class="row mb-5 align-items-center">
                     <div class="col-md-6 text-md-end hidden-element">
                         <div class="mock-app">
@@ -1699,7 +1719,7 @@
                         </div>
                     </div>
                 </div>
-                
+                <!-- STEP 2 - Library organization -->
                 <div class="row mb-5 align-items-center flex-column-reverse flex-md-row">
                     <div class="col-md-6 hidden-element">
                         <div class="d-flex flex-column align-items-center align-items-md-end mt-4 mt-md-0">
@@ -1775,8 +1795,8 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="row align-items-center">
+                <!-- STEP 3 - Learning -->
+                <div class="row mb-5 align-items-center">
                     <div class="col-md-6 text-md-end hidden-element">
                         <div class="mock-app">
                             <div class="mock-header">
@@ -1843,539 +1863,571 @@
                         </div>
                     </div>
                 </div>
+                <!-- NEW STEP 4 - Progress Tracking -->
+                <div class="row mb-5 align-items-center flex-column-reverse flex-md-row">
+                    <div class="col-md-6 hidden-element">
+                        <div class="d-flex flex-column align-items-center align-items-md-end mt-4 mt-md-0">
+                            <div class="step-number">4</div>
+                            <h3>Track Your Progress</h3>
+                            <p>Watch your skills grow with detailed progress analytics. Set learning goals, earn completion certificates, and review your learning history anytime.</p>
+                            <ul class="text-muted text-end d-none d-md-block">
+                                <li>Visual progress dashboards show your learning patterns</li>
+                                <li>Smart suggestions based on your learning habits</li>
+                                <li>Export learning reports for personal documentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden-element">
+                        <div class="mock-app">
+                            <div class="mock-header">
+                                <h5 class="m-0">Learning Dashboard</h5>
+                                <div>
+                                    <i class="fas fa-expand-alt"></i>
+                                </div>
+                            </div>
+                            <div class="mock-content">
+                                <div class="progress-stats mb-4">
+                                    <div class="d-flex justify-content-between mb-3">
+                                        <h6>Weekly Learning Goal</h6>
+                                        <span class="badge bg-success">On Track</span>
+                                    </div>
+                                    <div class="progress mb-2">
+                                        <div class="progress-bar bg-primary" role="progressbar" style="width: 75%" aria-valuenow="75" aria-valuemin="0" aria-valuemax="100"></div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <small class="text-muted">4h 30m of 6h</small>
+                                        <small class="text-muted">75%</small>
+                                    </div>
+                                </div>
+                                <div class="activity-chart mb-4">
+                                    <h6 class="mb-3">Learning Activity</h6>
+                                    <div class="chart-placeholder" style="height: 150px; background: #f8f9fa; border-radius: 8px; display: flex; align-items: center; justify-content: center;">
+                                        <div class="activity-bars d-flex align-items-end h-75 w-100 px-3">
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 30%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 60%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 45%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 80%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 65%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 40%; flex: 1;"></div>
+                                            <div class="activity-bar mx-1 bg-primary" style="height: 70%; flex: 1;"></div>
+                                        </div>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <small class="text-muted">Mon</small>
+                                        <small class="text-muted">Tue</small>
+                                        <small class="text-muted">Wed</small>
+                                        <small class="text-muted">Thu</small>
+                                        <small class="text-muted">Fri</small>
+                                        <small class="text-muted">Sat</small>
+                                        <small class="text-muted">Sun</small>
+                                    </div>
+                                </div>
+                                <div class="achievement-section">
+                                    <h6 class="mb-3">Recent Achievements</h6>
+                                    <div class="achievement-item d-flex align-items-center mb-2 p-2 bg-light rounded">
+                                        <div class="achievement-icon me-3 bg-warning text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-fire"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">7-Day Streak</h6>
+                                            <small class="text-muted">Learning every day for a week</small>
+                                        </div>
+                                    </div>
+                                    <div class="achievement-item d-flex align-items-center p-2 bg-light rounded">
+                                        <div class="achievement-icon me-3 bg-info text-white rounded-circle d-flex align-items-center justify-content-center" style="width: 40px; height: 40px;">
+                                            <i class="fas fa-graduation-cap"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-0">Course Milestone</h6>
+                                            <small class="text-muted">Completed 50% of Web Development</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Add a getting started CTA after the steps -->
+            <div class="text-center mt-5 pt-3 hidden-element">
+                <h3 class="h4 mb-4">Ready to transform your learning experience?</h3>
+                <a href="#features" class="btn btn-primary btn-lg">
+                    <i class="fas fa-rocket me-2"></i> Get Started Now
+                </a>
             </div>
         </div>
     </section>
 
-    <!-- Additional Features Section with Carousel -->
-    <section class="py-5" id="additional-features">
-        <div class="container py-5">
+    <!-- Additional Features Section with Bubble Background -->
+    <section class="py-5 my-5" id="additional-features">
+        <div class="container">
             <div class="text-center mb-5 hidden-element">
                 <h2 class="display-5 fw-bold">Explore All Features</h2>
                 <p class="lead text-muted">Discover the full range of tools to enhance your learning</p>
             </div>
-            
-            <div class="app-features-carousel">
-                <div class="features-slider d-flex" id="features-slider" aria-roledescription="carousel" style="overflow-x: auto; scroll-snap-type: x mandatory;">
-                    <!-- Slide 1: Advanced Video Player -->
-                    <div class="feature-slide" data-title="Advanced Video Player" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
-                        <div class="row">
-                            <div class="col-lg-6 mb-4 mb-lg-0">
-                                <div class="player-demo">
-                                    <div class="player-overlay">
-                                        <div class="player-top-controls">
-                                            <span class="player-control-btn"><i class="fas fa-cog"></i></span>
-                                        </div>
-                                        <div class="player-center-controls">
-                                            <div class="player-big-play" id="demo-play-btn">
-                                                <i class="fas fa-play"></i>
-                                            </div>
-                                        </div>
-                                        <div class="player-bottom-controls">
-                                            <div class="player-time-display">
-                                                <span>14:22</span>
-                                                <span>32:45</span>
-                                            </div>
-                                            <div class="player-progress-container">
-                                                <div class="player-progress-bar" id="demo-progress-bar"></div>
-                                                <div class="player-progress-handle"></div>
-                                            </div>
-                                            <div class="player-controls-row">
-                                                <div>
-                                                    <span class="player-control-btn"><i class="fas fa-step-backward"></i></span>
-                                                    <span class="player-control-btn"><i class="fas fa-play"></i></span>
-                                                    <span class="player-control-btn"><i class="fas fa-step-forward"></i></span>
-                                                    <span class="player-control-btn"><i class="fas fa-volume-up"></i></span>
-                                                </div>
-                                                <div>
-                                                    <span class="player-control-btn"><i class="fas fa-bookmark"></i></span>
-                                                    <span class="player-control-btn"><i class="fas fa-closed-captioning"></i></span>
-                                                    <span class="player-control-btn"><i class="fas fa-expand"></i></span>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6">
-                                <h3 class="h2 mb-4">Advanced Video Player</h3>
-                                <p class="mb-4">Experience a feature-rich video player designed specifically for educational content. Take control of your learning with:</p>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-tachometer-alt fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Variable Speed Control</h5>
-                                        <p>Adjust playback speed from 0.5x to 2x to match your learning pace.</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-bookmark fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Smart Bookmarking</h5>
-                                        <p>Create timestamped bookmarks with notes to quickly find important content.</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-history fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Auto-Resume</h5>
-                                        <p>Automatically continue from where you left off, even after closing the app.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+
+            <!-- Feature 1: Advanced Video Player -->
+            <div class="row mb-5">
+                <div class="col-12" style="background-color: rgba(13,110,253,0.08); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(13,110,253,0.1); position: relative; overflow: hidden;">
+                    <!-- Decorative bubbles -->
+                    <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(13,110,253,0.1), transparent); top: -100px; right: -100px; z-index: 0;"></div>
+                    <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(13,110,253,0.08), transparent); bottom: -50px; left: -50px; z-index: 0;"></div>
                     
-                    <!-- Slide 2: Course Content Index -->
-                    <div class="feature-slide" data-title="Course Navigation" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
-                        <div class="row">
-                            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
-                                <div class="contents-index">
-                                    <div class="index-header">
-                                        <h5 class="m-0">Course Contents</h5>
-                                        <div>
-                                            <i class="fas fa-expand text-primary"></i>
-                                        </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="player-demo" style="border-radius: 20px; box-shadow: 0 15px 40px rgba(0,0,0,0.2);">
+                                <div class="player-overlay">
+                                    <div class="player-top-controls">
+                                        <span class="player-control-btn"><i class="fas fa-cog"></i></span>
                                     </div>
-                                    <div class="index-search">
-                                        <i class="fas fa-search text-muted"></i>
-                                        <input type="text" placeholder="Search in course...">
-                                    </div>
-                                    <div class="index-section open">
-                                        <div class="index-section-header">
-                                            <span>1. Getting Started</span>
-                                            <i class="fas fa-chevron-down"></i>
-                                        </div>
-                                        <div class="index-section-content">
-                                            <div class="index-lecture">
-                                                <div class="index-lecture-icon video">
-                                                    <i class="fas fa-play"></i>
-                                                </div>
-                                                <div class="index-lecture-details">
-                                                    <div class="index-lecture-title">1.1 Introduction to the Course</div>
-                                                    <div class="index-lecture-meta">
-                                                        <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
-                                                    </div>
-                                                </div>
-                                                <div class="index-lecture-duration">8:42</div>
-                                            </div>
-                                            <div class="index-lecture">
-                                                <div class="index-lecture-icon video">
-                                                    <i class="fas fa-play"></i>
-                                                </div>
-                                                <div class="index-lecture-details">
-                                                    <div class="index-lecture-title">1.2 Setting Up Your Environment</div>
-                                                    <div class="index-lecture-meta">
-                                                        <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
-                                                    </div>
-                                                </div>
-                                                <div class="index-lecture-duration">12:15</div>
-                                            </div>
-                                            <div class="index-lecture">
-                                                <div class="index-lecture-icon quiz">
-                                                    <i class="fas fa-question"></i>
-                                                </div>
-                                                <div class="index-lecture-details">
-                                                    <div class="index-lecture-title">1.3 Quick Quiz</div>
-                                                    <div class="index-lecture-meta">
-                                                        <span><i class="fas fa-circle me-1 text-warning"></i> Not started</span>
-                                                    </div>
-                                                </div>
-                                                <div class="index-lecture-duration">5:00</div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="index-section">
-                                        <div class="index-section-header">
-                                            <span>2. Core Concepts</span>
-                                            <i class="fas fa-chevron-right"></i>
-                                        </div>
-                                        <div class="index-section-content">
-                                            <!-- Content collapsed -->
-                                        </div>
-                                    </div>
-                                    <div class="index-section">
-                                        <div class="index-section-header">
-                                            <span>3. Advanced Topics</span>
-                                            <i class="fas fa-chevron-right"></i>
-                                        </div>
-                                        <div class="index-section-content">
-                                            <!-- Content collapsed -->
-                                        </div>
-                                    </div>
-                                    <div class="index-section">
-                                        <div class="index-section-header">
-                                            <span>4. Practical Projects</span>
-                                            <i class="fas fa-chevron-right"></i>
-                                        </div>
-                                        <div class="index-section-content">
-                                            <!-- Content collapsed -->
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-lg-6 order-lg-1">
-                                <h3 class="h2 mb-4">Intuitive Course Navigation</h3>
-                                <p class="mb-4">Navigate through course content effortlessly with our intelligent organization system:</p>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-list fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Structured Content</h5>
-                                        <p>Course content is automatically organized into sections and lectures with clear hierarchy.</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-search fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Powerful Search</h5>
-                                        <p>Find specific topics instantly with our built-in search functionality.</p>
-                                    </div>
-                                </div>
-                                <div class="d-flex mb-3">
-                                    <div class="me-3 text-primary">
-                                        <i class="fas fa-filter fa-2x"></i>
-                                    </div>
-                                    <div>
-                                        <h5>Smart Filtering</h5>
-                                        <p>Filter content by type (video, document, quiz) or completion status to find what you need.</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    
-                    <!-- Slide 3: Progress Tracking -->
-                    <div class="feature-slide" data-title="Progress Tracking" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
-                        <div class="row">
-                            <div class="col-lg-6 mb-4 mb-lg-0">
-                                <div class="progress-tracking">
-                                    <div class="progress-header">
-                                        <h5 class="m-0">Learning Progress</h5>
-                                        <span class="badge bg-primary px-3 py-2">65% Complete</span>
-                                    </div>
-                                    
-                                    <div class="progress-detail">
-                                        <div class="progress-label">
-                                            <span>Web Development Masterclass</span>
-                                            <span>65%</span>
-                                        </div>
-                                        <div class="progress-bar-container">
-                                            <div class="progress-value" style="width: 65%; background-color: #0d6efd;"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="progress-detail">
-                                        <div class="progress-label">
-                                            <span>UI/UX Design Essentials</span>
-                                            <span>35%</span>
-                                        </div>
-                                        <div class="progress-bar-container">
-                                            <div class="progress-value" style="width: 35%; background-color: #6610f2;"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="progress-detail">
-                                        <div class="progress-label">
-                                            <span>Database Fundamentals</span>
-                                            <span>85%</span>
-                                        </div>
-                                        <div class="progress-bar-container">
-                                            <div class="progress-value" style="width: 85%; background-color: #fd7e14;"></div>
-                                        </div>
-                                    </div>
-                                    
-                                    <div class="recommended-next">
-                                        <div class="recommended-icon">
+                                    <div class="player-center-controls">
+                                        <div class="player-big-play" id="demo-play-btn">
                                             <i class="fas fa-play"></i>
                                         </div>
-                                        <div>
-                                            <h6 class="mb-1">Continue Learning</h6>
-                                            <small class="text-muted">Web Development Masterclass • Advanced CSS Techniques</small>
+                                    </div>
+                                    <div class="player-bottom-controls">
+                                        <div class="player-time-display">
+                                            <span>14:22</span>
+                                            <span>32:45</span>
+                                        </div>
+                                        <div class="player-progress-container">
+                                            <div class="player-progress-bar" id="demo-progress-bar"></div>
+                                            <div class="player-progress-handle"></div>
+                                        </div>
+                                        <div class="player-controls-row">
+                                            <div>
+                                                <span class="player-control-btn"><i class="fas fa-step-backward"></i></span>
+                                                <span class="player-control-btn"><i class="fas fa-play"></i></span>
+                                                <span class="player-control-btn"><i class="fas fa-step-forward"></i></span>
+                                                <span class="player-control-btn"><i class="fas fa-volume-up"></i></span>
+                                            </div>
+                                            <div>
+                                                <span class="player-control-btn"><i class="fas fa-bookmark"></i></span>
+                                                <span class="player-control-btn"><i class="fas fa-closed-captioning"></i></span>
+                                                <span class="player-control-btn"><i class="fas fa-expand"></i></span>
+                                            </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="position: relative; z-index: 1; padding: 0 0 0 20px;"></div>
+                                <h3 class="h2 mb-4">Advanced Video Player</h3>
+                                <p class="mb-4">Experience a feature-rich video player designed specifically for educational content. Take control of your learning with:</p>
+                                <ul class="feature-list mb-4">
+                                    <li class="mb-3"><strong class="text-primary">Variable Speed Control:</strong> Adjust playback speed from 0.5x to 2x to match your learning pace.</li>
+                                    <li class="mb-3"><strong class="text-primary">Smart Bookmarking:</strong> Create timestamped bookmarks with notes to quickly find important content.</li>
+                                    <li class="mb-3"><strong class="text-primary">Auto-Resume:</strong> Automatically continue from where you left off, even after closing the app.</li>
+                                </ul>
+                                <div class="feature-badge px-3 py-2 d-inline-block" style="background-color: rgba(13,110,253,0.1); border-radius: 20px; font-weight: 500;">
+                                    <i class="fas fa-check-circle text-primary me-2"></i>Works Offline
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            
+
+            <!-- Feature 2: Course Content Index -->
+            <div class="row mb-5">
+                <div class="col-12" style="background-color: rgba(102,16,242,0.08); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(102,16,242,0.1); position: relative; overflow: hidden;">
+                    <!-- Decorative bubbles -->
+                    <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(102,16,242,0.1), transparent); top: -100px; right: -100px; z-index: 0;"></div>
+                    <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(102,16,242,0.08), transparent); bottom: -50px; left: -50px; z-index: 0;"></div>
+                    
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0"></div>
+                            <div class="contents-index" style="position: relative; z-index: 1;">
+                                <div class="index-header">
+                                    <h5 class="m-0">Course Contents</h5>
+                                    <div>
+                                        <i class="fas fa-expand text-primary"></i>
+                                    </div>
+                                </div>
+                                <div class="index-search">
+                                    <i class="fas fa-search text-muted"></i>
+                                    <input type="text" placeholder="Search in course...">
+                                </div>
+                                <div class="index-section open">
+                                    <div class="index-section-header">
+                                        <span>1. Getting Started</span>
+                                        <i class="fas fa-chevron-down"></i>
+                                    </div>
+                                    <div class="index-section-content">
+                                        <div class="index-lecture">
+                                            <div class="index-lecture-icon video">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                            <div class="index-lecture-details">
+                                                <div class="index-lecture-title">1.1 Introduction to the Course</div>
+                                                <div class="index-lecture-meta">
+                                                    <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
+                                                </div>
+                                            </div>
+                                            <div class="index-lecture-duration">8:42</div>
+                                        </div>
+                                        <div class="index-lecture">
+                                            <div class="index-lecture-icon video">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                            <div class="index-lecture-details">
+                                                <div class="index-lecture-title">1.2 Setting Up Your Environment</div>
+                                                <div class="index-lecture-meta">
+                                                    <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
+                                                </div>
+                                            </div>
+                                            <div class="index-lecture-duration">12:15</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6 order-lg-1">
+                            <div style="position: relative; z-index: 1; padding: 0 20px 0 0;">
+                                <h3 class="h2 mb-4">Intuitive Course Navigation</h3>
+                                <p class="mb-4">Navigate through course content effortlessly with our intelligent organization system:</p>
+                                <ul class="mb-4">
+                                    <li class="mb-3"><strong class="text-primary">Structured Content:</strong> Course content is automatically organized into sections and lectures with clear hierarchy.</li>
+                                    <li class="mb-3"><strong class="text-primary">Powerful Search:</strong> Find specific topics instantly with our built-in search functionality.</li>
+                                    <li class="mb-3"><strong class="text-primary">Smart Filtering:</strong> Filter content by type (video, document, quiz) or completion status to find what you need.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+           
+       
+
+            <!-- Feature 3: Progress Tracking -->
+            <div class="row mb-5">
+                <div class="col-12" style="background-color: rgba(253,126,20,0.08); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(253,126,20,0.1); position: relative; overflow: hidden;">
+                    <!-- Decorative bubbles -->
+                    <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(253,126,20,0.1), transparent); top: -100px; left: -100px; z-index: 0;"></div>
+                    <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(253,126,20,0.08), transparent); bottom: -50px; right: -50px; z-index: 0;"></div>
+                    
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="progress-tracking" style="position: relative; z-index: 1;">
+                                <div class="progress-header">
+                                    <h5 class="m-0">Learning Progress</h5>
+                                    <span class="badge bg-primary px-3 py-2">65% Complete</span>
+                                </div>
+                                <div class="progress-detail">
+                                    <div class="progress-label">
+                                        <span>Web Development Masterclass</span>
+                                        <span>65%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-value" style="width: 65%; background-color: #0d6efd;"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-detail">
+                                    <div class="progress-label">
+                                        <span>UI/UX Design Essentials</span>
+                                        <span>35%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-value" style="width: 35%; background-color: #6610f2;"></div>
+                                    </div>
+                                </div>
+                                <div class="progress-detail">
+                                    <div class="progress-label">
+                                        <span>Database Fundamentals</span>
+                                        <span>85%</span>
+                                    </div>
+                                    <div class="progress-bar-container">
+                                        <div class="progress-value" style="width: 85%; background-color: #fd7e14;"></div>
+                                    </div>
+                                </div>
+                                <div class="recommended-next">
+                                    <div class="recommended-icon">
+                                        <i class="fas fa-play"></i>
+                                    </div>
+                                    <div>
+                                        <h6 class="mb-1">Continue Learning</h6>
+                                        <small class="text-muted">Web Development Masterclass • Advanced CSS Techniques</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="position: relative; z-index: 1; padding: 0 0 0 20px;">
                                 <h3 class="h2 mb-4">Comprehensive Progress Tracking</h3>
                                 <p class="mb-4">Keep track of your learning journey with detailed progress metrics:</p>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-chart-line fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Visual Progress Indicators</h5>
-                                        <p>See your progress at a glance with course completion percentages and visual indicators.</p>
+                                        <h5 class="mb-2">Visual Progress Indicators</h5>
+                                        <p class="mb-0">See your progress at a glance with course completion percentages and visual indicators.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-history fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Learning History</h5>
-                                        <p>Review your learning history with timestamps, session durations, and completed sections.</p>
+                                        <h5 class="mb-2">Learning History</h5>
+                                        <p class="mb-0">Review your learning history with timestamps, session durations, and completed sections.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-bullseye fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Smart Recommendations</h5>
-                                        <p>Get personalized recommendations on what to watch next based on your progress.</p>
+                                        <h5 class="mb-2">Smart Recommendations</h5>
+                                        <p class="mb-0">Get personalized recommendations on what to watch next based on your progress.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <!-- Feature 4: Course Library -->
+            <div class="row mb-5">
+                <div class="col-12" style="background-color: rgba(25,135,84,0.08); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(25,135,84,0.1); position: relative; overflow: hidden;">
+                    <!-- Decorative bubbles -->
+                    <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(25,135,84,0.1), transparent); top: -100px; right: -100px; z-index: 0;"></div>
+                    <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(25,135,84,0.08), transparent); bottom: -50px; left: -50px; z-index: 0;"></div>
                     
-                    <!-- Slide 4: Course Library -->
-                    <div class="feature-slide" data-title="Course Library" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
-                        <div class="row">
-                            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
-                                <div class="courses-grid-demo">
-                                    <div class="grid-course-card">
-                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #0d6efd, #0b5ed7);">
-                                            <span class="grid-course-badge">Most Popular</span>
-                                            <div class="grid-course-overlay">Web Development</div>
-                                        </div>
-                                        <div class="grid-course-content">
-                                            <h6>Web Development Masterclass</h6>
-                                            <div class="grid-course-stats">
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    <span>24 lectures</span>
-                                                </div>
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-clock"></i>
-                                                    <span>8 hours</span>
-                                                </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                            <div class="courses-grid-demo" style="position: relative; z-index: 1;">
+                                <div class="grid-course-card">
+                                    <div class="grid-course-img" style="background: linear-gradient(45deg, #0d6efd, #0b5ed7);">
+                                        <span class="grid-course-badge">Most Popular</span>
+                                        <div class="grid-course-overlay">Web Development</div>
+                                    </div>
+                                    <div class="grid-course-content">
+                                        <h6>Web Development Masterclass</h6>
+                                        <div class="grid-course-stats">
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-play-circle"></i>
+                                                <span>24 lectures</span>
+                                            </div>
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>8 hours</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="grid-course-card">
-                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #6610f2, #6f42c1);">
-                                            <div class="grid-course-overlay">UI/UX Design</div>
-                                        </div>
-                                        <div class="grid-course-content">
-                                            <h6>UI/UX Design Essentials</h6>
-                                            <div class="grid-course-stats">
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    <span>18 lectures</span>
-                                                </div>
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-clock"></i>
-                                                    <span>6 hours</span>
-                                                </div>
+                                </div>
+                                <div class="grid-course-card">
+                                    <div class="grid-course-img" style="background: linear-gradient(45deg, #6610f2, #6f42c1);">
+                                        <div class="grid-course-overlay">UI/UX Design</div>
+                                    </div>
+                                    <div class="grid-course-content">
+                                        <h6>UI/UX Design Essentials</h6>
+                                        <div class="grid-course-stats">
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-play-circle"></i>
+                                                <span>18 lectures</span>
+                                            </div>
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>6 hours</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="grid-course-card">
-                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #fd7e14, #e36209);">
-                                            <div class="grid-course-overlay">Databases</div>
-                                        </div>
-                                        <div class="grid-course-content">
-                                            <h6>Database Fundamentals</h6>
-                                            <div class="grid-course-stats">
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    <span>16 lectures</span>
-                                                </div>
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-clock"></i>
-                                                    <span>5 hours</span>
-                                                </div>
+                                </div>
+                                <div class="grid-course-card">
+                                    <div class="grid-course-img" style="background: linear-gradient(45deg, #fd7e14, #e36209);">
+                                        <div class="grid-course-overlay">Databases</div>
+                                    </div>
+                                    <div class="grid-course-content">
+                                        <h6>Database Fundamentals</h6>
+                                        <div class="grid-course-stats">
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-play-circle"></i>
+                                                <span>16 lectures</span>
+                                            </div>
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>5 hours</span>
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="grid-course-card">
-                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #20c997, #1ca080);">
-                                            <span class="grid-course-badge">New</span>
-                                            <div class="grid-course-overlay">AI & Machine Learning</div>
-                                        </div>
-                                        <div class="grid-course-content">
-                                            <h6>AI & Machine Learning</h6>
-                                            <div class="grid-course-stats">
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-play-circle"></i>
-                                                    <span>22 lectures</span>
-                                                </div>
-                                                <div class="grid-stats-item">
-                                                    <i class="fas fa-clock"></i>
-                                                    <span>10 hours</span>
-                                                </div>
+                                </div>
+                                <div class="grid-course-card">
+                                    <div class="grid-course-img" style="background: linear-gradient(45deg, #20c997, #1ca080);">
+                                        <span class="grid-course-badge">New</span>
+                                        <div class="grid-course-overlay">AI & Machine Learning</div>
+                                    </div>
+                                    <div class="grid-course-content">
+                                        <h6>AI & Machine Learning</h6>
+                                        <div class="grid-course-stats">
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-play-circle"></i>
+                                                <span>22 lectures</span>
+                                            </div>
+                                            <div class="grid-stats-item">
+                                                <i class="fas fa-clock"></i>
+                                                <span>10 hours</span>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-lg-6 order-lg-1">
+                        </div>
+                        <div class="col-lg-6 order-lg-1">
+                            <div style="position: relative; z-index: 1; padding: 0 20px 0 0;">
                                 <h3 class="h2 mb-4">Organized Course Library</h3>
                                 <p class="mb-4">Keep all your learning resources in one beautifully organized library:</p>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4"></div>
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-th-large fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Grid & List Views</h5>
-                                        <p>Choose between grid and list layouts to browse your courses the way you prefer.</p>
+                                        <h5 class="mb-2">Grid & List Views</h5>
+                                        <p class="mb-0">Choose between grid and list layouts to browse your courses the way you prefer.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4"></div>
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-sort-amount-down fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Smart Sorting</h5>
-                                        <p>Sort courses by name, date added, progress, or last accessed to find what you need quickly.</p>
+                                        <h5 class="mb-2">Smart Sorting</h5>
+                                        <p class="mb-0">Sort courses by name, date added, progress, or last accessed to find what you need quickly.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-tag fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Custom Tags & Categories</h5>
-                                        <p>Create your own tags and categories to organize courses in a way that makes sense to you.</p>
+                                        <h5 class="mb-2">Custom Tags & Categories</h5>
+                                        <p class="mb-0">Create your own tags and categories to organize courses in a way that makes sense to you.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+               
+           
+
+            <!-- Feature 5: Smart Note-Taking -->
+            <div class="row mb-5">
+                <div class="col-12" style="background-color: rgba(13,202,240,0.08); border-radius: 30px; padding: 40px; box-shadow: 0 10px 30px rgba(13,202,240,0.1); position: relative; overflow: hidden;">
+                    <!-- Decorative bubbles -->
+                    <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(13,202,240,0.1), transparent); top: -100px; left: -100px; z-index: 0;"></div>
+                    <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(13,202,240,0.08), transparent); bottom: -50px; right: -50px; z-index: 0;"></div>
                     
-                    <!-- Slide 5: Notes & Bookmarks -->
-                    <div class="feature-slide" data-title="Smart Note-Taking" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
-                        <div class="row">
-                            <div class="col-lg-6 mb-4 mb-lg-0">
-                                <div class="notes-panel">
-                                    <div class="notes-header">
-                                        <h5 class="m-0">Notes & Bookmarks</h5>
-                                        <span class="badge bg-primary px-3 py-2">7 Notes</span>
-                                    </div>
-                                    <div class="notes-timestamps">
-                                        <div class="note-item">
-                                            <div class="note-timestamp">05:22</div>
-                                            <div class="note-content">Introduction to CSS variables and their advantages over traditional methods</div>
-                                            <div class="note-actions">
-                                                <i class="fas fa-edit text-primary me-2"></i>
-                                                <i class="fas fa-trash-alt text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="note-item">
-                                            <div class="note-timestamp">12:47</div>
-                                            <div class="note-content">Important: Media queries breakpoints for responsive design</div>
-                                            <div class="note-actions">
-                                                <i class="fas fa-edit text-primary me-2"></i>
-                                                <i class="fas fa-trash-alt text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="note-item">
-                                            <div class="note-timestamp">18:33</div>
-                                            <div class="note-content">Flexbox vs Grid: when to use each layout system</div>
-                                            <div class="note-actions">
-                                                <i class="fas fa-edit text-primary me-2"></i>
-                                                <i class="fas fa-trash-alt text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="note-item">
-                                            <div class="note-timestamp">22:15</div>
-                                            <div class="note-content">Browser compatibility issues with newer CSS features</div>
-                                            <div class="note-actions">
-                                                <i class="fas fa-edit text-primary me-2"></i>
-                                                <i class="fas fa-trash-alt text-danger"></i>
-                                            </div>
-                                        </div>
-                                        <div class="note-item">
-                                            <div class="note-timestamp">27:40</div>
-                                            <div class="note-content">CSS animations performance optimization techniques</div>
-                                            <div class="note-actions">
-                                                <i class="fas fa-edit text-primary me-2"></i>
-                                                <i class="fas fa-trash-alt text-danger"></i>
-                                            </div>
+                    <div class="row align-items-center">
+                        <div class="col-lg-6 mb-4 mb-lg-0">
+                            <div class="notes-panel" style="position: relative; z-index: 1;">
+                                <div class="notes-header">
+                                    <h5 class="m-0">Notes & Bookmarks</h5>
+                                    <span class="badge bg-primary px-3 py-2">7 Notes</span>
+                                </div>
+                                <div class="notes-timestamps">
+                                    <div class="note-item">
+                                        <div class="note-timestamp">05:22</div>
+                                        <div class="note-content">Introduction to CSS variables and their advantages over traditional methods</div>
+                                        <div class="note-actions">
+                                            <i class="fas fa-edit text-primary me-2"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
                                         </div>
                                     </div>
-                                    <div class="notes-input">
-                                        <input type="text" placeholder="Add a note at current timestamp...">
-                                        <button>Save</button>
+                                    <div class="note-item">
+                                        <div class="note-timestamp">12:47</div>
+                                        <div class="note-content">Important: Media queries breakpoints for responsive design</div>
+                                        <div class="note-actions">
+                                            <i class="fas fa-edit text-primary me-2"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="note-item">
+                                        <div class="note-timestamp">18:33</div>
+                                        <div class="note-content">Flexbox vs Grid: when to use each layout system</div>
+                                        <div class="note-actions">
+                                            <i class="fas fa-edit text-primary me-2"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="note-item">
+                                        <div class="note-timestamp">22:15</div>
+                                        <div class="note-content">Browser compatibility issues with newer CSS features</div>
+                                        <div class="note-actions">
+                                            <i class="fas fa-edit text-primary me-2"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </div>
+                                    </div>
+                                    <div class="note-item">
+                                        <div class="note-timestamp">27:40</div>
+                                        <div class="note-content">CSS animations performance optimization techniques</div>
+                                        <div class="note-actions">
+                                            <i class="fas fa-edit text-primary me-2"></i>
+                                            <i class="fas fa-trash-alt text-danger"></i>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="notes-input">
+                                    <input type="text" placeholder="Add a note at current timestamp...">
+                                    <button>Save</button>
+                                </div>
                             </div>
-                            <div class="col-lg-6">
+                        </div>
+                        <div class="col-lg-6">
+                            <div style="position: relative; z-index: 1; padding: 0 0 0 20px;"></div>
                                 <h3 class="h2 mb-4">Smart Note-Taking</h3>
                                 <p class="mb-4">Enhance your learning with integrated note-taking and bookmarking features:</p>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-bookmark fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Time-Stamped Bookmarks</h5>
-                                        <p>Create bookmarks at specific timestamps to quickly return to important points in videos.</p>
+                                        <h5 class="mb-2">Time-Stamped Bookmarks</h5>
+                                        <p class="mb-0">Create bookmarks at specific timestamps to quickly return to important points in videos.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4">
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-sticky-note fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Integrated Notes</h5>
-                                        <p>Take notes while watching videos without pausing or switching to another application.</p>
+                                        <h5 class="mb-2">Integrated Notes</h5>
+                                        <p class="mb-0">Take notes while watching videos without pausing or switching to another application.</p>
                                     </div>
                                 </div>
-                                <div class="d-flex mb-3">
+                                <div class="d-flex mb-4"></div>
                                     <div class="me-3 text-primary">
                                         <i class="fas fa-file-export fa-2x"></i>
                                     </div>
                                     <div>
-                                        <h5>Export & Sync</h5>
-                                        <p>Export your notes in various formats or sync them across devices for access anywhere.</p>
+                                        <h5 class="mb-2">Export & Sync</h5>
+                                        <p class="mb-0">Export your notes in various formats or sync them across devices for access anywhere.</p>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                
-                <!-- Slider Navigation -->
-                <div class="slider-controls">
-                    <button class="slider-arrow prev" id="prev-slide" aria-label="Previous slide">
-                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
-                    </button>
-                    <div class="slider-nav" id="slider-nav" role="tablist" aria-label="Slides navigation"></div>
-                    <button class="slider-arrow next" id="next-slide" aria-label="Next slide">
-                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
-                    </button>
-                </div>
-                
-                <!-- Loading indicator -->
-                <div class="slider-loading" id="slider-loading" aria-hidden="true">
-                    <div class="loading-spinner"></div>
-                </div>
             </div>
+            
         </div>
     </section>
 
 
 
-    <!-- Fix testimonials section that has structural issues -->
-    <section class="bg-light py-5" id="testimonials">
-        <div class="container py-5">
+    <!-- Fix testimonials section to be full width and correct HTML structure -->
+    <section class="bg-light overflow-hidden py-5" id="testimonials">
+        <div class="container-fluid py-5">
             <div class="text-center mb-5 hidden-element">
                 <h2 class="display-5 fw-bold">What Our Users Say</h2>
-                <p class="lead text-muted">Join thousands of satisfied learners</p>
+                <p class="lead text-muted">Join thousands of satisfied learners around the world</p>
             </div>
-            <div class="row g-4">
-                <div class="col-md-4 hidden-element">
-                    <div class="testimonial-card">
+
+            <!-- Infinite scrolling testimonials container -->
+            <div class="testimonial-scroll-container position-relative my-4">
+                <div class="testimonial-track d-flex" id="testimonial-track-1">
+                    <!-- First set of testimonials -->
+                    <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
                         <div class="d-flex align-items-center mb-3">
                             <div class="text-warning me-2">
                                 <i class="fas fa-star"></i>
@@ -2395,9 +2447,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 hidden-element">
-                    <div class="testimonial-card">
+
+                    <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
                         <div class="d-flex align-items-center mb-3">
                             <div class="text-warning me-2">
                                 <i class="fas fa-star"></i>
@@ -2417,9 +2468,8 @@
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4 hidden-element">
-                    <div class="testimonial-card">
+
+                    <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
                         <div class="d-flex align-items-center mb-3">
                             <div class="text-warning me-2">
                                 <i class="fas fa-star"></i>
@@ -2439,23 +2489,209 @@
                             </div>
                         </div>
                     </div>
+
+                    <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0</span>
+                        </div>
+                        <p class="mb-3">"Perfect for my digital nomad lifestyle. I download courses when I have wifi and learn while traveling. The bookmark feature is extremely useful for important points."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">MP</div>
+                            <div>
+                                <h5 class="mb-0">Maria Perez</h5>
+                                <small class="text-muted">Digital Nomad</small>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0</span>
+                        </div>
+                        <p class="mb-3">"Such a time-saver! The automatic organization of videos by course and section is exactly what I needed. I can focus on learning instead of managing files."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">TW</div>
+                            <div>
+                                <h5 class="mb-0">Thomas Wong</h5>
+                                <small class="text-muted">Software Engineer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <!-- Second set of testimonials scrolling in the opposite direction -->
+    <div class="testimonial-scroll-container position-relative my-4">
+        <div class="testimonial-track d-flex" id="testimonial-track-2">
+            <!-- First set of testimonials -->
+            <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span>5.0</span>
+                </div>
+                <p class="mb-3">"The offline feature is a lifesaver! I can learn on the go without worrying about internet connectivity."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">AB</div>
+                    <div>
+                        <h5 class="mb-0">Alice Brown</h5>
+                        <small class="text-muted">Freelancer</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star-half-alt"></i>
+                    </div>
+                    <span>4.5</span>
+                </div>
+                <p class="mb-3">"The progress tracking and smart recommendations have made my learning journey so much more efficient."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">CW</div>
+                    <div>
+                        <h5 class="mb-0">Chris White</h5>
+                        <small class="text-muted">Entrepreneur</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span>5.0</span>
+                </div>
+                <p class="mb-3">"I love how organized everything is. The clean UI and offline access make this app a must-have for learners."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">LM</div>
+                    <div>
+                        <h5 class="mb-0">Laura Martinez</h5>
+                        <small class="text-muted">Graphic Designer</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span>5.0</span>
+                </div>
+                <p class="mb-3">"The ability to bookmark and take notes while watching videos is a game-changer for my studies."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-warning text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">DK</div>
+                    <div>
+                        <h5 class="mb-0">David Kim</h5>
+                        <small class="text-muted">Student</small>
+                    </div>
+                </div>
+            </div>
+
+            <div class="testimonial-card mx-3" style="min-width: 350px; max-width: 350px;">
+                <div class="d-flex align-items-center mb-3">
+                    <div class="text-warning me-2">
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                        <i class="fas fa-star"></i>
+                    </div>
+                    <span>5.0</span>
+                </div>
+                <p class="mb-3">"This app has made learning so much more enjoyable. The features are well thought out and easy to use."</p>
+                <div class="d-flex align-items-center">
+                    <div class="rounded-circle bg-danger text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">SH</div>
+                    <div>
+                        <h5 class="mb-0">Sophia Harris</h5>
+                        <small class="text-muted">Teacher</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </section>
+           <section class="trust-section py-5" style="background-color: #f8f9fa; border-radius: 30px; margin: 40px 0; padding: 60px 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.05); overflow: hidden; position: relative;">
+            <!-- Decorative bubbles in background -->
+            <div style="position: absolute; width: 300px; height: 300px; border-radius: 50%; background: radial-gradient(circle, rgba(13,110,253,0.1), transparent); top: -100px; right: -100px; z-index: 0;"></div>
+            <div style="position: absolute; width: 200px; height: 200px; border-radius: 50%; background: radial-gradient(circle, rgba(13,110,253,0.08), transparent); bottom: -50px; left: -50px; z-index: 0;"></div>
+            
+            <!-- Add a trust indicators section -->
+            <div class="trust-indicators text-center mt-5 hidden-element" style="position: relative; z-index: 1;">
+                <div class="row justify-content-center">
+                    <div class="col-md-8"></div>
+                        <div class="d-flex flex-wrap justify-content-center gap-5 mb-4">
+                            <div class="trust-stat p-4" style="background-color: white; border-radius: 20px; min-width: 180px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s;">
+                                <h3 class="display-6 fw-bold text-primary">10,000+</h3>
+                                <p class="text-muted mb-0">Happy Users</p>
+                            </div>
+                            <div class="trust-stat p-4" style="background-color: white; border-radius: 20px; min-width: 180px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s;">
+                                <h3 class="display-6 fw-bold text-primary">4.9/5</h3>
+                                <p class="text-muted mb-0">Average Rating</p>
+                            </div>
+                            <div class="trust-stat p-4" style="background-color: white; border-radius: 20px; min-width: 180px; box-shadow: 0 10px 20px rgba(0,0,0,0.05); transition: transform 0.3s;">
+                                <h3 class="display-6 fw-bold text-primary">50,000+</h3>
+                                <p class="text-muted mb-0">Hours Saved</p>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-        <!-- CTA Section -->
-        <section class="cta-section">
-            <div class="container text-center">
-                <div class="hidden-element">
-                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Learning Experience?</h2>
-                    <p class="lead mb-5">Get started today and take control of your educational journey</p>
-                    <a href="courses.html" class="btn btn-light btn-lg btn-get-started px-5 py-3" id="cta-button">
-                        <i class="fas fa-rocket me-2"></i> Get Started Now
-                    </a>
-                </div>
+  
+
+
+  
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container text-center">
+            <div class="hidden-element">
+                <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Learning Experience?</h2>
+                <p class="lead mb-5">Get started today and take control of your educational journey</p>
+                <a href="courses.html" class="btn btn-light btn-lg btn-get-started px-5 py-3" id="cta-button">
+                    <i class="fas fa-rocket me-2"></i> Get Started Now
+                </a>
             </div>
-        </section>
+        </div>
+    </section>
 
     <!-- Footer -->
     <footer class="bg-dark text-white py-4">
@@ -2495,6 +2731,78 @@
             </div>
         </div>
     </footer>
+ <!-- Schedule a Demo Call Modal -->
+     <!-- <div class="modal fade" id="scheduleCallModal" tabindex="-1" aria-labelledby="scheduleCallModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="scheduleCallModalLabel">Schedule a Demo Call</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="scheduleCallForm">
+                        <div class="mb-3">
+                            <label for="nameInput" class="form-label">Your Name</label>
+                            <input type="text" class="form-control" id="nameInput" placeholder="Enter your name" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="emailInput" class="form-label">Email Address</label>
+                            <input type="email" class="form-control" id="emailInput" placeholder="Enter your email" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="phoneInput" class="form-label">Phone Number (optional)</label>
+                            <input type="tel" class="form-control" id="phoneInput" placeholder="Enter your phone number">
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateInput" class="form-label">Preferred Date</label>
+                            <input type="date" class="form-control" id="dateInput" required>
+                        </div>
+                        <div class="mb-3">
+                            <label for="timeInput" class="form-label">Preferred Time</label>
+                            <select class="form-select" id="timeInput" required>
+                                <option value="" selected disabled>Select a time slot</option>
+                                <option value="9:00 AM">9:00 AM</option>
+                                <option value="10:00 AM">10:00 AM</option>
+                                <option value="11:00 AM">11:00 AM</option>
+                                <option value="1:00 PM">1:00 PM</option>
+                                <option value="2:00 PM">2:00 PM</option>
+                                <option value="3:00 PM">3:00 PM</option>
+                                <option value="4:00 PM">4:00 PM</option>
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="messageInput" class="form-label">Additional Notes</label>
+                            <textarea class="form-control" id="messageInput" rows="3" placeholder="Tell us about your specific needs or questions"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" id="submitScheduleForm">Schedule Call</button>
+                </div>
+            </div>
+        </div>
+    </div> -->
+
+    <!-- Confirmation modal for schedule request -->
+    <div class="modal fade" id="confirmationModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title">Call Scheduled</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body text-center py-4">
+                    <i class="fas fa-check-circle text-success fa-4x mb-3"></i>
+                    <h5>Thank you for scheduling a demo call!</h5>
+                    <p>We've received your request and will confirm your appointment shortly via email.</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Got it</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
@@ -2502,526 +2810,12 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
     <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
-    <!-- Landing Page Animation Script -->
-    <script>
-        // Make page visible immediately as a fallback
-        document.body.style.visibility = 'visible';
-        document.body.style.opacity = '1';
-        
-        // Initialize particle.js for hero background
-        if (typeof particlesJS !== 'undefined') {
-            try {
-                particlesJS("particles-js", {
-                    particles: {
-                        number: { value: 80, density: { enable: true, value_area: 800 } },
-                        color: { value: "#0d6efd" },
-                        shape: { type: "circle" },
-                        opacity: { value: 0.5, random: false },
-                        size: { value: 3, random: true },
-                        line_linked: { enable: true, distance: 150, color: "#0d6efd", opacity: 0.4, width: 1 },
-                        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
-                    },
-                    interactivity: {
-                        detect_on: "canvas",
-                        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
-                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
-                    },
-                    retina_detect: true
-                });
-            } catch (e) {
-                console.error('particles.js error:', e);
-            }
-        }
-
-        // Initialize GSAP animations
-        document.addEventListener('DOMContentLoaded', function() {
-            // Make all elements visible by default in case GSAP fails
-            document.querySelectorAll('.hidden-element').forEach(el => {
-                el.classList.add('visible');
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-            });
-            
-            // Add class to indicate JavaScript is fully enabled
-            document.body.classList.remove('js-loading');
-            document.body.classList.add('js-enabled');
-            
-            // Safely check if GSAP is loaded before using it
-            if (typeof gsap !== 'undefined') {
-                // Register ScrollTrigger plugin if available
-                if (gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
-                    gsap.registerPlugin(ScrollTrigger);
-                    
-                    // Hero section animations
-                    gsap.from('.hero-content .hidden-element', {
-                        y: 50,
-                        opacity: 0,
-                        duration: 1,
-                        stagger: 0.2,
-                        delay: 0.5
-                    });
-                    
-                    // Animate elements when scrolled into view
-                    gsap.utils.toArray('.hidden-element').forEach(element => {
-                        if (!element.closest('.hero-content')) {
-                            gsap.from(element, {
-                                scrollTrigger: {
-                                    trigger: element,
-                                    start: "top 80%",
-                                    onEnter: function() {
-                                        element.style.opacity = '1';
-                                        element.style.transform = 'translateY(0)';
-                                    }
-                                },
-                                y: 50,
-                                opacity: 0,
-                                duration: 1,
-                                ease: "power2.out"
-                            });
-                        }
-                    });
-                    
-                    // Initialize other UI interactions
-                    initializeUIInteractions();
-                }
-            }
-            
-            // Sticky navbar
-            const navbar = document.querySelector('.nav-landing');
-            window.addEventListener('scroll', () => {
-                if (window.scrollY > 50) {
-                    navbar.classList.add('scrolled');
-                } else {
-                    navbar.classList.remove('scrolled');
-                }
-            });
-            
-            // Smooth scroll for navigation
-            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-                anchor.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    const targetId = this.getAttribute('href');
-                    if (targetId === '#') return;
-                    
-                    const targetElement = document.querySelector(targetId);
-                    if (targetElement) {
-                        window.scrollTo({
-                            top: targetElement.offsetTop - 80,
-                            behavior: 'smooth'
-                        });
-                    }
-                });
-            });
-        });
-        
-        // Separate function for UI interactions
-        function initializeUIInteractions() {
-            // Folder selector interaction
-            const folderSelector = document.getElementById('folder-selector');
-            const selectedFiles = document.getElementById('selected-files');
-            
-            if (folderSelector && selectedFiles) {
-                folderSelector.addEventListener('click', function() {
-                    gsap.to(folderSelector, { 
-                        height: 0, 
-                        opacity: 0, 
-                        padding: 0, 
-                        margin: 0,
-                        duration: 0.5,
-                        onComplete: function() {
-                            folderSelector.style.display = 'none';
-                            selectedFiles.style.display = 'block';
-                            gsap.from(selectedFiles, { 
-                                opacity: 0, 
-                                y: -20, 
-                                duration: 0.5,
-                                stagger: 0.1
-                            });
-                        }
-                    });
-                });
-            }
-            
-            // Features slider functionality - Fixed version
-            function initializeSlider() {
-                const slider = document.getElementById('features-slider');
-                const slides = document.querySelectorAll('.feature-slide');
-                const sliderNav = document.getElementById('slider-nav');
-                
-                if (!slider || !sliderNav) {
-                    console.warn('Slider elements not found:', {
-                        slider: !!slider,
-                        sliderNav: !!sliderNav,
-                        slideCount: slides.length
-                    });
-                    return;
-                }
-                
-                console.log('Initializing slider with', slides.length, 'slides');
-                
-                let currentSlide = 0;
-                
-                // Clear any existing dots first to prevent duplicates
-                sliderNav.innerHTML = '';
-                
-                // Create dots for navigation
-                slides.forEach((_, index) => {
-                    const dot = document.createElement('div');
-                    dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
-                    dot.addEventListener('click', () => {
-                        goToSlide(index);
-                    });
-                    sliderNav.appendChild(dot);
-                });
-                
-                // Add arrow controls if they exist
-                const prevSlideBtn = document.getElementById('prev-slide');
-                const nextSlideBtn = document.getElementById('next-slide');
-                
-                if (prevSlideBtn) {
-                    prevSlideBtn.addEventListener('click', () => {
-                        let newIndex = currentSlide - 1;
-                        if (newIndex < 0) newIndex = slides.length - 1;
-                        goToSlide(newIndex);
-                    });
-                }
-                
-                if (nextSlideBtn) {
-                    nextSlideBtn.addEventListener('click', () => {
-                        let newIndex = currentSlide + 1;
-                        if (newIndex >= slides.length) newIndex = 0;
-                        goToSlide(newIndex);
-                    });
-                }
-                
-                function goToSlide(index) {
-                    if (index < 0 || index >= slides.length) return;
-                    currentSlide = index;
-                    
-                    // Update slider position
-                    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
-                    
-                    // Update dots
-                    document.querySelectorAll('.slider-dot').forEach((dot, i) => {
-                        dot.classList.toggle('active', i === currentSlide);
-                    });
-                }
-                
-                // Auto-rotate slides every 6 seconds
-                let slideInterval = setInterval(() => {
-                    currentSlide = (currentSlide + 1) % slides.length;
-                    goToSlide(currentSlide);
-                }, 6000);
-                
-                // Pause rotation on hover
-                if (slider) {
-                    slider.addEventListener('mouseenter', () => {
-                        clearInterval(slideInterval);
-                    });
-                    
-                    slider.addEventListener('mouseleave', () => {
-                        slideInterval = setInterval(() => {
-                            currentSlide = (currentSlide + 1) % slides.length;
-                            goToSlide(currentSlide);
-                        }, 6000);
-                    });
-                }
-            }
-
-            
-            // Initialize slider after a small delay to ensure DOM is fully ready
-            setTimeout(initializeSlider, 500);
-        }
-            // Other UI interactions
-            // Mock course card hover animation
-            const courseCards = document.querySelectorAll('.mock-course-card');
-            courseCards.forEach(card => {
-                card.addEventListener('mouseenter', function() {
-                    gsap.to(this.querySelector('.mock-course-image'), {
-                        scale: 1.05,
-                        duration: 0.3
-                    });
-                    gsap.to(this.querySelector('.mock-progress-value'), {
-                        width: '100%',
-                        duration: 1.5,
-                        ease: "power2.inOut"
-                    });
-                });
-                
-                card.addEventListener('mouseleave', function() {
-                    gsap.to(this.querySelector('.mock-course-image'), {
-                        scale: 1,
-                        duration: 0.3
-                    });
-                    
-                    // Reset progress to original value
-                    const originalWidth = this.querySelector('.mock-progress-value').style.width;
-                    gsap.to(this.querySelector('.mock-progress-value'), {
-                        width: originalWidth,
-                        duration: 0.8,
-                        ease: "power2.out"
-                    });
-                });
-            });
-
-            // Video player interaction
-            const playToggle = document.getElementById('play-toggle');
-            const videoProgress = document.getElementById('video-progress');
-            const bookmarkToggle = document.getElementById('bookmark-toggle');
-
-            if (playToggle) {
-                let isPlaying = false;
-                playToggle.addEventListener('click', function() {
-                    isPlaying = !isPlaying;
-                    if (isPlaying) {
-                        this.classList.remove('fa-play');
-                        this.classList.add('fa-pause');
-                        
-                        // Animate progress
-                        gsap.to(videoProgress, {
-                            width: '75%',
-                            duration: 15,
-                            ease: "linear"
-                        });
-                    } else {
-                        this.classList.remove('fa-pause');
-                        this.classList.add('fa-play');
-                        
-                        // Pause progress animation
-                        gsap.killTweensOf(videoProgress);
-                    }
-                });
-            }
-
-            if (bookmarkToggle) {
-                let isBookmarked = false;
-                bookmarkToggle.addEventListener('click', function() {
-                    isBookmarked = !isBookmarked;
-                    if (isBookmarked) {
-                        this.classList.add('text-warning');
-                        gsap.from(this, {
-                            scale: 1.5,
-                            duration: 0.3,
-                            ease: "back.out(1.7)"
-                        });
-                    } else {
-                        this.classList.remove('text-warning');
-                    }
-                });
-            }
-
-            // Demo library card click animation
-            const demoLibraryCard = document.getElementById('demo-library-card');
-            if (demoLibraryCard) {
-                demoLibraryCard.addEventListener('click', function() {
-                    gsap.to(this, {
-                        scale: 0.95,
-                        duration: 0.2,
-                        onComplete: function() {
-                            gsap.to(demoLibraryCard, {
-                                scale: 1,
-                                duration: 0.2
-                            });
-                        }
-                    });
-                });
-            }
-
-            // Demo course card pulse animation
-            const demoCourseCard = document.getElementById('demo-course-card');
-            if (demoCourseCard) {
-                gsap.timeline({repeat: -1, repeatDelay: 2})
-                    .to(demoCourseCard, {
-                        boxShadow: '0 15px 30px rgba(13, 110, 253, 0.3)',
-                        y: -10,
-                        duration: 1,
-                        ease: "power2.out"
-                    })
-                    .to(demoCourseCard, {
-                        boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
-                        y: 0,
-                        duration: 1,
-                        delay: 1,
-                        ease: "power2.in"
-                    });
-            }
-
-            // Interactions for the lectures list
-            const lectures = document.querySelectorAll('.mock-lecture');
-            if (lectures.length > 0) {
-                lectures.forEach((lecture, index) => {
-                    if (index > 0) { // Skip the active one
-                        lecture.addEventListener('mouseenter', function() {
-                            gsap.to(this, {
-                                backgroundColor: 'rgba(13, 110, 253, 0.1)',
-                                duration: 0.3
-                            });
-                        });
-                        
-                        lecture.addEventListener('mouseleave', function() {
-                            gsap.to(this, {
-                                backgroundColor: index === 1 ? 'rgba(13, 110, 253, 0)' : '#f8f9fa',
-                                duration: 0.3
-                            });
-                        });
-                    }
-                });
-            }
-
-            // Demo play button for the featured player demo
-            const demoPlayBtn = document.getElementById('demo-play-btn');
-            const demoProgressBar = document.getElementById('demo-progress-bar');
-
-            if (demoPlayBtn && demoProgressBar) {
-                let isPlaying = false;
-                demoPlayBtn.addEventListener('click', function() {
-                    isPlaying = !isPlaying;
-                    const icon = this.querySelector('i');
-                    
-                    if (isPlaying) {
-                        icon.classList.remove('fa-play');
-                        icon.classList.add('fa-pause');
-                        
-                        gsap.to(demoProgressBar, {
-                            width: '100%',
-                            duration: 30,
-                            ease: 'linear'
-                        });
-                    } else {
-                        icon.classList.remove('fa-pause');
-                        icon.classList.add('fa-play');
-                        
-                        gsap.killTweensOf(demoProgressBar);
-                    }
-                });
-            }
-
-            // Contents index interactivity
-            const sectionHeaders = document.querySelectorAll('.index-section-header');
-
-            sectionHeaders.forEach(header => {
-                header.addEventListener('click', function() {
-                    const section = this.closest('.index-section');
-                    const isOpen = section.classList.contains('open');
-                    const icon = this.querySelector('i');
-                    
-                    if (isOpen) {
-                        section.classList.remove('open');
-                        icon.classList.remove('fa-chevron-down');
-                        icon.classList.add('fa-chevron-right');
-                    } else {
-                        section.classList.add('open');
-                        icon.classList.remove('fa-chevron-right');
-                        icon.classList.add('fa-chevron-down');
-                    }
-                });
-            });
-
-            // Scroll down arrow animation
-            const scrollDown = document.getElementById('scroll-down');
-            if (scrollDown) {
-                scrollDown.addEventListener('click', () => {
-                    window.scrollTo({
-                        top: window.innerHeight,
-                        behavior: 'smooth'
-                    });
-                });
-                
-                // Add a subtle animation
-                gsap.to(scrollDown, {
-                    y: 10,
-                    duration: 1.5,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: "power1.inOut"
-                });
-            }
-
-            // Progress animation on scroll
-            const progressValues = document.querySelectorAll('.progress-value');
-
-            progressValues.forEach(progress => {
-                const originalWidth = progress.style.width;
-                
-                ScrollTrigger.create({
-                    trigger: progress,
-                    start: 'top 80%',
-                    onEnter: () => {
-                        gsap.fromTo(progress, 
-                            { width: '0%' },
-                            {
-                                width: originalWidth,
-                                duration: 1.5,
-                                ease: 'power2.out'
-                            }
-                        );
-                    },
-                    once: true
-                });
-            });
-
-            // Grid course card hover animation
-            const gridCards = document.querySelectorAll('.grid-course-card');
-
-            gridCards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    gsap.to(card, {
-                        y: -10,
-                        boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
-                        duration: 0.3
-                    });
-                });
-                
-                card.addEventListener('mouseleave', () => {
-                    gsap.to(card, {
-                        y: 0,
-                        boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
-                        duration: 0.3
-                    });
-                });
-            });
-
-            // Animation for recommended next button
-            const recommendedNext = document.querySelector('.recommended-next');
-
-            if (recommendedNext) {
-                gsap.to(recommendedNext, {
-                    y: -5,
-                    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
-                    duration: 1,
-                    repeat: -1,
-                    yoyo: true,
-                    ease: 'power1.inOut'
-                });
-                
-                recommendedNext.addEventListener('click', function() {
-                    gsap.to(this, {
-                        scale: 0.95,
-                        duration: 0.1,
-                        onComplete: function() {
-                            gsap.to(recommendedNext, {
-                                scale: 1,
-                                duration: 0.2
-                            });
-                        }
-                    });
-                });
-            }
-
-            // Enhanced CTA button with analytics tracking
-        // Add a window load event to ensure everything is visible
-        window.addEventListener('load', function() {
-            // Make sure page is visible
-            document.body.style.visibility = 'visible';
-            document.body.style.opacity = '1';
-            
-            // Ensure all elements are visible after page load
-            document.querySelectorAll('.hidden-element').forEach(el => {
-                el.style.opacity = '1';
-                el.style.transform = 'translateY(0)';
-                el.classList.add('visible');
-            });
-        });
-    </script>
+    <!-- Calendly widget script -->
+    <script src="https://assets.calendly.com/assets/external/widget.js" type="text/javascript" async></script>
+    
+    <!-- Custom Scripts -->
+ 
+    <script src="testimonial-scroll.js"></script>
+    <script src="calendly-init.js"></script>
 </body>
 </html>
