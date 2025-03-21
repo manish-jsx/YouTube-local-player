@@ -194,4 +194,164 @@ document.addEventListener('DOMContentLoaded', function() {
             loadCourses();
         }
     });
+
+    // Check if this is the first visit from landing page
+    let userJourney;
+    try {
+        userJourney = JSON.parse(localStorage.getItem('user_journey'));
+    } catch (err) {
+        console.log('No user journey data found');
+    }
+    
+    // If coming from landing page CTA, show an onboarding tip
+    if (userJourney && userJourney.cta_clicked) {
+        // Clear the flag to avoid showing again
+        try {
+            userJourney.cta_clicked = false;
+            localStorage.setItem('user_journey', JSON.stringify(userJourney));
+        } catch (err) {
+            console.log('Storage not available');
+        }
+        
+        // Show onboarding tooltip after a short delay
+        setTimeout(() => {
+            // Create and show onboarding tooltip
+            const addCourseBtn = document.getElementById('add-course-btn');
+            if (addCourseBtn) {
+                // Create tooltip element
+                const tooltip = document.createElement('div');
+                tooltip.className = 'onboarding-tooltip';
+                tooltip.innerHTML = `
+                    <p>Start by adding your first course folder!</p>
+                    <div class="onboarding-arrow"></div>
+                    <button class="onboarding-close"><i class="fas fa-times"></i></button>
+                `;
+
+                // Position the tooltip relative to the add course button
+                const rect = addCourseBtn.getBoundingClientRect();
+                tooltip.style.top = `${rect.bottom + 10}px`;
+                tooltip.style.left = `${rect.left + rect.width / 2}px`;
+                tooltip.style.transform = 'translateX(-50%)';
+
+                document.body.appendChild(tooltip);
+
+                // Add event listener to close button
+                const closeBtn = tooltip.querySelector('.onboarding-close');
+                closeBtn.addEventListener('click', () => {
+                    tooltip.remove();
+                });
+
+                // Auto-hide after 8 seconds
+                setTimeout(() => {
+                    if (document.body.contains(tooltip)) {
+                        gsap.to(tooltip, {
+                            opacity: 0,
+                            y: -10,
+                            duration: 0.3,
+                            onComplete: () => tooltip.remove()
+                        });
+                    }
+                }, 8000);
+            }
+        }, 1000);
+    }
+
+    // Add sort functionality for courses
+    function addSortingFunctionality() {
+        // Create sort dropdown in header
+        const sortDropdown = document.createElement('div');
+        sortDropdown.className = 'dropdown';
+        sortDropdown.innerHTML = `
+            <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="sortDropdown" data-bs-toggle="dropdown" aria-expanded="false">
+                <i class="fas fa-sort me-1"></i> Sort By
+            </button>
+            <ul class="dropdown-menu" aria-labelledby="sortDropdown">
+                <li><a class="dropdown-item" href="#" data-sort="name">Name</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="progress">Progress</a></li>
+                <li><a class="dropdown-item" href="#" data-sort="date">Date Added</a></li>
+            </ul>
+        `;
+        
+        // Insert before Add Course button
+        const headerDiv = document.querySelector('.courses-header');
+        headerDiv.insertBefore(sortDropdown, addCourseBtn);
+        
+        // Add event listeners to sort options
+        const sortOptions = sortDropdown.querySelectorAll('.dropdown-item');
+        sortOptions.forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.preventDefault();
+                const sortBy = e.target.dataset.sort;
+                sortCourses(sortBy);
+                // Update button text
+                document.getElementById('sortDropdown').innerHTML = `
+                    <i class="fas fa-sort me-1"></i> Sort: ${sortBy.charAt(0).toUpperCase() + sortBy.slice(1)}
+                `;
+            });
+        });
+    }
+
+    // Sort courses function
+    function sortCourses(sortBy) {
+        switch(sortBy) {
+            case 'name':
+                courses.sort((a, b) => a.name.localeCompare(b.name));
+                break;
+            case 'progress':
+                courses.sort((a, b) => {
+                    const progressA = Math.round((a.completedVideos.length / a.videoCount) * 100) || 0;
+                    const progressB = Math.round((b.completedVideos.length / b.videoCount) * 100) || 0;
+                    return progressB - progressA; // Higher progress first
+                });
+                break;
+            case 'date':
+                courses.sort((a, b) => new Date(b.dateAdded) - new Date(a.dateAdded)); // Newest first
+                break;
+        }
+        updateCoursesUI();
+    }
+
+    // Initialize sort functionality when courses are loaded
+    if (courses.length > 0) {
+        addSortingFunctionality();
+    }
+
+    // Add page transition effect
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add page transition overlay
+        const overlay = document.createElement('div');
+        overlay.className = 'page-transition-overlay';
+        overlay.innerHTML = '<div class="loading-spinner"></div>';
+        document.body.appendChild(overlay);
+        
+        // Fade out overlay
+        setTimeout(() => {
+            gsap.to(overlay, {
+                opacity: 0,
+                duration: 0.5,
+                onComplete: () => {
+                    overlay.style.display = 'none';
+                }
+            });
+        }, 500);
+        
+        // Add transition effect to page links
+        document.querySelectorAll('a[href^="app.html"], a[href^="index.html"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = this.getAttribute('href');
+                
+                // Show transition
+                overlay.style.display = 'flex';
+                gsap.to(overlay, {
+                    opacity: 1,
+                    duration: 0.3,
+                    onComplete: () => {
+                        // Navigate to target page
+                        window.location.href = target;
+                    }
+                });
+            });
+        });
+    });
 });

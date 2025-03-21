@@ -3,118 +3,3025 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Local LMS Player</title>
+    <title>Local LMS Player - Your Personal Learning Platform</title>
     <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Replace Video.js with Plyr.js which has better UI -->
-    <link rel="stylesheet" href="https://cdn.plyr.io/3.7.8/plyr.css">
+    <!-- Google Poppins Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Add fallback stylesheet -->
+    <link rel="stylesheet" href="fallback.css">
+    <script src="script.js"></script>
+    <style>
+        /* Landing page specific styles */
+        :root {
+            --primary: #0d6efd;
+            --primary-dark: #0b5ed7;
+            --secondary: #6c757d;
+            --light: #f8f9fa;
+            --dark: #212529;
+        }
+        
+        /* Fix visibility issues */
+        body, html {
+            visibility: visible !important;
+            opacity: 1 !important;
+            background-color: var(--light);
+            color: var(--dark);
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+        
+        /* Smooth scrolling for whole page */
+        html {
+            scroll-behavior: smooth;
+        }
+        
+        /* Initial state - make visible by default as fallback */
+        .hidden-element {
+            opacity: 1 !important; /* Override to ensure visibility */
+            transform: translateY(0) !important; /* Reset any transform */
+        }
+        
+        /* Only hide elements if JavaScript is enabled */
+        .js-enabled .hidden-element:not(.visible) {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        
+        .hero-section {
+            min-height: 100vh;
+            position: relative;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            display: flex;
+            align-items: center;
+            overflow: hidden;
+        }
+        
+        .hero-particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+        }
+        
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+        
+        .floating-element {
+            animation: float 6s ease-in-out infinite;
+        }
+        
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+        
+        /* Rest of your CSS styles */
+        .feature-card {
+            border-radius: 12px;
+            padding: 2rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            background: white;
+            height: 100%;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .feature-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.12);
+        }
+        
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+        
+        .feature-section {
+            padding: 6rem 0;
+        }
+        
+        .cta-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 6rem 0;
+            color: white;
+        }
+        
+        .device-mockup {
+            max-width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            position: relative;
+        }
+        
+        .testimonial-card {
+            border-radius: 12px;
+            padding: 2rem;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
+        }
+        
+        .scroll-down {
+            position: absolute;
+            bottom: 40px;
+            left: 50%;
+            transform: translateX(-50%);
+            color: var(--dark);
+            font-size: 2rem;
+            cursor: pointer;
+            animation: bounce 2s infinite;
+        }
+        
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% { transform: translateY(0) translateX(-50%); }
+            40% { transform: translateY(-20px) translateX(-50%); }
+            60% { transform: translateY(-10px) translateX(-50%); }
+        }
+        
+        .nav-landing {
+            background-color: transparent !important;
+            transition: background-color 0.3s ease;
+            position: fixed;
+            width: 100%;
+            z-index: 1000;
+        }
+        
+        .nav-landing.scrolled {
+            background-color: white !important;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .btn-get-started {
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            transition: all 0.3s ease;
+        }
+        
+        .btn-get-started:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 7px 14px rgba(0,0,0,0.1);
+        }
+        
+        .how-it-works {
+            position: relative;
+        }
+        
+        .step-line {
+            position: absolute;
+            top: 100px;
+            left: 50%;
+            height: 70%;
+            width: 4px;
+            background-color: var(--primary);
+            z-index: -1;
+        }
+        
+        .step-number {
+            width: 60px;
+            height: 60px;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            font-weight: bold;
+            margin-bottom: 1.5rem;
+        }
+        
+        /* Interactive UI Components */
+        .mock-app {
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            overflow: hidden;
+            position: relative;
+            height: 700px;
+            width: 100%;
+        }
+        
+        .mock-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .mock-content {
+            height: calc(100% - 56px);
+            overflow: auto;
+            padding: 15px;
+        }
+        
+        .mock-course {
+            background: #fff;
+            border: 1px solid #e7e7e7;
+            border-radius: 8px;
+            padding: 12px;
+            margin-bottom: 12px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .mock-course:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+        
+        .mock-video {
+            background: #000;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            margin-bottom: 15px;
+            aspect-ratio: 16/9;
+        }
+        
+        .mock-video-controls {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: rgba(0,0,0,0.7);
+            padding: 10px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .mock-progress {
+            flex-grow: 1;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 3px;
+            margin: 0 10px;
+            position: relative;
+        }
+        
+        .mock-progress-fill {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+            width: 35%;
+        }
+        
+        .mock-lecture {
+            display: flex;
+            align-items: center;
+            padding: 8px;
+            margin-bottom: 8px;
+            border-radius: 6px;
+            background: #f8f9fa;
+            cursor: pointer;
+        }
+        
+        .mock-lecture.active {
+            background: rgba(13, 110, 253, 0.1);
+            border-left: 3px solid var(--primary);
+        }
+        
+        .mock-lecture:hover {
+            background: rgba(13, 110, 253, 0.05);
+        }
+        
+        .mock-lecture-status {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            margin-right: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            color: white;
+        }
+        
+        .mock-lecture-status.completed {
+            background: #28a745;
+        }
+        
+        .mock-lecture-status.current {
+            background: var(--primary);
+        }
+        
+        .mock-lecture-status.pending {
+            background: #e9ecef;
+            color: #212529;
+        }
+        
+        .mock-folder {
+            border: 2px dashed #dee2e6;
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            margin-bottom: 15px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .mock-folder:hover {
+            border-color: var(--primary);
+            background: rgba(13, 110, 253, 0.03);
+        }
+        
+        .mock-file {
+            background: #f8f9fa;
+            border-radius: 6px;
+            padding: 10px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            font-size: 14px;
+        }
+        
+        .mock-file i {
+            margin-right: 10px;
+            color: var(--primary);
+        }
+        
+        .mock-library {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        
+        .mock-course-card {
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mock-course-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .mock-course-image {
+            height: 120px;
+            background: linear-gradient(45deg, var(--primary), var(--primary-dark));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+        }
+        
+        .mock-course-details {
+            padding: 15px;
+            background: white;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .mock-course-progress {
+            height: 6px;
+            background: #e9ecef;
+            border-radius: 3px;
+            margin-top: auto;
+            margin-bottom: 10px;
+            overflow: hidden;
+        }
+        
+        .mock-progress-value {
+            height: 100%;
+            background: var(--primary);
+            border-radius: 3px;
+        }
+        
+        .hover-reveal {
+            position: absolute;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            padding: 20px;
+            opacity: 0;
+            transform: translateY(20px);
+            pointer-events: none;
+            z-index: 10;
+            transition: opacity 0.3s, transform 0.3s;
+        }
+        
+        .reveal-trigger:hover .hover-reveal {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: auto;
+        }
+        
+        .reveal-content {
+            max-width: 350px;
+        }
+        
+        /* Player controls for the mock video player */
+        .player-controls {
+            display: flex;
+            gap: 10px;
+            color: white;
+        }
+        
+        .player-controls i {
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        
+        .player-controls i:hover {
+            color: var(--primary);
+        }
+        
+        /* Animation classes */
+        .scale-on-hover {
+            transition: transform 0.3s ease;
+        }
+        
+        .scale-on-hover:hover {
+            transform: scale(1.05);
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .typewriter {
+            overflow: hidden;
+            border-right: .15em solid var(--primary);
+            white-space: nowrap;
+            margin: 0 auto;
+            animation: 
+                typing 3.5s steps(40, end),
+                blink-caret .75s step-end infinite;
+        }
+        
+        @keyframes typing {
+            from { width: 0 }
+            to { width: 100% }
+        }
+        
+        @keyframes blink-caret {
+            from, to { border-color: transparent }
+            50% { border-color: var(--primary); }
+        }
+        
+        /* Player demo styles */
+        .player-demo {
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+            background: #000;
+            position: relative;
+            aspect-ratio: 16/9;
+        }
+        
+        .player-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.6);
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        
+        .player-top-controls {
+            display: flex;
+            justify-content: flex-end;
+            padding: 15px;
+        }
+        
+        .player-center-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .player-bottom-controls {
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            padding: 15px;
+        }
+        
+        .player-big-play {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(13, 110, 253, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 2rem;
+            cursor: pointer;
+            transition: transform 0.3s, background-color 0.3s;
+        }
+        
+        .player-big-play:hover {
+            transform: scale(1.1);
+            background: rgba(13, 110, 253, 1);
+        }
+        
+        .player-progress-container {
+            width: 100%;
+            height: 5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 2.5px;
+            margin-bottom: 10px;
+            position: relative;
+            cursor: pointer;
+        }
+        
+        .player-progress-bar {
+            position: absolute;
+            left: 0;
+            top: 0;
+            height: 100%;
+            width: 45%;
+            background: var(--primary);
+            border-radius: 2.5px;
+        }
+        
+        .player-progress-handle {
+            position: absolute;
+            top: 50%;
+            left: 45%;
+            width: 15px;
+            height: 15px;
+            border-radius: 50%;
+            background: white;
+            transform: translate(-50%, -50%);
+            box-shadow: 0 0 5px rgba(0,0,0,0.5);
+        }
+        
+        .player-time-display {
+            color: white;
+            font-size: 0.9rem;
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .player-controls-row {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .player-control-btn {
+            color: white;
+            cursor: pointer;
+            margin: 0 5px;
+            transition: color 0.2s;
+        }
+        
+        .player-control-btn:hover {
+            color: var(--primary);
+        }
+        
+        /* Contents Index Page */
+        .contents-index {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: 400px;
+            overflow: auto;
+        }
+        
+        .index-header {
+            border-bottom: 1px solid #e9ecef;
+            padding-bottom: 15px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .index-search {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 20px;
+            padding: 8px 15px;
+            margin-bottom: 15px;
+        }
+        
+        .index-search input {
+            border: none;
+            background: transparent;
+            outline: none;
+            width: 100%;
+            margin-left: 10px;
+            font-size: 0.9rem;
+        }
+        
+        .index-section {
+            margin-bottom: 15px;
+        }
+        
+        .index-section-header {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            border-radius: 6px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        
+        .index-section-header:hover {
+            background: #e9ecef;
+        }
+        
+        .index-section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        
+        .index-section.open .index-section-content {
+            max-height: 500px;
+        }
+        
+        .index-lecture {
+            display: flex;
+            align-items: center;
+            padding: 10px 15px;
+            border-bottom: 1px solid #f8f9fa;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .index-lecture:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+        
+        .index-lecture-icon {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 0.8rem;
+        }
+        
+        .index-lecture-icon.video {
+            background: rgba(13, 110, 253, 0.1);
+            color: var(--primary);
+        }
+        
+        .index-lecture-icon.quiz {
+            background: rgba(40, 167, 69, 0.1);
+            color: #28a745;
+        }
+        
+        .index-lecture-icon.file {
+            background: rgba(253, 126, 20, 0.1);
+            color: #fd7e14;
+        }
+        
+        .index-lecture-details {
+            flex-grow: 1;
+        }
+        
+        .index-lecture-title {
+            font-size: 0.9rem;
+            margin-bottom: 3px;
+        }
+        
+        .index-lecture-meta {
+            display: flex;
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        .index-lecture-duration {
+            margin-left: auto;
+            font-size: 0.8rem;
+            color: var(--secondary);
+        }
+        
+        /* Progress tracking component */
+        .progress-tracking {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        }
+        
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 25px;
+        }
+        
+        .progress-detail {
+            margin-bottom: 20px;
+        }
+        
+        .progress-label {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 0.9rem;
+        }
+        
+        .progress-bar-container {
+            height: 8px;
+            background: #e9ecef;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+        
+        .progress-value {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease;
+        }
+        
+        .recommended-next {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+            cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        
+        .recommended-next:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
+        }
+        
+        .recommended-icon {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+        
+        /* Courses grid component */
+        .courses-grid-demo {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        
+        .grid-course-card {
+            border-radius: 10px;
+            overflow: hidden;
+            background: white;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            cursor: pointer;
+        }
+        
+        .grid-course-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.15);
+        }
+        
+        .grid-course-img {
+            height: 150px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .grid-course-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(13, 110, 253, 0.9);
+            color: white;
+            padding: 3px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 600;
+        }
+        
+        .grid-course-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            padding: 15px;
+            background: linear-gradient(transparent, rgba(0,0,0,0.8));
+            color: white;
+            font-weight: 600;
+        }
+        
+        .grid-course-content {
+            padding: 15px;
+        }
+        
+        .grid-course-stats {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.8rem;
+            color: var(--secondary);
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 1px solid #f8f9fa;
+        }
+        
+        .grid-stats-item {
+            display: flex;
+            align-items: center;
+        }
+        
+        .grid-stats-item i {
+            margin-right: 5px;
+            color: var(--primary);
+        }
+        
+        /* Notes component */
+        .notes-panel {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .notes-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+        
+        .notes-timestamps {
+            flex-grow: 1;
+            overflow-y: auto;
+            margin-bottom: 15px;
+        }
+        
+        .note-item {
+            display: flex;
+            padding: 10px 15px;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            transition: background-color 0.2s;
+            cursor: pointer;
+        }
+        
+        .note-item:hover {
+            background-color: #f8f9fa;
+        }
+        
+        .note-timestamp {
+            color: var(--primary);
+            font-weight: 600;
+            margin-right: 15px;
+            min-width: 50px;
+        }
+        
+        .note-content {
+            flex-grow: 1;
+            font-size: 0.9rem;
+        }
+        
+        .note-actions {
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        
+        .note-item:hover .note-actions {
+            opacity: 1;
+        }
+        
+        .notes-input {
+            display: flex;
+            align-items: center;
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 10px 15px;
+        }
+        
+        .notes-input input {
+            flex-grow: 1;
+            border: none;
+            background: transparent;
+            outline: none;
+            font-size: 0.9rem;
+        }
+        
+        .notes-input button {
+            padding: 5px 15px;
+            border: none;
+            background: var(--primary);
+            color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        
+        .notes-input button:hover {
+            background: var(--primary-dark);
+        }
+        
+        /* Additional UI Components - these were all fine */
+        .app-features-carousel {
+            overflow: hidden;
+            position: relative;
+            padding: 40px 0;
+        }
+        
+        .features-slider {
+            display: flex;
+            transition: transform 0.5s ease;
+        }
+        
+        .feature-slide {
+            min-width: 100%;
+            padding: 0 15px;
+        }
+        
+        /* Slider navigation dots */
+        .slider-nav {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+            gap: 10px;
+        }
+
+        .slider-dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background-color: #dee2e6;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+
+        .slider-dot:hover {
+            background-color: #adb5bd;
+        }
+
+        .slider-dot.active {
+            background-color: var(--primary);
+            transform: scale(1.2);
+        }
+
+        /* Animated elements */
+        .fade-in {
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Course card badges and status indicators */
+        .status-badge {
+            display: inline-block;
+            padding: 3px 8px;
+            border-radius: 12px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+        }
+
+        .status-badge.new {
+            background-color: rgba(13, 110, 253, 0.1);
+            color: var(--primary);
+        }
+
+        .status-badge.popular {
+            background-color: rgba(220, 53, 69, 0.1);
+            color: #dc3545;
+        }
+
+        .status-badge.completed {
+            background-color: rgba(25, 135, 84, 0.1);
+            color: #198754;
+        }
+
+        /* Hover info tooltips */
+        .tooltip-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        .tooltip-text {
+            visibility: hidden;
+            position: absolute;
+            z-index: 100;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: white;
+            text-align: center;
+            border-radius: 6px;
+            padding: 8px 12px;
+            font-size: 0.8rem;
+            width: 150px;
+            bottom: 100%;
+            left: 50%;
+            transform: translateX(-50%);
+            margin-bottom: 8px;
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+
+        .tooltip-text::after {
+            content: "";
+            position: absolute;
+            top: 100%;
+            left: 50%;
+            margin-left: -5px;
+            border-width: 5px;
+            border-style: solid;
+            border-color: rgba(0, 0, 0, 0.8) transparent transparent transparent;
+        }
+
+        .tooltip-container:hover .tooltip-text {
+            visibility: visible;
+            opacity: 1;
+        }
+
+        /* Loading animations */
+        .loading-spinner {
+            width: 40px;
+            height: 40px;
+            border: 4px solid rgba(13, 110, 253, 0.1);
+            border-left-color: var(--primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        .loading-pulse {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
+            100% { transform: scale(0.8); opacity: 0.5; }
+        }
+
+        /* Feature comparison table styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th {
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            padding: 12px 15px;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e9ecef;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background-color: #f8f9fa;
+        }
+
+        .comparison-table tr:hover {
+            background-color: rgba(13, 110, 253, 0.05);
+        }
+
+        .comparison-table .feature-yes {
+            color: #198754;
+        }
+
+        .comparison-table .feature-no {
+            color: #dc3545;
+        }
+
+        /* Pricing cards if needed */
+        .pricing-card {
+            background-color: white;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+            transition: transform 0.3s, box-shadow 0.3s;
+            margin-bottom: 30px;
+        }
+
+        .pricing-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.12);
+        }
+
+        .pricing-header {
+            background-color: var(--primary);
+            color: white;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        .pricing-price {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin: 10px 0;
+        }
+
+        .pricing-features {
+            padding: 20px;
+            list-style-type: none;
+        }
+
+        .pricing-features li {
+            padding: 10px 0;
+            border-bottom: 1px solid #f8f9fa;
+        }
+
+        .pricing-features li:last-child {
+            border-bottom: none;
+        }
+
+        /* Custom radio and checkbox styles */
+        .custom-control {
+            position: relative;
+            display: block;
+            min-height: 1.5rem;
+            padding-left: 1.5rem;
+        }
+
+        .custom-control-input {
+            position: absolute;
+            z-index: -1;
+            opacity: 0;
+        }
+
+        .custom-control-label {
+            position: relative;
+            margin-bottom: 0;
+            vertical-align: top;
+            cursor: pointer;
+        }
+
+        .custom-control-label::before {
+            position: absolute;
+            top: 0.25rem;
+            left: -1.5rem;
+            display: block;
+            width: 1rem;
+            height: 1rem;
+            pointer-events: none;
+            content: "";
+            background-color: #fff;
+            border: 1px solid #adb5bd;
+            transition: background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+        }
+
+        .custom-control-input:checked ~ .custom-control-label::before {
+            color: #fff;
+            border-color: var(--primary);
+            background-color: var(--primary);
+        }
+
+        /* FAQ accordion styles */
+        .faq-accordion {
+            margin-bottom: 30px;
+        }
+
+        .faq-question {
+            padding: 15px 20px;
+            background-color: white;
+            border-radius: 8px;
+            margin-bottom: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            cursor: pointer;
+            transition: background-color 0.2s;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question:hover {
+            background-color: #f8f9fa;
+        }
+
+        .faq-question.active {
+            background-color: rgba(13, 110, 253, 0.05);
+            border-left: 3px solid var(--primary);
+        }
+
+        .faq-answer {
+            padding: 0 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-question.active + .faq-answer {
+            max-height: 200px;
+            padding: 15px 20px;
+        }
+
+        /* Timeline component for roadmap or history */
+        .timeline {
+            position: relative;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline::after {
+            content: '';
+            position: absolute;
+            width: 4px;
+            background-color: var(--primary);
+            top: 0;
+            bottom: 0;
+            left: 50%;
+            margin-left: -2px;
+        }
+
+        .timeline-item {
+            padding: 10px 40px;
+            position: relative;
+            width: 50%;
+            box-sizing: border-box;
+        }
+
+        .timeline-item:nth-child(odd) {
+            left: 0;
+        }
+
+        .timeline-item:nth-child(even) {
+            left: 50%;
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: white;
+            border: 4px solid var(--primary);
+            border-radius: 50%;
+            top: 15px;
+            z-index: 1;
+        }
+
+        .timeline-item:nth-child(odd)::after {
+            right: -10px;
+        }
+
+        .timeline-item:nth-child(even)::after {
+            left: -10px;
+        }
+
+        .timeline-content {
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+
+        /* Page transition overlay// Add these styles to your existing styles section  */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;       
+            display: flex;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+        }
+        /* Fix the broken page transition overlay style */
+        .page-transition-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: var(--primary);
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+    
+        /* Fix the slider controls that were missing styles */
+        .slider-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-top: 30px;
+        }
+    
+        .slider-arrow {
+            background: var(--light);
+            border: none;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            color: var(--primary);
+            margin: 0 10px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+            transition: all 0.2s;
+        }
+    
+        .slider-arrow:hover {
+            background: var(--primary);
+            color: white;
+            transform: scale(1.1);
+        }
+    
+        /* Fix slider tooltip display */
+        .slider-dot:hover .slider-tooltip {
+            opacity: 1;
+            transform: translateX(-50%) translateY(-5px);
+        }
+    </style>
 </head>
 <body>
-    <div class="app-container">
-        <!-- Sidebar/Navigation with Resizable Width -->
-        <div class="sidebar" id="sidebar">
-            <div class="brand">
-                <h2>Local LMS</h2>
-                <div class="nav-links">
-                    <a href="courses.html" class="nav-link" title="View All Courses">
-                        <i class="fas fa-graduation-cap"></i>
+    <!-- Add class to detect JavaScript enabled -->
+    <script>document.body.classList.add('js-loading');</script>
+
+    <!-- Modern Navigation Bar -->
+    <nav class="modern-navbar" id="main-navbar" aria-label="Main navigation">
+        <div class="modern-navbar__container">
+            <div class="modern-navbar__brand">
+                <a href="index.html" class="modern-navbar__brand-link" aria-label="Local LMS Home">
+                    <i class="fas fa-graduation-cap modern-navbar__brand-icon" aria-hidden="true"></i>
+                    <span class="modern-navbar__brand-text">Local LMS</span>
+                </a>
+            </div>
+            
+            <button class="modern-navbar__toggler" type="button" aria-expanded="false" aria-label="Toggle navigation" id="navbar-toggler">
+                <span class="modern-navbar__toggler-icon"></span>
+            </button>
+            
+            <div class="modern-navbar__menu" id="navbar-menu">
+                <ul class="modern-navbar__nav">
+                    <li class="modern-navbar__nav-item modern-navbar__nav-item--active">
+                        <a href="#home" class="modern-navbar__nav-link">Home</a>
+                    </li>
+                    <li class="modern-navbar__nav-item">
+                        <a href="#features" class="modern-navbar__nav-link">Features</a>
+                    </li>
+                    <li class="modern-navbar__nav-item">
+                        <a href="#how-it-works" class="modern-navbar__nav-link">How It Works</a>
+                    </li>
+                    <li class="modern-navbar__nav-item">
+                        <a href="#testimonials" class="modern-navbar__nav-link">Testimonials</a>
+                    </li>
+                    <li class="modern-navbar__nav-item d-block d-lg-none">
+                        <a href="courses.html" class="modern-navbar__nav-link">My Courses</a>
+                    </li>
+                </ul>
+                
+                <div class="modern-navbar__actions d-block d-lg-none">
+                    <a href="courses.html" class="modern-navbar__action-btn">
+                        <i class="fas fa-rocket" aria-hidden="true"></i> Get Started
                     </a>
                 </div>
             </div>
-            <div class="folder-selection">
-                <button id="folder-selector" class="btn btn-primary">
-                    <i class="fas fa-folder-open"></i> Choose Course Folder
-                </button>
-                <input type="file" id="folder-input" webkitdirectory directory multiple style="display: none;">
-            </div>
-            <div class="course-info">
-                <h3 id="course-title">No Course Selected</h3>
-                <p id="video-count">0 lectures</p>
-            </div>
-            <div class="playlist-container">
-                <h4>Content</h4>
-                <ul id="video-playlist" class="playlist">
-                    <!-- Playlist items will be generated here -->
-                </ul>
-            </div>
-            <div class="resize-handle" id="resize-handle" title="Drag to resize sidebar">
-                <div class="handle-line"></div>
+            
+            <div class="modern-navbar__actions d-none d-lg-flex">
+                <a href="courses.html" class="modern-navbar__action-btn">
+                    <i class="fas fa-rocket" aria-hidden="true"></i> Get Started
+                </a>
             </div>
         </div>
+    </nav>
 
-        <!-- Main Content Area -->
-        <div class="main-content" id="main-content">
-            <div class="video-container">
-                <div id="no-video-message">
-                    <i class="fas fa-film fa-5x"></i>
-                    <h2>No video selected</h2>
-                    <p>Choose a course folder and select a video from the playlist</p>
-                </div>
-                <!-- Switch back to standard video element for Plyr -->
-                <video id="video-player" controls style="display: none;">
-                    Your browser does not support the video tag.
-                </video>
-            </div>
-            <!-- Add video size controls -->
-            <div class="video-size-controls">
-                <button id="decrease-video-size" class="btn btn-sm btn-outline-secondary" title="Decrease video size">
-                    <i class="fas fa-compress"></i>
-                </button>
-                <button id="reset-video-size" class="btn btn-sm btn-outline-secondary" title="Reset video size">
-                    <i class="fas fa-sync-alt"></i>
-                </button>
-                <button id="increase-video-size" class="btn btn-sm btn-outline-secondary" title="Increase video size">
-                    <i class="fas fa-expand"></i>
-                </button>
-            </div>
-            <div class="video-info">
-                <h2 id="current-video-title">No Video Selected</h2>
-                <div class="video-meta">
-                    <span id="current-video-duration">0:00</span>
-                    <div class="video-controls">
-                        <button id="prev-video" class="btn btn-sm btn-outline-primary" disabled>
-                            <i class="fas fa-step-backward"></i> Previous
-                        </button>
-                        <button id="next-video" class="btn btn-sm btn-outline-primary" disabled>
-                            Next <i class="fas fa-step-forward"></i>
-                        </button>
-                    </div>
-                </div>
-                <div class="progress-container">
-                    <div class="progress-label">
-                        <span>Course Progress:</span>
-                        <span id="progress-percentage">0%</span>
-                    </div>
-                    <div class="progress">
-                        <div id="course-progress" class="progress-bar" role="progressbar" style="width: 0%"></div>
-                    </div>
-                </div>
-            </div>
-            <div class="video-description">
-                <h3>Description</h3>
-                <p id="current-video-description">Select a video to see its description.</p>
-            </div>
-        </div>
+    <!-- Make sure the menu backdrop is present -->
+    <div class="menu-backdrop" aria-hidden="true"></div>
+
+    <!-- Add page transition overlay -->
+    <div class="page-transition-overlay">
+        <div class="loading-spinner"></div>
     </div>
 
-    <!-- Toasts for notifications -->
-    <div class="toast-container position-fixed bottom-0 end-0 p-3">
-        <div id="toast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
-            <div class="toast-header">
-                <strong class="me-auto" id="toast-title">Notification</strong>
-                <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    <!-- Hero Section -->
+    <section class="hero-section" id="home">
+        <div class="hero-particles" id="particles-js"></div>
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-6 text-center text-lg-start">
+                    <div class="hero-content hidden-element">
+                        <h1 class="display-4 fw-bold mb-3">Welcome to <span class="text-primary">Local LMS Player</span></h1>
+                        <p class="lead text-muted mb-4">Your personal learning platform for organized, offline course viewing</p>
+                        <a href="#features" class="btn btn-primary btn-lg btn-get-started">Get Started</a>
+                    </div>
+                </div>
+                <div class="col-lg-6 d-flex justify-content-center mt-5 mt-lg-0">
+                    <div class="mock-app floating-element">
+                        <div class="mock-header">
+                            <h5 class="m-0">Local LMS Player</h5>
+                            <div>
+                                <i class="fas fa-expand-alt"></i>
+                            </div>
+                        </div>
+                        <div class="mock-content">
+                            <div class="mock-library">
+                                <div class="mock-course-card" id="demo-course-card">
+                                    <div class="mock-course-image">
+                                        <i class="fas fa-code"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>Web Development Masterclass</h6>
+                                        <small class="text-muted">24 lectures • 8 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 65%"></div>
+                                        </div>
+                                        <small class="text-muted">65% complete</small>
+                                    </div>
+                                </div>
+                                <div class="mock-course-card">
+                                    <div class="mock-course-image" style="background: linear-gradient(45deg, #6610f2, #6f42c1);">
+                                        <i class="fas fa-paint-brush"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>UI/UX Design Essentials</h6>
+                                        <small class="text-muted">18 lectures • 6 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 85%"></div>
+                                        </div>
+                                        <small class="text-muted">85% complete</small>
+                                    </div>
+                                </div>
+                                <div class="mock-course-card">
+                                    <div class="mock-course-image" style="background: linear-gradient(45deg, #fd7e14, #e36209);">
+                                        <i class="fas fa-database"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>Database Fundamentals</h6>
+                                        <small class="text-muted">16 lectures • 5 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 35%"></div>
+                                        </div>
+                                        <small class="text-muted">35% complete</small>
+                                    </div>
+                                </div>
+                                <div class="mock-course-card">
+                                    <div class="mock-course-image" style="background: linear-gradient(45deg, #20c997, #1ca080);">
+                                        <i class="fas fa-robot"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>AI & Machine Learning</h6>
+                                        <small class="text-muted">22 lectures • 10 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 15%"></div>
+                                        </div>
+                                        <small class="text-muted">15% complete</small>
+                                    </div>
+                                </div>
+                                <div class="mock-course-card"></div>
+                                    <div class="mock-course-image" style="background: linear-gradient(45deg, #dc3545, #c82333);">
+                                        <i class="fas fa-chart-bar"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>Data Analytics Basics</h6>
+                                        <small class="text-muted">20 lectures • 7 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 50%"></div>
+                                        </div>
+                                        <small class="text-muted">50% complete</small>
+                                    </div>
+                                </div>
+                                <div class="mock-course-card">
+                                    <div class="mock-course-image" style="background: linear-gradient(45deg, #ffc107, #e0a800);">
+                                        <i class="fas fa-language"></i>
+                                    </div>
+                                    <div class="mock-course-details">
+                                        <h6>Language Learning Essentials</h6>
+                                        <small class="text-muted">30 lectures • 12 hours</small>
+                                        <div class="mock-course-progress mt-2">
+                                            <div class="mock-progress-value" style="width: 70%"></div>
+                                        </div>
+                                        <small class="text-muted">70% complete</small>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
-            <div class="toast-body" id="toast-message"></div>
         </div>
-    </div>
+        <div class="scroll-down" id="scroll-down">
+            <i class="fas fa-chevron-down"></i>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="feature-section bg-light" id="features">
+        <div class="container">
+            <div class="text-center mb-5 hidden-element">
+                <h2 class="display-5 fw-bold">Powerful Features</h2>
+                <p class="lead text-muted">Everything you need for a seamless learning experience</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-folder-open"></i>
+                        </div>
+                        <h3>Easy Import</h3>
+                        <p>Import entire course folders with one click. Automatic organization of your video content.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-play-circle"></i>
+                        </div>
+                        <h3>Advanced Player</h3>
+                        <p>Enhanced video player with playback speed control, bookmarks, and progress tracking.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-wifi-slash"></i>
+                        </div>
+                        <h3>Offline Access</h3>
+                        <p>Access all your courses without internet connection. Perfect for learning anywhere.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-chart-line"></i>
+                        </div>
+                        <h3>Progress Tracking</h3>
+                        <p>Never lose your place again. Auto-save your progress and continue from where you left off.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-th-large"></i>
+                        </div>
+                        <h3>Clean Organization</h3>
+                        <p>Automatically organize your learning materials by course, section, and lecture.</p>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="feature-card hidden-element">
+                        <div class="feature-icon">
+                            <i class="fas fa-paint-brush"></i>
+                        </div>
+                        <h3>Modern UI</h3>
+                        <p>Sleek, user-friendly interface designed to enhance your learning experience.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="py-5" id="how-it-works">
+        <div class="container py-5">
+            <div class="text-center mb-5 hidden-element">
+                <h2 class="display-5 fw-bold">How It Works</h2>
+                <p class="lead text-muted">Three simple steps to transform your learning experience</p>
+            </div>
+            
+            <div class="how-it-works">
+                <div class="step-line d-none d-md-block"></div>
+                
+                <div class="row mb-5 align-items-center">
+                    <div class="col-md-6 text-md-end hidden-element">
+                        <div class="mock-app">
+                            <div class="mock-header">
+                                <h5 class="m-0">Add Course</h5>
+                                <div>
+                                    <i class="fas fa-times"></i>
+                                </div>
+                            </div>
+                            <div class="mock-content">
+                                <div class="mock-folder" id="folder-selector">
+                                    <i class="fas fa-folder-open fa-3x mb-3 text-muted"></i>
+                                    <h5>Select Course Folder</h5>
+                                    <p class="text-muted mb-0">Click to browse for course videos</p>
+                                    <button class="btn btn-primary mt-3 w-100">
+                                        <i class="fas fa-plus"></i> Add to Library
+                                    </button>
+                                </div>
+                                <div id="selected-files" style="display: none;">
+                                    <h6 class="mb-3">Selected Files:</h6>
+                                    <div class="mock-file">
+                                        <i class="fas fa-video"></i>
+                                        <span>01-Introduction.mp4</span>
+                                    </div>
+                                    <div class="mock-file">
+                                        <i class="fas fa-video"></i>
+                                        <span>02-Getting-Started.mp4</span>
+                                    </div>
+                                    <div class="mock-file">
+                                        <i class="fas fa-video"></i>
+                                        <span>03-Basic-Concepts.mp4</span>
+                                    </div>
+                                    <div class="mock-file">
+                                        <i class="fas fa-video"></i>
+                                        <span>04-Advanced-Topics.mp4</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden-element">
+                        <div class="d-flex flex-column align-items-center align-items-md-start mt-4 mt-md-0">
+                            <div class="step-number">1</div>
+                            <h3>Select Your Course Folder</h3>
+                            <p>Simply choose the folder containing your course videos. Local LMS automatically detects and organizes your content.</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row mb-5 align-items-center flex-column-reverse flex-md-row">
+                    <div class="col-md-6 hidden-element">
+                        <div class="d-flex flex-column align-items-center align-items-md-end mt-4 mt-md-0">
+                            <div class="step-number">2</div>
+                            <h3>Browse Your Library</h3>
+                            <p>Access all your courses in one place with our intuitive library view. Filter, sort, and find exactly what you need.</p>
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden-element">
+                        <div class="mock-app">
+                            <div class="mock-header">
+                                <h5 class="m-0">My Courses</h5>
+                                <div>
+                                    <i class="fas fa-search"></i>
+                                </div>
+                            </div>
+                            <div class="mock-content">
+                                <div class="mock-library">
+                                    <div class="mock-course-card" id="demo-library-card">
+                                        <div class="mock-course-image">
+                                            <i class="fas fa-code"></i>
+                                        </div>
+                                        <div class="mock-course-details">
+                                            <h6>Web Development</h6>
+                                            <small class="text-muted">24 lectures</small>
+                                            <div class="mock-course-progress mt-2">
+                                                <div class="mock-progress-value" style="width: 65%"></div>
+                                            </div>
+                                            <small class="text-muted">65% complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="mock-course-card">
+                                        <div class="mock-course-image" style="background: linear-gradient(45deg, #6610f2, #6f42c1);">
+                                            <i class="fas fa-paint-brush"></i>
+                                        </div>
+                                        <div class="mock-course-details">
+                                            <h6>UI/UX Design</h6>
+                                            <small class="text-muted">18 lectures</small>
+                                            <div class="mock-course-progress mt-2">
+                                                <div class="mock-progress-value" style="width: 35%"></div>
+                                            </div>
+                                            <small class="text-muted">35% complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="mock-course-card">
+                                        <div class="mock-course-image" style="background: linear-gradient(45deg, #fd7e14, #e36209);">
+                                            <i class="fas fa-database"></i>
+                                        </div>
+                                        <div class="mock-course-details">
+                                            <h6>Database Fundamentals</h6>
+                                            <small class="text-muted">16 lectures</small>
+                                            <div class="mock-course-progress mt-2">
+                                                <div class="mock-progress-value" style="width: 85%"></div>
+                                            </div>
+                                            <small class="text-muted">85% complete</small>
+                                        </div>
+                                    </div>
+                                    <div class="mock-course-card">
+                                        <div class="mock-course-image" style="background: linear-gradient(45deg, #20c997, #1ca080);">
+                                            <i class="fas fa-robot"></i>
+                                        </div>
+                                        <div class="mock-course-details">
+                                            <h6>AI & Machine Learning</h6>
+                                            <small class="text-muted">22 lectures</small>
+                                            <div class="mock-course-progress mt-2">
+                                                <div class="mock-progress-value" style="width: 15%"></div>
+                                            </div>
+                                            <small class="text-muted">15% complete</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="row align-items-center">
+                    <div class="col-md-6 text-md-end hidden-element">
+                        <div class="mock-app">
+                            <div class="mock-header">
+                                <h5 class="m-0">Web Development - Lecture 7</h5>
+                                <div>
+                                    <i class="fas fa-expand-alt"></i>
+                                </div>
+                            </div>
+                            <div class="mock-content">
+                                <div class="mock-video">
+                                    <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+                                        <i class="fas fa-play-circle fa-3x text-white-50"></i>
+                                    </div>
+                                    <div class="mock-video-controls">
+                                        <div class="player-controls">
+                                            <i class="fas fa-play" id="play-toggle"></i>
+                                            <i class="fas fa-volume-up"></i>
+                                        </div>
+                                        <div class="mock-progress">
+                                            <div class="mock-progress-fill" id="video-progress"></div>
+                                        </div>
+                                        <div class="player-controls">
+                                            <i class="fas fa-bookmark" id="bookmark-toggle"></i>
+                                            <i class="fas fa-cog"></i>
+                                        </div>
+                                    </div>
+                                </div>
+                                <h6>Lecture Content</h6>
+                                <div class="mock-lecture active">
+                                    <div class="mock-lecture-status current">
+                                        <i class="fas fa-play"></i>
+                                    </div>
+                                    <div>
+                                        <strong>7. Advanced CSS Techniques</strong>
+                                        <div class="text-muted small">Currently watching • 12:45</div>
+                                    </div>
+                                </div>
+                                <div class="mock-lecture">
+                                    <div class="mock-lecture-status completed">
+                                        <i class="fas fa-check"></i>
+                                    </div>
+                                    <div>
+                                        <strong>6. Responsive Design</strong>
+                                        <div class="text-muted small">Completed • 18:30</div>
+                                    </div>
+                                </div>
+                                <div class="mock-lecture">
+                                    <div class="mock-lecture-status pending">
+                                        <i class="fas fa-circle"></i>
+                                    </div>
+                                    <div>
+                                        <strong>8. Introduction to JavaScript</strong>
+                                        <div class="text-muted small">Not started • 22:15</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-6 hidden-element">
+                        <div class="d-flex flex-column align-items-center align-items-md-start mt-4 mt-md-0">
+                            <div class="step-number">3</div>
+                            <h3>Watch and Learn</h3>
+                            <p>Enjoy your courses with our advanced player. Control playback speed, add bookmarks, and track your progress automatically.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Additional Features Section with Carousel -->
+    <section class="py-5" id="additional-features">
+        <div class="container py-5">
+            <div class="text-center mb-5 hidden-element">
+                <h2 class="display-5 fw-bold">Explore All Features</h2>
+                <p class="lead text-muted">Discover the full range of tools to enhance your learning</p>
+            </div>
+            
+            <div class="app-features-carousel">
+                <div class="features-slider d-flex" id="features-slider" aria-roledescription="carousel" style="overflow-x: auto; scroll-snap-type: x mandatory;">
+                    <!-- Slide 1: Advanced Video Player -->
+                    <div class="feature-slide" data-title="Advanced Video Player" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                <div class="player-demo">
+                                    <div class="player-overlay">
+                                        <div class="player-top-controls">
+                                            <span class="player-control-btn"><i class="fas fa-cog"></i></span>
+                                        </div>
+                                        <div class="player-center-controls">
+                                            <div class="player-big-play" id="demo-play-btn">
+                                                <i class="fas fa-play"></i>
+                                            </div>
+                                        </div>
+                                        <div class="player-bottom-controls">
+                                            <div class="player-time-display">
+                                                <span>14:22</span>
+                                                <span>32:45</span>
+                                            </div>
+                                            <div class="player-progress-container">
+                                                <div class="player-progress-bar" id="demo-progress-bar"></div>
+                                                <div class="player-progress-handle"></div>
+                                            </div>
+                                            <div class="player-controls-row">
+                                                <div>
+                                                    <span class="player-control-btn"><i class="fas fa-step-backward"></i></span>
+                                                    <span class="player-control-btn"><i class="fas fa-play"></i></span>
+                                                    <span class="player-control-btn"><i class="fas fa-step-forward"></i></span>
+                                                    <span class="player-control-btn"><i class="fas fa-volume-up"></i></span>
+                                                </div>
+                                                <div>
+                                                    <span class="player-control-btn"><i class="fas fa-bookmark"></i></span>
+                                                    <span class="player-control-btn"><i class="fas fa-closed-captioning"></i></span>
+                                                    <span class="player-control-btn"><i class="fas fa-expand"></i></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 class="h2 mb-4">Advanced Video Player</h3>
+                                <p class="mb-4">Experience a feature-rich video player designed specifically for educational content. Take control of your learning with:</p>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-tachometer-alt fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Variable Speed Control</h5>
+                                        <p>Adjust playback speed from 0.5x to 2x to match your learning pace.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-bookmark fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Smart Bookmarking</h5>
+                                        <p>Create timestamped bookmarks with notes to quickly find important content.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-history fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Auto-Resume</h5>
+                                        <p>Automatically continue from where you left off, even after closing the app.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 2: Course Content Index -->
+                    <div class="feature-slide" data-title="Course Navigation" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
+                        <div class="row">
+                            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                                <div class="contents-index">
+                                    <div class="index-header">
+                                        <h5 class="m-0">Course Contents</h5>
+                                        <div>
+                                            <i class="fas fa-expand text-primary"></i>
+                                        </div>
+                                    </div>
+                                    <div class="index-search">
+                                        <i class="fas fa-search text-muted"></i>
+                                        <input type="text" placeholder="Search in course...">
+                                    </div>
+                                    <div class="index-section open">
+                                        <div class="index-section-header">
+                                            <span>1. Getting Started</span>
+                                            <i class="fas fa-chevron-down"></i>
+                                        </div>
+                                        <div class="index-section-content">
+                                            <div class="index-lecture">
+                                                <div class="index-lecture-icon video">
+                                                    <i class="fas fa-play"></i>
+                                                </div>
+                                                <div class="index-lecture-details">
+                                                    <div class="index-lecture-title">1.1 Introduction to the Course</div>
+                                                    <div class="index-lecture-meta">
+                                                        <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
+                                                    </div>
+                                                </div>
+                                                <div class="index-lecture-duration">8:42</div>
+                                            </div>
+                                            <div class="index-lecture">
+                                                <div class="index-lecture-icon video">
+                                                    <i class="fas fa-play"></i>
+                                                </div>
+                                                <div class="index-lecture-details">
+                                                    <div class="index-lecture-title">1.2 Setting Up Your Environment</div>
+                                                    <div class="index-lecture-meta">
+                                                        <span><i class="fas fa-check-circle me-1 text-success"></i> Completed</span>
+                                                    </div>
+                                                </div>
+                                                <div class="index-lecture-duration">12:15</div>
+                                            </div>
+                                            <div class="index-lecture">
+                                                <div class="index-lecture-icon quiz">
+                                                    <i class="fas fa-question"></i>
+                                                </div>
+                                                <div class="index-lecture-details">
+                                                    <div class="index-lecture-title">1.3 Quick Quiz</div>
+                                                    <div class="index-lecture-meta">
+                                                        <span><i class="fas fa-circle me-1 text-warning"></i> Not started</span>
+                                                    </div>
+                                                </div>
+                                                <div class="index-lecture-duration">5:00</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="index-section">
+                                        <div class="index-section-header">
+                                            <span>2. Core Concepts</span>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                        <div class="index-section-content">
+                                            <!-- Content collapsed -->
+                                        </div>
+                                    </div>
+                                    <div class="index-section">
+                                        <div class="index-section-header">
+                                            <span>3. Advanced Topics</span>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                        <div class="index-section-content">
+                                            <!-- Content collapsed -->
+                                        </div>
+                                    </div>
+                                    <div class="index-section">
+                                        <div class="index-section-header">
+                                            <span>4. Practical Projects</span>
+                                            <i class="fas fa-chevron-right"></i>
+                                        </div>
+                                        <div class="index-section-content">
+                                            <!-- Content collapsed -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-lg-1">
+                                <h3 class="h2 mb-4">Intuitive Course Navigation</h3>
+                                <p class="mb-4">Navigate through course content effortlessly with our intelligent organization system:</p>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-list fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Structured Content</h5>
+                                        <p>Course content is automatically organized into sections and lectures with clear hierarchy.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-search fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Powerful Search</h5>
+                                        <p>Find specific topics instantly with our built-in search functionality.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-filter fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Smart Filtering</h5>
+                                        <p>Filter content by type (video, document, quiz) or completion status to find what you need.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 3: Progress Tracking -->
+                    <div class="feature-slide" data-title="Progress Tracking" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                <div class="progress-tracking">
+                                    <div class="progress-header">
+                                        <h5 class="m-0">Learning Progress</h5>
+                                        <span class="badge bg-primary px-3 py-2">65% Complete</span>
+                                    </div>
+                                    
+                                    <div class="progress-detail">
+                                        <div class="progress-label">
+                                            <span>Web Development Masterclass</span>
+                                            <span>65%</span>
+                                        </div>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-value" style="width: 65%; background-color: #0d6efd;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="progress-detail">
+                                        <div class="progress-label">
+                                            <span>UI/UX Design Essentials</span>
+                                            <span>35%</span>
+                                        </div>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-value" style="width: 35%; background-color: #6610f2;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="progress-detail">
+                                        <div class="progress-label">
+                                            <span>Database Fundamentals</span>
+                                            <span>85%</span>
+                                        </div>
+                                        <div class="progress-bar-container">
+                                            <div class="progress-value" style="width: 85%; background-color: #fd7e14;"></div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="recommended-next">
+                                        <div class="recommended-icon">
+                                            <i class="fas fa-play"></i>
+                                        </div>
+                                        <div>
+                                            <h6 class="mb-1">Continue Learning</h6>
+                                            <small class="text-muted">Web Development Masterclass • Advanced CSS Techniques</small>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 class="h2 mb-4">Comprehensive Progress Tracking</h3>
+                                <p class="mb-4">Keep track of your learning journey with detailed progress metrics:</p>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-chart-line fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Visual Progress Indicators</h5>
+                                        <p>See your progress at a glance with course completion percentages and visual indicators.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-history fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Learning History</h5>
+                                        <p>Review your learning history with timestamps, session durations, and completed sections.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-bullseye fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Smart Recommendations</h5>
+                                        <p>Get personalized recommendations on what to watch next based on your progress.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 4: Course Library -->
+                    <div class="feature-slide" data-title="Course Library" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
+                        <div class="row">
+                            <div class="col-lg-6 order-lg-2 mb-4 mb-lg-0">
+                                <div class="courses-grid-demo">
+                                    <div class="grid-course-card">
+                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #0d6efd, #0b5ed7);">
+                                            <span class="grid-course-badge">Most Popular</span>
+                                            <div class="grid-course-overlay">Web Development</div>
+                                        </div>
+                                        <div class="grid-course-content">
+                                            <h6>Web Development Masterclass</h6>
+                                            <div class="grid-course-stats">
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-play-circle"></i>
+                                                    <span>24 lectures</span>
+                                                </div>
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>8 hours</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-course-card">
+                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #6610f2, #6f42c1);">
+                                            <div class="grid-course-overlay">UI/UX Design</div>
+                                        </div>
+                                        <div class="grid-course-content">
+                                            <h6>UI/UX Design Essentials</h6>
+                                            <div class="grid-course-stats">
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-play-circle"></i>
+                                                    <span>18 lectures</span>
+                                                </div>
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>6 hours</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-course-card">
+                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #fd7e14, #e36209);">
+                                            <div class="grid-course-overlay">Databases</div>
+                                        </div>
+                                        <div class="grid-course-content">
+                                            <h6>Database Fundamentals</h6>
+                                            <div class="grid-course-stats">
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-play-circle"></i>
+                                                    <span>16 lectures</span>
+                                                </div>
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>5 hours</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="grid-course-card">
+                                        <div class="grid-course-img" style="background: linear-gradient(45deg, #20c997, #1ca080);">
+                                            <span class="grid-course-badge">New</span>
+                                            <div class="grid-course-overlay">AI & Machine Learning</div>
+                                        </div>
+                                        <div class="grid-course-content">
+                                            <h6>AI & Machine Learning</h6>
+                                            <div class="grid-course-stats">
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-play-circle"></i>
+                                                    <span>22 lectures</span>
+                                                </div>
+                                                <div class="grid-stats-item">
+                                                    <i class="fas fa-clock"></i>
+                                                    <span>10 hours</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6 order-lg-1">
+                                <h3 class="h2 mb-4">Organized Course Library</h3>
+                                <p class="mb-4">Keep all your learning resources in one beautifully organized library:</p>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-th-large fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Grid & List Views</h5>
+                                        <p>Choose between grid and list layouts to browse your courses the way you prefer.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-sort-amount-down fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Smart Sorting</h5>
+                                        <p>Sort courses by name, date added, progress, or last accessed to find what you need quickly.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-tag fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Custom Tags & Categories</h5>
+                                        <p>Create your own tags and categories to organize courses in a way that makes sense to you.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Slide 5: Notes & Bookmarks -->
+                    <div class="feature-slide" data-title="Smart Note-Taking" role="group" aria-roledescription="slide" style="flex: 0 0 100%; scroll-snap-align: start;">
+                        <div class="row">
+                            <div class="col-lg-6 mb-4 mb-lg-0">
+                                <div class="notes-panel">
+                                    <div class="notes-header">
+                                        <h5 class="m-0">Notes & Bookmarks</h5>
+                                        <span class="badge bg-primary px-3 py-2">7 Notes</span>
+                                    </div>
+                                    <div class="notes-timestamps">
+                                        <div class="note-item">
+                                            <div class="note-timestamp">05:22</div>
+                                            <div class="note-content">Introduction to CSS variables and their advantages over traditional methods</div>
+                                            <div class="note-actions">
+                                                <i class="fas fa-edit text-primary me-2"></i>
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="note-item">
+                                            <div class="note-timestamp">12:47</div>
+                                            <div class="note-content">Important: Media queries breakpoints for responsive design</div>
+                                            <div class="note-actions">
+                                                <i class="fas fa-edit text-primary me-2"></i>
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="note-item">
+                                            <div class="note-timestamp">18:33</div>
+                                            <div class="note-content">Flexbox vs Grid: when to use each layout system</div>
+                                            <div class="note-actions">
+                                                <i class="fas fa-edit text-primary me-2"></i>
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="note-item">
+                                            <div class="note-timestamp">22:15</div>
+                                            <div class="note-content">Browser compatibility issues with newer CSS features</div>
+                                            <div class="note-actions">
+                                                <i class="fas fa-edit text-primary me-2"></i>
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                        </div>
+                                        <div class="note-item">
+                                            <div class="note-timestamp">27:40</div>
+                                            <div class="note-content">CSS animations performance optimization techniques</div>
+                                            <div class="note-actions">
+                                                <i class="fas fa-edit text-primary me-2"></i>
+                                                <i class="fas fa-trash-alt text-danger"></i>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="notes-input">
+                                        <input type="text" placeholder="Add a note at current timestamp...">
+                                        <button>Save</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-lg-6">
+                                <h3 class="h2 mb-4">Smart Note-Taking</h3>
+                                <p class="mb-4">Enhance your learning with integrated note-taking and bookmarking features:</p>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-bookmark fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Time-Stamped Bookmarks</h5>
+                                        <p>Create bookmarks at specific timestamps to quickly return to important points in videos.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-sticky-note fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Integrated Notes</h5>
+                                        <p>Take notes while watching videos without pausing or switching to another application.</p>
+                                    </div>
+                                </div>
+                                <div class="d-flex mb-3">
+                                    <div class="me-3 text-primary">
+                                        <i class="fas fa-file-export fa-2x"></i>
+                                    </div>
+                                    <div>
+                                        <h5>Export & Sync</h5>
+                                        <p>Export your notes in various formats or sync them across devices for access anywhere.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Slider Navigation -->
+                <div class="slider-controls">
+                    <button class="slider-arrow prev" id="prev-slide" aria-label="Previous slide">
+                        <i class="fas fa-chevron-left" aria-hidden="true"></i>
+                    </button>
+                    <div class="slider-nav" id="slider-nav" role="tablist" aria-label="Slides navigation"></div>
+                    <button class="slider-arrow next" id="next-slide" aria-label="Next slide">
+                        <i class="fas fa-chevron-right" aria-hidden="true"></i>
+                    </button>
+                </div>
+                
+                <!-- Loading indicator -->
+                <div class="slider-loading" id="slider-loading" aria-hidden="true">
+                    <div class="loading-spinner"></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    <!-- Fix testimonials section that has structural issues -->
+    <section class="bg-light py-5" id="testimonials">
+        <div class="container py-5">
+            <div class="text-center mb-5 hidden-element">
+                <h2 class="display-5 fw-bold">What Our Users Say</h2>
+                <p class="lead text-muted">Join thousands of satisfied learners</p>
+            </div>
+            <div class="row g-4">
+                <div class="col-md-4 hidden-element">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0</span>
+                        </div>
+                        <p class="mb-3">"This app completely changed how I consume online courses. No more browser tabs or internet issues. Everything is right there, organized, and ready to play."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">JD</div>
+                            <div>
+                                <h5 class="mb-0">John Doe</h5>
+                                <small class="text-muted">Web Developer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 hidden-element">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                            </div>
+                            <span>5.0</span>
+                        </div>
+                        <p class="mb-3">"As someone who travels a lot, being able to watch my courses offline is a game-changer. The progress tracking feature is fantastic - I never lose my place!"</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-success text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">AS</div>
+                            <div>
+                                <h5 class="mb-0">Anna Smith</h5>
+                                <small class="text-muted">UX Designer</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-4 hidden-element">
+                    <div class="testimonial-card">
+                        <div class="d-flex align-items-center mb-3">
+                            <div class="text-warning me-2">
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star"></i>
+                                <i class="fas fa-star-half-alt"></i>
+                            </div>
+                            <span>4.5</span>
+                        </div>
+                        <p class="mb-3">"I have a slow internet connection, so streaming courses was always frustrating. This local player solved all my problems. The UI is clean and intuitive."</p>
+                        <div class="d-flex align-items-center">
+                            <div class="rounded-circle bg-info text-white d-flex align-items-center justify-content-center me-3" style="width: 50px; height: 50px;">RJ</div>
+                            <div>
+                                <h5 class="mb-0">Robert Johnson</h5>
+                                <small class="text-muted">Data Scientist</small>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+        <!-- CTA Section -->
+        <section class="cta-section">
+            <div class="container text-center">
+                <div class="hidden-element">
+                    <h2 class="display-5 fw-bold mb-4">Ready to Transform Your Learning Experience?</h2>
+                    <p class="lead mb-5">Get started today and take control of your educational journey</p>
+                    <a href="courses.html" class="btn btn-light btn-lg btn-get-started px-5 py-3" id="cta-button">
+                        <i class="fas fa-rocket me-2"></i> Get Started Now
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-white py-4">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <h3>Local LMS Player</h3>
+                    <p>Your personal learning hub for organized, offline course viewing</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#home" class="text-white text-decoration-none">Home</a></li>
+                        <li><a href="#features" class="text-white text-decoration-none">Features</a></li>
+                        <li><a href="#how-it-works" class="text-white text-decoration-none">How It Works</a></li>
+                        <li><a href="#testimonials" class="text-white text-decoration-none">Testimonials</a></li>
+                        <li><a href="courses.html" class="text-white text-decoration-none">My Courses</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>App</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="courses.html" class="text-white text-decoration-none">My Courses</a></li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="row">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2023 Local LMS Player. All rights reserved.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <a href="#" class="text-white me-3"><i class="fab fa-github"></i></a>
+                    <a href="#" class="text-white me-3"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="text-white"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
 
     <!-- Libraries -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Replace Video.js with Plyr.js -->
-    <script src="https://cdn.plyr.io/3.7.8/plyr.polyfilled.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/particles.js/2.0.0/particles.min.js"></script>
     
-    <!-- Main Script -->
-    <script src="script.js"></script>
+    <!-- Landing Page Animation Script -->
+    <script>
+        // Make page visible immediately as a fallback
+        document.body.style.visibility = 'visible';
+        document.body.style.opacity = '1';
+        
+        // Initialize particle.js for hero background
+        if (typeof particlesJS !== 'undefined') {
+            try {
+                particlesJS("particles-js", {
+                    particles: {
+                        number: { value: 80, density: { enable: true, value_area: 800 } },
+                        color: { value: "#0d6efd" },
+                        shape: { type: "circle" },
+                        opacity: { value: 0.5, random: false },
+                        size: { value: 3, random: true },
+                        line_linked: { enable: true, distance: 150, color: "#0d6efd", opacity: 0.4, width: 1 },
+                        move: { enable: true, speed: 2, direction: "none", random: false, straight: false, out_mode: "out", bounce: false }
+                    },
+                    interactivity: {
+                        detect_on: "canvas",
+                        events: { onhover: { enable: true, mode: "repulse" }, onclick: { enable: true, mode: "push" } },
+                        modes: { repulse: { distance: 100, duration: 0.4 }, push: { particles_nb: 4 } }
+                    },
+                    retina_detect: true
+                });
+            } catch (e) {
+                console.error('particles.js error:', e);
+            }
+        }
+
+        // Initialize GSAP animations
+        document.addEventListener('DOMContentLoaded', function() {
+            // Make all elements visible by default in case GSAP fails
+            document.querySelectorAll('.hidden-element').forEach(el => {
+                el.classList.add('visible');
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+            });
+            
+            // Add class to indicate JavaScript is fully enabled
+            document.body.classList.remove('js-loading');
+            document.body.classList.add('js-enabled');
+            
+            // Safely check if GSAP is loaded before using it
+            if (typeof gsap !== 'undefined') {
+                // Register ScrollTrigger plugin if available
+                if (gsap.registerPlugin && typeof ScrollTrigger !== 'undefined') {
+                    gsap.registerPlugin(ScrollTrigger);
+                    
+                    // Hero section animations
+                    gsap.from('.hero-content .hidden-element', {
+                        y: 50,
+                        opacity: 0,
+                        duration: 1,
+                        stagger: 0.2,
+                        delay: 0.5
+                    });
+                    
+                    // Animate elements when scrolled into view
+                    gsap.utils.toArray('.hidden-element').forEach(element => {
+                        if (!element.closest('.hero-content')) {
+                            gsap.from(element, {
+                                scrollTrigger: {
+                                    trigger: element,
+                                    start: "top 80%",
+                                    onEnter: function() {
+                                        element.style.opacity = '1';
+                                        element.style.transform = 'translateY(0)';
+                                    }
+                                },
+                                y: 50,
+                                opacity: 0,
+                                duration: 1,
+                                ease: "power2.out"
+                            });
+                        }
+                    });
+                    
+                    // Initialize other UI interactions
+                    initializeUIInteractions();
+                }
+            }
+            
+            // Sticky navbar
+            const navbar = document.querySelector('.nav-landing');
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    navbar.classList.add('scrolled');
+                } else {
+                    navbar.classList.remove('scrolled');
+                }
+            });
+            
+            // Smooth scroll for navigation
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const targetId = this.getAttribute('href');
+                    if (targetId === '#') return;
+                    
+                    const targetElement = document.querySelector(targetId);
+                    if (targetElement) {
+                        window.scrollTo({
+                            top: targetElement.offsetTop - 80,
+                            behavior: 'smooth'
+                        });
+                    }
+                });
+            });
+        });
+        
+        // Separate function for UI interactions
+        function initializeUIInteractions() {
+            // Folder selector interaction
+            const folderSelector = document.getElementById('folder-selector');
+            const selectedFiles = document.getElementById('selected-files');
+            
+            if (folderSelector && selectedFiles) {
+                folderSelector.addEventListener('click', function() {
+                    gsap.to(folderSelector, { 
+                        height: 0, 
+                        opacity: 0, 
+                        padding: 0, 
+                        margin: 0,
+                        duration: 0.5,
+                        onComplete: function() {
+                            folderSelector.style.display = 'none';
+                            selectedFiles.style.display = 'block';
+                            gsap.from(selectedFiles, { 
+                                opacity: 0, 
+                                y: -20, 
+                                duration: 0.5,
+                                stagger: 0.1
+                            });
+                        }
+                    });
+                });
+            }
+            
+            // Features slider functionality - Fixed version
+            function initializeSlider() {
+                const slider = document.getElementById('features-slider');
+                const slides = document.querySelectorAll('.feature-slide');
+                const sliderNav = document.getElementById('slider-nav');
+                
+                if (!slider || !sliderNav) {
+                    console.warn('Slider elements not found:', {
+                        slider: !!slider,
+                        sliderNav: !!sliderNav,
+                        slideCount: slides.length
+                    });
+                    return;
+                }
+                
+                console.log('Initializing slider with', slides.length, 'slides');
+                
+                let currentSlide = 0;
+                
+                // Clear any existing dots first to prevent duplicates
+                sliderNav.innerHTML = '';
+                
+                // Create dots for navigation
+                slides.forEach((_, index) => {
+                    const dot = document.createElement('div');
+                    dot.className = `slider-dot ${index === 0 ? 'active' : ''}`;
+                    dot.addEventListener('click', () => {
+                        goToSlide(index);
+                    });
+                    sliderNav.appendChild(dot);
+                });
+                
+                // Add arrow controls if they exist
+                const prevSlideBtn = document.getElementById('prev-slide');
+                const nextSlideBtn = document.getElementById('next-slide');
+                
+                if (prevSlideBtn) {
+                    prevSlideBtn.addEventListener('click', () => {
+                        let newIndex = currentSlide - 1;
+                        if (newIndex < 0) newIndex = slides.length - 1;
+                        goToSlide(newIndex);
+                    });
+                }
+                
+                if (nextSlideBtn) {
+                    nextSlideBtn.addEventListener('click', () => {
+                        let newIndex = currentSlide + 1;
+                        if (newIndex >= slides.length) newIndex = 0;
+                        goToSlide(newIndex);
+                    });
+                }
+                
+                function goToSlide(index) {
+                    if (index < 0 || index >= slides.length) return;
+                    currentSlide = index;
+                    
+                    // Update slider position
+                    slider.style.transform = `translateX(-${currentSlide * 100}%)`;
+                    
+                    // Update dots
+                    document.querySelectorAll('.slider-dot').forEach((dot, i) => {
+                        dot.classList.toggle('active', i === currentSlide);
+                    });
+                }
+                
+                // Auto-rotate slides every 6 seconds
+                let slideInterval = setInterval(() => {
+                    currentSlide = (currentSlide + 1) % slides.length;
+                    goToSlide(currentSlide);
+                }, 6000);
+                
+                // Pause rotation on hover
+                if (slider) {
+                    slider.addEventListener('mouseenter', () => {
+                        clearInterval(slideInterval);
+                    });
+                    
+                    slider.addEventListener('mouseleave', () => {
+                        slideInterval = setInterval(() => {
+                            currentSlide = (currentSlide + 1) % slides.length;
+                            goToSlide(currentSlide);
+                        }, 6000);
+                    });
+                }
+            }
+
+            
+            // Initialize slider after a small delay to ensure DOM is fully ready
+            setTimeout(initializeSlider, 500);
+        }
+            // Other UI interactions
+            // Mock course card hover animation
+            const courseCards = document.querySelectorAll('.mock-course-card');
+            courseCards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    gsap.to(this.querySelector('.mock-course-image'), {
+                        scale: 1.05,
+                        duration: 0.3
+                    });
+                    gsap.to(this.querySelector('.mock-progress-value'), {
+                        width: '100%',
+                        duration: 1.5,
+                        ease: "power2.inOut"
+                    });
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    gsap.to(this.querySelector('.mock-course-image'), {
+                        scale: 1,
+                        duration: 0.3
+                    });
+                    
+                    // Reset progress to original value
+                    const originalWidth = this.querySelector('.mock-progress-value').style.width;
+                    gsap.to(this.querySelector('.mock-progress-value'), {
+                        width: originalWidth,
+                        duration: 0.8,
+                        ease: "power2.out"
+                    });
+                });
+            });
+
+            // Video player interaction
+            const playToggle = document.getElementById('play-toggle');
+            const videoProgress = document.getElementById('video-progress');
+            const bookmarkToggle = document.getElementById('bookmark-toggle');
+
+            if (playToggle) {
+                let isPlaying = false;
+                playToggle.addEventListener('click', function() {
+                    isPlaying = !isPlaying;
+                    if (isPlaying) {
+                        this.classList.remove('fa-play');
+                        this.classList.add('fa-pause');
+                        
+                        // Animate progress
+                        gsap.to(videoProgress, {
+                            width: '75%',
+                            duration: 15,
+                            ease: "linear"
+                        });
+                    } else {
+                        this.classList.remove('fa-pause');
+                        this.classList.add('fa-play');
+                        
+                        // Pause progress animation
+                        gsap.killTweensOf(videoProgress);
+                    }
+                });
+            }
+
+            if (bookmarkToggle) {
+                let isBookmarked = false;
+                bookmarkToggle.addEventListener('click', function() {
+                    isBookmarked = !isBookmarked;
+                    if (isBookmarked) {
+                        this.classList.add('text-warning');
+                        gsap.from(this, {
+                            scale: 1.5,
+                            duration: 0.3,
+                            ease: "back.out(1.7)"
+                        });
+                    } else {
+                        this.classList.remove('text-warning');
+                    }
+                });
+            }
+
+            // Demo library card click animation
+            const demoLibraryCard = document.getElementById('demo-library-card');
+            if (demoLibraryCard) {
+                demoLibraryCard.addEventListener('click', function() {
+                    gsap.to(this, {
+                        scale: 0.95,
+                        duration: 0.2,
+                        onComplete: function() {
+                            gsap.to(demoLibraryCard, {
+                                scale: 1,
+                                duration: 0.2
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Demo course card pulse animation
+            const demoCourseCard = document.getElementById('demo-course-card');
+            if (demoCourseCard) {
+                gsap.timeline({repeat: -1, repeatDelay: 2})
+                    .to(demoCourseCard, {
+                        boxShadow: '0 15px 30px rgba(13, 110, 253, 0.3)',
+                        y: -10,
+                        duration: 1,
+                        ease: "power2.out"
+                    })
+                    .to(demoCourseCard, {
+                        boxShadow: '0 5px 15px rgba(0,0,0,0.1)',
+                        y: 0,
+                        duration: 1,
+                        delay: 1,
+                        ease: "power2.in"
+                    });
+            }
+
+            // Interactions for the lectures list
+            const lectures = document.querySelectorAll('.mock-lecture');
+            if (lectures.length > 0) {
+                lectures.forEach((lecture, index) => {
+                    if (index > 0) { // Skip the active one
+                        lecture.addEventListener('mouseenter', function() {
+                            gsap.to(this, {
+                                backgroundColor: 'rgba(13, 110, 253, 0.1)',
+                                duration: 0.3
+                            });
+                        });
+                        
+                        lecture.addEventListener('mouseleave', function() {
+                            gsap.to(this, {
+                                backgroundColor: index === 1 ? 'rgba(13, 110, 253, 0)' : '#f8f9fa',
+                                duration: 0.3
+                            });
+                        });
+                    }
+                });
+            }
+
+            // Demo play button for the featured player demo
+            const demoPlayBtn = document.getElementById('demo-play-btn');
+            const demoProgressBar = document.getElementById('demo-progress-bar');
+
+            if (demoPlayBtn && demoProgressBar) {
+                let isPlaying = false;
+                demoPlayBtn.addEventListener('click', function() {
+                    isPlaying = !isPlaying;
+                    const icon = this.querySelector('i');
+                    
+                    if (isPlaying) {
+                        icon.classList.remove('fa-play');
+                        icon.classList.add('fa-pause');
+                        
+                        gsap.to(demoProgressBar, {
+                            width: '100%',
+                            duration: 30,
+                            ease: 'linear'
+                        });
+                    } else {
+                        icon.classList.remove('fa-pause');
+                        icon.classList.add('fa-play');
+                        
+                        gsap.killTweensOf(demoProgressBar);
+                    }
+                });
+            }
+
+            // Contents index interactivity
+            const sectionHeaders = document.querySelectorAll('.index-section-header');
+
+            sectionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const section = this.closest('.index-section');
+                    const isOpen = section.classList.contains('open');
+                    const icon = this.querySelector('i');
+                    
+                    if (isOpen) {
+                        section.classList.remove('open');
+                        icon.classList.remove('fa-chevron-down');
+                        icon.classList.add('fa-chevron-right');
+                    } else {
+                        section.classList.add('open');
+                        icon.classList.remove('fa-chevron-right');
+                        icon.classList.add('fa-chevron-down');
+                    }
+                });
+            });
+
+            // Scroll down arrow animation
+            const scrollDown = document.getElementById('scroll-down');
+            if (scrollDown) {
+                scrollDown.addEventListener('click', () => {
+                    window.scrollTo({
+                        top: window.innerHeight,
+                        behavior: 'smooth'
+                    });
+                });
+                
+                // Add a subtle animation
+                gsap.to(scrollDown, {
+                    y: 10,
+                    duration: 1.5,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: "power1.inOut"
+                });
+            }
+
+            // Progress animation on scroll
+            const progressValues = document.querySelectorAll('.progress-value');
+
+            progressValues.forEach(progress => {
+                const originalWidth = progress.style.width;
+                
+                ScrollTrigger.create({
+                    trigger: progress,
+                    start: 'top 80%',
+                    onEnter: () => {
+                        gsap.fromTo(progress, 
+                            { width: '0%' },
+                            {
+                                width: originalWidth,
+                                duration: 1.5,
+                                ease: 'power2.out'
+                            }
+                        );
+                    },
+                    once: true
+                });
+            });
+
+            // Grid course card hover animation
+            const gridCards = document.querySelectorAll('.grid-course-card');
+
+            gridCards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    gsap.to(card, {
+                        y: -10,
+                        boxShadow: '0 15px 30px rgba(0,0,0,0.15)',
+                        duration: 0.3
+                    });
+                });
+                
+                card.addEventListener('mouseleave', () => {
+                    gsap.to(card, {
+                        y: 0,
+                        boxShadow: '0 5px 15px rgba(0,0,0,0.08)',
+                        duration: 0.3
+                    });
+                });
+            });
+
+            // Animation for recommended next button
+            const recommendedNext = document.querySelector('.recommended-next');
+
+            if (recommendedNext) {
+                gsap.to(recommendedNext, {
+                    y: -5,
+                    boxShadow: '0 10px 20px rgba(0,0,0,0.1)',
+                    duration: 1,
+                    repeat: -1,
+                    yoyo: true,
+                    ease: 'power1.inOut'
+                });
+                
+                recommendedNext.addEventListener('click', function() {
+                    gsap.to(this, {
+                        scale: 0.95,
+                        duration: 0.1,
+                        onComplete: function() {
+                            gsap.to(recommendedNext, {
+                                scale: 1,
+                                duration: 0.2
+                            });
+                        }
+                    });
+                });
+            }
+
+            // Enhanced CTA button with analytics tracking
+        // Add a window load event to ensure everything is visible
+        window.addEventListener('load', function() {
+            // Make sure page is visible
+            document.body.style.visibility = 'visible';
+            document.body.style.opacity = '1';
+            
+            // Ensure all elements are visible after page load
+            document.querySelectorAll('.hidden-element').forEach(el => {
+                el.style.opacity = '1';
+                el.style.transform = 'translateY(0)';
+                el.classList.add('visible');
+            });
+        });
+    </script>
 </body>
 </html>

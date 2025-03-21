@@ -1,537 +1,522 @@
-document.addEventListener('DOMContentLoaded', function() {
-    // DOM elements
-    const folderSelector = document.getElementById('folder-selector');
-    const folderInput = document.getElementById('folder-input');
-    const videoPlaylist = document.getElementById('video-playlist');
-    const videoPlayer = document.getElementById('video-player');
-    const noVideoMessage = document.getElementById('no-video-message');
-    const currentVideoTitle = document.getElementById('current-video-title');
-    const currentVideoDescription = document.getElementById('current-video-description');
-    const currentVideoDuration = document.getElementById('current-video-duration');
-    const courseTitle = document.getElementById('course-title');
-    const videoCount = document.getElementById('video-count');
-    const prevVideoBtn = document.getElementById('prev-video');
-    const nextVideoBtn = document.getElementById('next-video');
-    const courseProgress = document.getElementById('course-progress');
-    const progressPercentage = document.getElementById('progress-percentage');
-    const toast = document.getElementById('toast');
-    const toastTitle = document.getElementById('toast-title');
-    const toastMessage = document.getElementById('toast-message');
-
-    // Initialize Bootstrap toast
-    const toastInstance = new bootstrap.Toast(toast);
-
-    // Initialize Plyr player with better settings
-    const player = new Plyr(videoPlayer, {
-        controls: [
-            'play-large', 'play', 'progress', 'current-time', 'mute',
-            'volume', 'settings', 'pip', 'airplay', 'fullscreen'
-        ],
-        settings: ['captions', 'quality', 'speed'],
-        speed: { selected: 1, options: [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2] },
-        tooltips: { controls: true, seek: true },
-        keyboard: { focused: true, global: true },
-        blankVideo: 'data:video/mp4;base64,AAAAHGZ0eXBpc29tAAACAGlzb21pc28yYXZjMW1wNDEAAAAIZnJlZQAAAFttZGF0AAAAMmWIhD///8PAnFAAFPf39/3331/t/+ln3v3//e/t///93fbt///9/t3///+37///u3v//Txl',
-        quality: {
-            default: 576,
-            options: [4320, 2880, 2160, 1440, 1080, 720, 576, 480, 360, 240]
-        },
-        i18n: {
-            restart: 'Restart',
-            rewind: 'Rewind {seektime}s',
-            play: 'Play',
-            pause: 'Pause',
-            fastForward: 'Forward {seektime}s',
-            seek: 'Seek',
-            seekLabel: '{currentTime} of {duration}',
-            played: 'Played',
-            buffered: 'Buffered',
-            currentTime: 'Current time',
-            duration: 'Duration',
-            volume: 'Volume',
-            mute: 'Mute',
-            unmute: 'Unmute',
-            enableCaptions: 'Enable captions',
-            disableCaptions: 'Disable captions',
-            download: 'Download',
-            enterFullscreen: 'Enter fullscreen',
-            exitFullscreen: 'Exit fullscreen',
-            frameTitle: 'Player for {title}',
-            captions: 'Captions',
-            settings: 'Settings',
-            menuBack: 'Go back to previous menu',
-            speed: 'Speed',
-            normal: 'Normal',
-            quality: 'Quality',
-            loop: 'Loop',
-            start: 'Start',
-            end: 'End',
-            all: 'All',
-            reset: 'Reset',
-            disabled: 'Disabled',
-            enabled: 'Enabled',
-            advertisement: 'Ad',
-            qualityBadge: {
-                2160: '4K',
-                1440: 'HD',
-                1080: 'HD',
-                720: 'HD',
-                576: 'SD',
-                480: 'SD',
-            },
+// Modern Navbar - Industry-grade implementation
+function initModernNavbar() {
+    const navbar = document.querySelector('.modern-navbar');
+    if (!navbar) return;
+    
+    console.log('Initializing modern navbar with performance optimizations');
+    
+    // Performance: Use event delegation instead of multiple listeners
+    document.addEventListener('click', (e) => {
+        // Handle navbar toggler click
+        if (e.target.closest('.navbar-toggler')) {
+            toggleMenu();
+        } 
+        // Handle backdrop click
+        else if (e.target.classList.contains('menu-backdrop')) {
+            closeMenu();
         }
-    });
-
-    // Application state
-    let videos = [];
-    let currentVideoIndex = -1;
-    let watchedVideos = new Set();
-    let lastWatchedPositions = {};
-
-    // Load saved state from localStorage
-    function loadSavedState() {
-        try {
-            const savedState = localStorage.getItem('lmsPlayerState');
-            if (savedState) {
-                const state = JSON.parse(savedState);
-                watchedVideos = new Set(state.watchedVideos || []);
-                lastWatchedPositions = state.lastWatchedPositions || {};
-                
-                // Show toast if there's saved progress
-                if (watchedVideos.size > 0) {
-                    showToast('Progress Loaded', 'Your previous watching progress has been loaded.');
-                }
+        // Handle nav link click
+        else if (e.target.closest('.nav-link')) {
+            const link = e.target.closest('.nav-link');
+            if (link.getAttribute('href').startsWith('#')) {
+                e.preventDefault();
+                handleNavLinkClick(link);
             }
-        } catch (e) {
-            console.error('Error loading saved state:', e);
+        }
+    }, { passive: false });
+    
+    // Toggle menu state with transitions
+    function toggleMenu() {
+        const isOpen = navbar.classList.contains('menu-open');
+        if (isOpen) {
+            closeMenu();
+        } else {
+            openMenu();
         }
     }
-
-    // Save state to localStorage
-    function saveState() {
-        try {
-            const state = {
-                watchedVideos: Array.from(watchedVideos),
-                lastWatchedPositions: lastWatchedPositions
-            };
-            localStorage.setItem('lmsPlayerState', JSON.stringify(state));
-        } catch (e) {
-            console.error('Error saving state:', e);
+    
+    function openMenu() {
+        navbar.classList.add('menu-open');
+        document.body.classList.add('overflow-hidden');
+        navbar.querySelector('.navbar-toggler')?.setAttribute('aria-expanded', 'true');
+        
+        // Animate menu items for a staggered entrance
+        const menuItems = navbar.querySelectorAll('.navbar-menu .nav-item');
+        menuItems.forEach((item, index) => {
+            item.style.transitionDelay = `${index * 0.05}s`;
+            item.classList.add('fade-in-right');
+        });
+    }
+    
+    function closeMenu() {
+        navbar.classList.remove('menu-open');
+        document.body.classList.remove('overflow-hidden');
+        navbar.querySelector('.navbar-toggler')?.setAttribute('aria-expanded', 'false');
+        
+        // Reset animation delays
+        const menuItems = navbar.querySelectorAll('.navbar-menu .nav-item');
+        menuItems.forEach(item => {
+            item.style.transitionDelay = '';
+            item.classList.remove('fade-in-right');
+        });
+    }
+    
+    function handleNavLinkClick(link) {
+        // Close menu first
+        closeMenu();
+        
+        // Get target section
+        const targetId = link.getAttribute('href');
+        const targetElement = document.querySelector(targetId);
+        
+        if (targetElement) {
+            // Use requestAnimationFrame for smoother scrolling
+            requestAnimationFrame(() => {
+                const navbarHeight = navbar.offsetHeight;
+                const targetPosition = targetElement.getBoundingClientRect().top + window.pageYOffset - navbarHeight;
+                
+                // Use native smooth scrolling with fallback
+                if ('scrollBehavior' in document.documentElement.style) {
+                    window.scrollTo({
+                        top: targetPosition,
+                        behavior: 'smooth'
+                    });
+                } else {
+                    // Fallback for browsers that don't support smooth scrolling
+                    window.scrollTo(0, targetPosition);
+                }
+            });
         }
     }
-
-    // Handle folder selection
-    folderSelector.addEventListener('click', () => {
-        folderInput.click();
+    
+    // Use IntersectionObserver for scroll handling - more efficient
+    const navLinks = navbar.querySelectorAll('.nav-link[href^="#"]');
+    const sections = [...navLinks].map(link => {
+        const id = link.getAttribute('href');
+        return document.querySelector(id);
+    }).filter(Boolean);
+    
+    // Set up the observer with appropriate options
+    const observerOptions = {
+        root: null,
+        rootMargin: `-${navbar.offsetHeight + 20}px 0px 0px 0px`,
+        threshold: 0.1
+    };
+    
+    const navObserver = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            const id = entry.target.id;
+            const navLink = navbar.querySelector(`.nav-link[href="#${id}"]`);
+            
+            if (!navLink) return;
+            
+            const navItem = navLink.parentElement;
+            
+            if (entry.isIntersecting) {
+                // Remove active class from all nav items
+                navLinks.forEach(link => link.parentElement.classList.remove('active'));
+                // Add active class to current nav item
+                navItem.classList.add('active');
+            }
+        });
+    }, observerOptions);
+    
+    // Start observing each section
+    sections.forEach(section => {
+        if (section) navObserver.observe(section);
     });
+    
+    // Throttled scroll handler for navbar background change
+    let lastScrollY = window.scrollY;
+    let ticking = false;
+    
+    function updateNavbarOnScroll() {
+        if (window.scrollY > 50) {
+            navbar.classList.add('scrolled');
+        } else {
+            navbar.classList.remove('scrolled');
+        }
+        ticking = false;
+    }
+    
+    window.addEventListener('scroll', () => {
+        lastScrollY = window.scrollY;
+        if (!ticking) {
+            requestAnimationFrame(() => {
+                updateNavbarOnScroll();
+                ticking = false;
+            });
+            ticking = true;
+        }
+    }, { passive: true });
+    
+    // Set initial state
+    updateNavbarOnScroll();
+    
+    // Mark as initialized
+    navbar.classList.add('initialized');
+}
 
-    folderInput.addEventListener('change', async (e) => {
-        const files = Array.from(e.target.files);
-        if (files.length === 0) return;
+// Industry-grade Features Slider with robust error handling and performance optimization
+class FeatureSlider {
+    constructor(options = {}) {
+        // Default options
+        this.options = {
+            sliderId: 'features-slider',
+            slideSelector: '.feature-slide',
+            navId: 'slider-nav',
+            prevBtnId: 'prev-slide',
+            nextBtnId: 'next-slide',
+            autoplayInterval: 6000,
+            animationDuration: 500,
+            ...options
+        };
         
-        // Filter video files
-        const videoFiles = files.filter(file => 
-            file.type.startsWith('video/') || 
-            file.name.match(/\.(mp4|webm|ogg|mov|mkv)$/i)
-        );
+        // State management
+        this.slider = null;
+        this.slides = [];
+        this.nav = null;
+        this.prevBtn = null;
+        this.nextBtn = null;
+        this.currentSlide = 0;
+        this.slideCount = 0;
+        this.isAnimating = false;
+        this.autoplayTimer = null;
+        this.touchStartX = 0;
+        this.touchEndX = 0;
+        this.isAutoplayPaused = false;
         
-        if (videoFiles.length === 0) {
-            showToast('No Videos Found', 'The selected folder does not contain any supported video files.');
+        // Bind methods to preserve context
+        this.init = this.init.bind(this);
+        this.goToSlide = this.goToSlide.bind(this);
+        this.handlePrevClick = this.handlePrevClick.bind(this);
+        this.handleNextClick = this.handleNextClick.bind(this);
+        this.handleNavClick = this.handleNavClick.bind(this);
+        this.startAutoplay = this.startAutoplay.bind(this);
+        this.stopAutoplay = this.stopAutoplay.bind(this);
+        this.pauseAutoplay = this.pauseAutoplay.bind(this);
+        this.resumeAutoplay = this.resumeAutoplay.bind(this);
+        this.handleKeydown = this.handleKeydown.bind(this);
+        this.handleTouchStart = this.handleTouchStart.bind(this);
+        this.handleTouchMove = this.handleTouchMove.bind(this);
+        this.handleTouchEnd = this.handleTouchEnd.bind(this);
+        this.createSliderNav = this.createSliderNav.bind(this);
+        this.setupAccessibility = this.setupAccessibility.bind(this);
+        this.cleanup = this.cleanup.bind(this);
+    }
+    
+    init() {
+        // Get DOM elements
+        this.slider = document.getElementById(this.options.sliderId);
+        if (!this.slider) {
+            console.error(`[FeatureSlider] Slider element with ID "${this.options.sliderId}" not found.`);
+            return false;
+        }
+        
+        this.slides = this.slider.querySelectorAll(this.options.slideSelector);
+        this.slideCount = this.slides.length;
+        
+        if (this.slideCount === 0) {
+            console.warn('[FeatureSlider] No slides found.');
+            return false;
+        }
+        
+        this.nav = document.getElementById(this.options.navId);
+        this.prevBtn = document.getElementById(this.options.prevBtnId);
+        this.nextBtn = document.getElementById(this.options.nextBtnId);
+        
+        // Initialize slider
+        this.createSliderNav();
+        this.setupEventListeners();
+        this.setupAccessibility();
+        this.goToSlide(0, false);
+        this.startAutoplay();
+        
+        console.log(`[FeatureSlider] Initialized with ${this.slideCount} slides`);
+        return true;
+    }
+    
+    createSliderNav() {
+        if (!this.nav) return;
+        
+        // Clear existing navigation
+        this.nav.innerHTML = '';
+        
+        // Create navigation dots
+        for (let i = 0; i < this.slideCount; i++) {
+            const dot = document.createElement('button');
+            dot.className = `slider-dot ${i === 0 ? 'active' : ''}`;
+            dot.setAttribute('type', 'button');
+            dot.setAttribute('aria-label', `Go to slide ${i + 1} of ${this.slideCount}`);
+            dot.setAttribute('aria-current', i === 0 ? 'true' : 'false');
+            dot.setAttribute('data-slide-index', i);
+            
+            // Add tooltip for each dot
+            const tooltip = document.createElement('span');
+            tooltip.className = 'slider-tooltip';
+            tooltip.textContent = this.slides[i].getAttribute('data-title') || `Slide ${i + 1}`;
+            dot.appendChild(tooltip);
+            
+            this.nav.appendChild(dot);
+        }
+    }
+    
+    setupEventListeners() {
+        // Navigation dots
+        if (this.nav) {
+            this.nav.addEventListener('click', this.handleNavClick);
+        }
+        
+        // Next and previous buttons
+        if (this.prevBtn) {
+            this.prevBtn.addEventListener('click', this.handlePrevClick);
+        }
+        
+        if (this.nextBtn) {
+            this.nextBtn.addEventListener('click', this.handleNextClick);
+        }
+        
+        // Pause autoplay on hover
+        this.slider.addEventListener('mouseenter', this.pauseAutoplay);
+        this.slider.addEventListener('mouseleave', this.resumeAutoplay);
+        
+        // Keyboard navigation
+        this.slider.addEventListener('keydown', this.handleKeydown);
+        
+        // Touch events for swipe support
+        this.slider.addEventListener('touchstart', this.handleTouchStart, { passive: true });
+        this.slider.addEventListener('touchmove', this.handleTouchMove, { passive: true });
+        this.slider.addEventListener('touchend', this.handleTouchEnd);
+        
+        // Focus events for accessibility
+        this.slider.addEventListener('focusin', this.pauseAutoplay);
+        this.slider.addEventListener('focusout', this.resumeAutoplay);
+        
+        // Visibility API to pause when tab is not visible
+        document.addEventListener('visibilitychange', () => {
+            if (document.hidden) {
+                this.pauseAutoplay();
+            } else {
+                this.resumeAutoplay();
+            }
+        });
+    }
+    
+    setupAccessibility() {
+        // Set up proper ARIA attributes
+        this.slider.setAttribute('role', 'region');
+        this.slider.setAttribute('aria-roledescription', 'carousel');
+        this.slider.setAttribute('aria-label', 'Feature slider');
+        
+        // Make the slider focusable for keyboard navigation
+        this.slider.setAttribute('tabindex', '0');
+        
+        // Set up slide attributes
+        this.slides.forEach((slide, index) => {
+            slide.setAttribute('role', 'group');
+            slide.setAttribute('aria-roledescription', 'slide');
+            slide.setAttribute('aria-label', `Slide ${index + 1} of ${this.slideCount}`);
+            slide.setAttribute('aria-hidden', index === 0 ? 'false' : 'true');
+        });
+        
+        // Announce slide changes for screen readers
+        this.liveRegion = document.createElement('div');
+        this.liveRegion.setAttribute('aria-live', 'polite');
+        this.liveRegion.setAttribute('aria-atomic', 'true');
+        this.liveRegion.className = 'sr-only';
+        document.body.appendChild(this.liveRegion);
+    }
+    
+    goToSlide(index, animate = true) {
+        if (this.isAnimating || index < 0 || index >= this.slideCount || index === this.currentSlide) {
             return;
         }
         
-        // Get folder name from first file path
-        const pathParts = videoFiles[0].webkitRelativePath.split('/');
-        const folderName = pathParts[0];
+        this.isAnimating = animate;
+        const prevSlide = this.currentSlide;
+        this.currentSlide = index;
         
-        // Sort videos by name
-        videos = videoFiles.sort((a, b) => {
-            // Extract numbers from filenames for natural sorting
-            const aName = a.name.replace(/^\d+\.\s*/, '');
-            const bName = b.name.replace(/^\d+\.\s*/, '');
-            return aName.localeCompare(bName, undefined, {numeric: true, sensitivity: 'base'});
+        // Update slides
+        this.slides.forEach((slide, i) => {
+            slide.setAttribute('aria-hidden', i === index ? 'false' : 'true');
         });
         
-        // Update UI
-        courseTitle.textContent = folderName;
-        videoCount.textContent = `${videos.length} lectures`;
-        
-        // Generate playlist
-        generatePlaylist();
-        updateProgressUI();
-        
-        // Enable navigation buttons if we have videos
-        updateNavigationButtons();
-        
-        showToast('Course Loaded', `Successfully loaded ${videos.length} videos from "${folderName}"`);
-    });
-
-    // Generate video playlist
-    function generatePlaylist() {
-        videoPlaylist.innerHTML = '';
-        
-        videos.forEach((video, index) => {
-            const listItem = document.createElement('li');
-            listItem.className = 'playlist-item';
-            if (index === currentVideoIndex) {
-                listItem.classList.add('active');
-            }
-            if (watchedVideos.has(video.name)) {
-                listItem.classList.add('completed');
-            }
-            
-            const videoName = video.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-            const cleanName = videoName.replace(/^\d+\.\s*/, ''); // Remove leading numbers
-            
-            listItem.innerHTML = `
-                <span class="completed-icon"><i class="fas fa-check-circle"></i></span>
-                <span class="video-number">${index + 1}.</span>
-                <span class="video-title">${cleanName}</span>
-                <span class="video-duration">--:--</span>
-            `;
-            
-            listItem.addEventListener('click', () => {
-                playVideo(index);
+        // Update nav dots
+        if (this.nav) {
+            const dots = this.nav.querySelectorAll('.slider-dot');
+            dots.forEach((dot, i) => {
+                dot.classList.toggle('active', i === index);
+                dot.setAttribute('aria-current', i === index ? 'true' : 'false');
             });
-            
-            videoPlaylist.appendChild(listItem);
-        });
-    }
-
-    // Play selected video
-    function playVideo(index) {
-        if (index < 0 || index >= videos.length) return;
-        
-        currentVideoIndex = index;
-        const selectedVideo = videos[index];
-        
-        // Update playlist active item
-        const playlistItems = videoPlaylist.querySelectorAll('.playlist-item');
-        playlistItems.forEach((item, i) => {
-            item.classList.toggle('active', i === index);
-        });
-        
-        // Update video player
-        const videoURL = URL.createObjectURL(selectedVideo);
-        videoPlayer.src = videoURL;
-        videoPlayer.style.display = 'block';
-        noVideoMessage.style.display = 'none';
-        
-        // Update video info
-        const videoName = selectedVideo.name.replace(/\.[^/.]+$/, ""); // Remove file extension
-        const cleanName = videoName.replace(/^\d+\.\s*/, ''); // Remove leading numbers
-        currentVideoTitle.textContent = cleanName;
-        currentVideoDescription.textContent = `This is lecture ${index + 1} of your course. The file name is "${selectedVideo.name}".`;
-        
-        // Restore last watched position if exists
-        if (lastWatchedPositions[selectedVideo.name]) {
-            videoPlayer.currentTime = lastWatchedPositions[selectedVideo.name];
         }
         
-        // Update navigation buttons
-        updateNavigationButtons();
-        
-        // Play the video
-        player.play().catch(e => console.log('Playback prevented:', e));
-    }
-
-    // Update navigation buttons state
-    function updateNavigationButtons() {
-        prevVideoBtn.disabled = currentVideoIndex <= 0;
-        nextVideoBtn.disabled = currentVideoIndex >= videos.length - 1 || currentVideoIndex === -1;
-    }
-
-    // Handle previous and next video buttons
-    prevVideoBtn.addEventListener('click', () => {
-        if (currentVideoIndex > 0) {
-            playVideo(currentVideoIndex - 1);
-        }
-    });
-    
-    nextVideoBtn.addEventListener('click', () => {
-        if (currentVideoIndex < videos.length - 1) {
-            playVideo(currentVideoIndex + 1);
-        }
-    });
-
-    // Track video progress 
-    player.on('timeupdate', () => {
-        if (currentVideoIndex === -1) return;
-        
-        const currentVideo = videos[currentVideoIndex];
-        const currentTime = videoPlayer.currentTime;
-        const duration = videoPlayer.duration;
-        
-        // Update duration display
-        if (!isNaN(duration)) {
-            const durationMinutes = Math.floor(duration / 60);
-            const durationSeconds = Math.floor(duration % 60);
-            currentVideoDuration.textContent = `${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
-            
-            // Update duration in playlist
-            const playlistItems = videoPlaylist.querySelectorAll('.playlist-item');
-            if (playlistItems[currentVideoIndex]) {
-                const durationElement = playlistItems[currentVideoIndex].querySelector('.video-duration');
-                durationElement.textContent = `${durationMinutes}:${durationSeconds.toString().padStart(2, '0')}`;
-            }
-        }
-        
-        // Save current position every 5 seconds
-        if (currentTime % 5 < 1) {
-            lastWatchedPositions[currentVideo.name] = currentTime;
-            saveState();
-        }
-        
-        // Mark video as watched if 90% completed
-        if (duration && !isNaN(duration) && currentTime / duration > 0.9) {
-            if (!watchedVideos.has(currentVideo.name)) {
-                watchedVideos.add(currentVideo.name);
-                updateProgressUI();
-                saveState();
-                updateCourseProgress(); // Update course progress data
-                
-                // Update playlist item
-                const playlistItems = videoPlaylist.querySelectorAll('.playlist-item');
-                if (playlistItems[currentVideoIndex]) {
-                    playlistItems[currentVideoIndex].classList.add('completed');
+        // Animate transition with GSAP if available, otherwise use CSS
+        if (typeof gsap !== 'undefined' && animate) {
+            gsap.to(this.slider, {
+                duration: this.options.animationDuration / 1000,
+                x: `-${index * 100}%`,
+                ease: "power2.out",
+                onComplete: () => {
+                    this.isAnimating = false;
                 }
-            }
-        }
-    });
-
-    // Auto-play next video when current one ends
-    player.on('ended', function() {
-        if (currentVideoIndex < videos.length - 1) {
-            playVideo(currentVideoIndex + 1);
-        }
-    });
-
-    // Update progress UI
-    function updateProgressUI() {
-        if (videos.length === 0) return;
-        
-        const completedCount = watchedVideos.size;
-        const totalCount = videos.length;
-        const progressPercent = Math.round((completedCount / totalCount) * 100);
-        
-        courseProgress.style.width = `${progressPercent}%`;
-        progressPercentage.textContent = `${progressPercent}%`;
-    }
-
-    // Show toast notification
-    function showToast(title, message) {
-        toastTitle.textContent = title;
-        toastMessage.textContent = message;
-        toastInstance.show();
-    }
-
-    // Keyboard shortcuts
-    document.addEventListener('keydown', (e) => {
-        // Skip forward with right arrow
-        if (e.key === 'ArrowRight' && e.ctrlKey) {
-            e.preventDefault();
-            if (currentVideoIndex < videos.length - 1) {
-                playVideo(currentVideoIndex + 1);
-            }
-        }
-        
-        // Skip backward with left arrow
-        if (e.key === 'ArrowLeft' && e.ctrlKey) {
-            e.preventDefault();
-            if (currentVideoIndex > 0) {
-                playVideo(currentVideoIndex - 1);
-            }
-        }
-    });
-
-    // Load saved state on app start
-    loadSavedState();
-
-    // Handle direct course loading from URL parameter
-    function loadCourseFromUrl() {
-        const urlParams = new URLSearchParams(window.location.search);
-        const coursePath = urlParams.get('course');
-        
-        if (coursePath) {
-            // Check if we have this course saved
-            try {
-                const savedCourses = localStorage.getItem('lmsPlayerCourses');
-                if (savedCourses) {
-                    const courses = JSON.parse(savedCourses);
-                    const course = courses.find(c => c.path === coursePath);
-                    
-                    if (course) {
-                        courseTitle.textContent = course.name;
-                        // We can't automatically load the folder since browsers don't allow that
-                        // We'll just display the name and show a message
-                        showToast('Select Course Folder', 'Please select the folder for "' + course.name + '" to continue.');
-                    }
-                }
-            } catch (e) {
-                console.error('Error loading course from URL:', e);
-            }
-        }
-    }
-
-    // Load course from URL parameter if available
-    loadCourseFromUrl();
-
-    // Elements for resizing
-    const sidebar = document.getElementById('sidebar');
-    const mainContent = document.getElementById('main-content');
-    const resizeHandle = document.getElementById('resize-handle');
-    const videoContainer = document.querySelector('.video-container');
-    const decreaseVideoSizeBtn = document.getElementById('decrease-video-size');
-    const resetVideoSizeBtn = document.getElementById('reset-video-size');
-    const increaseVideoSizeBtn = document.getElementById('increase-video-size');
-    
-    // Default sizes and current video size percentage
-    const defaultSidebarWidth = 300; // in px
-    let videoSizePercentage = 100; // current video size as percentage of container width
-    
-    // Load saved layout preferences if available
-    function loadLayoutPreferences() {
-        try {
-            const layoutPrefs = localStorage.getItem('lmsPlayerLayout');
-            if (layoutPrefs) {
-                const prefs = JSON.parse(layoutPrefs);
-                
-                // Apply sidebar width
-                if (prefs.sidebarWidth && window.innerWidth > 768) { // Only apply on desktop
-                    sidebar.style.width = `${prefs.sidebarWidth}px`;
-                    mainContent.style.width = `calc(100% - ${prefs.sidebarWidth}px)`;
-                }
-                
-                // Apply video size
-                if (prefs.videoSizePercentage) {
-                    videoSizePercentage = prefs.videoSizePercentage;
-                    videoContainer.style.width = `${videoSizePercentage}%`;
-                }
-            }
-        } catch (e) {
-            console.error('Error loading layout preferences:', e);
-        }
-    }
-    
-    // Save layout preferences
-    function saveLayoutPreferences() {
-        try {
-            const prefs = {
-                sidebarWidth: parseInt(sidebar.style.width),
-                videoSizePercentage: videoSizePercentage
-            };
-            localStorage.setItem('lmsPlayerLayout', JSON.stringify(prefs));
-        } catch (e) {
-            console.error('Error saving layout preferences:', e);
-        }
-    }
-    
-    // Make sidebar resizable
-    function initializeResizableSidebar() {
-        let isResizing = false;
-        let startX, startWidth;
-        
-        resizeHandle.addEventListener('mousedown', (e) => {
-            isResizing = true;
-            startX = e.clientX;
-            startWidth = parseInt(document.defaultView.getComputedStyle(sidebar).width, 10);
-            document.body.style.cursor = 'col-resize';
-            document.addEventListener('mousemove', handleMouseMove);
-            document.addEventListener('mouseup', stopResize);
-            e.preventDefault(); // Prevent text selection during drag
-        });
-        
-        function handleMouseMove(e) {
-            if (!isResizing) return;
+            });
+        } else {
+            this.slider.style.transition = animate ? `transform ${this.options.animationDuration}ms ease` : 'none';
+            this.slider.style.transform = `translateX(-${index * 100}%)`;
             
-            const width = startWidth + (e.clientX - startX);
-            
-            // Apply constraints
-            if (width >= 200 && width <= window.innerWidth * 0.5) {
-                sidebar.style.width = `${width}px`;
-                mainContent.style.width = `calc(100% - ${width}px)`;
-            }
-        }
-        
-        function stopResize() {
-            isResizing = false;
-            document.body.style.cursor = '';
-            document.removeEventListener('mousemove', handleMouseMove);
-            document.removeEventListener('mouseup', stopResize);
-            saveLayoutPreferences();
-        }
-    }
-    
-    // Video size control functions
-    function initializeVideoSizeControls() {
-        // Decrease video size
-        decreaseVideoSizeBtn.addEventListener('click', () => {
-            if (videoSizePercentage > 60) { // Don't let it get too small
-                videoSizePercentage -= 10;
-                videoContainer.style.width = `${videoSizePercentage}%`;
-                saveLayoutPreferences();
-            }
-        });
-        
-        // Reset video size
-        resetVideoSizeBtn.addEventListener('click', () => {
-            videoSizePercentage = 100;
-            videoContainer.style.width = '100%';
-            saveLayoutPreferences();
-        });
-        
-        // Increase video size
-        increaseVideoSizeBtn.addEventListener('click', () => {
-            if (videoSizePercentage < 150) { // Don't let it get too large
-                videoSizePercentage += 10;
-                videoContainer.style.width = `${videoSizePercentage}%`;
-                saveLayoutPreferences();
-            }
-        });
-    }
-    
-    // Initialize resizable interface
-    loadLayoutPreferences();
-    initializeResizableSidebar();
-    initializeVideoSizeControls();
-
-    // Load courses data when navigating through pages
-    function updateCourseProgress() {
-        if (currentVideoIndex === -1 || videos.length === 0) return;
-        
-        try {
-            // Get the current course name from path
-            const pathParts = videos[0].webkitRelativePath.split('/');
-            const folderName = pathParts[0];
-            
-            // Load courses
-            const savedCoursesStr = localStorage.getItem('lmsPlayerCourses');
-            if (!savedCoursesStr) return;
-            
-            const savedCourses = JSON.parse(savedCoursesStr);
-            const courseIndex = savedCourses.findIndex(c => c.name === folderName);
-            
-            if (courseIndex !== -1) {
-                // Update the completed videos
-                savedCourses[courseIndex].completedVideos = Array.from(watchedVideos);
-                savedCourses[courseIndex].videoCount = videos.length;
-                
-                // Save back to localStorage
-                localStorage.setItem('lmsPlayerCourses', JSON.stringify(savedCourses));
+            if (animate) {
+                const transitionEndHandler = () => {
+                    this.isAnimating = false;
+                    this.slider.removeEventListener('transitionend', transitionEndHandler);
+                };
+                this.slider.addEventListener('transitionend', transitionEndHandler);
             } else {
-                // Create new course entry
-                savedCourses.push({
-                    name: folderName,
-                    path: folderName,
-                    videoCount: videos.length,
-                    completedVideos: Array.from(watchedVideos),
-                    dateAdded: new Date().toISOString()
-                });
-                
-                localStorage.setItem('lmsPlayerCourses', JSON.stringify(savedCourses));
+                this.isAnimating = false;
             }
-        } catch (e) {
-            console.error('Error updating course progress:', e);
         }
+        
+        // Announce slide change for screen readers
+        this.liveRegion.textContent = `Showing slide ${index + 1} of ${this.slideCount}`;
+    }
+    
+    handlePrevClick() {
+        let newIndex = this.currentSlide - 1;
+        if (newIndex < 0) newIndex = this.slideCount - 1;
+        this.goToSlide(newIndex);
+    }
+    
+    handleNextClick() {
+        let newIndex = this.currentSlide + 1;
+        if (newIndex >= this.slideCount) newIndex = 0;
+        this.goToSlide(newIndex);
+    }
+    
+    handleNavClick(event) {
+        const dot = event.target.closest('.slider-dot');
+        if (dot) {
+            const index = parseInt(dot.getAttribute('data-slide-index'), 10);
+            if (!isNaN(index)) {
+                this.goToSlide(index);
+            }
+        }
+    }
+    
+    startAutoplay() {
+        if (this.options.autoplayInterval > 0) {
+            this.autoplayTimer = setInterval(() => {
+                if (!this.isAutoplayPaused) {
+                    this.handleNextClick();
+                }
+            }, this.options.autoplayInterval);
+        }
+    }
+    
+    stopAutoplay() {
+        if (this.autoplayTimer) {
+            clearInterval(this.autoplayTimer);
+            this.autoplayTimer = null;
+        }
+    }
+    
+    pauseAutoplay() {
+        this.isAutoplayPaused = true;
+    }
+    
+    resumeAutoplay() {
+        this.isAutoplayPaused = false;
+    }
+    
+    handleKeydown(event) {
+        if (event.key === 'ArrowLeft') {
+            this.handlePrevClick();
+            event.preventDefault();
+        } else if (event.key === 'ArrowRight') {
+            this.handleNextClick();
+            event.preventDefault();
+        }
+    }
+    
+    handleTouchStart(event) {
+        this.touchStartX = event.touches[0].clientX;
+    }
+    
+    handleTouchMove(event) {
+        this.touchEndX = event.touches[0].clientX;
+    }
+    
+    handleTouchEnd() {
+        const touchDiff = this.touchStartX - this.touchEndX;
+        const threshold = 50; // Minimum swipe distance
+        
+        if (Math.abs(touchDiff) > threshold) {
+            if (touchDiff > 0) {
+                // Swipe left - go to next slide
+                this.handleNextClick();
+            } else {
+                // Swipe right - go to previous slide
+                this.handlePrevClick();
+            }
+        }
+    }
+    
+    cleanup() {
+        // Remove all event listeners
+        this.stopAutoplay();
+        
+        if (this.nav) {
+            this.nav.removeEventListener('click', this.handleNavClick);
+        }
+        
+        if (this.prevBtn) {
+            this.prevBtn.removeEventListener('click', this.handlePrevClick);
+        }
+        
+        if (this.nextBtn) {
+            this.nextBtn.removeEventListener('click', this.handleNextClick);
+        }
+        
+        this.slider.removeEventListener('mouseenter', this.pauseAutoplay);
+        this.slider.removeEventListener('mouseleave', this.resumeAutoplay);
+        this.slider.removeEventListener('keydown', this.handleKeydown);
+        this.slider.removeEventListener('touchstart', this.handleTouchStart);
+        this.slider.removeEventListener('touchmove', this.handleTouchMove);
+        this.slider.removeEventListener('touchend', this.handleTouchEnd);
+        this.slider.removeEventListener('focusin', this.pauseAutoplay);
+        this.slider.removeEventListener('focusout', this.resumeAutoplay);
+        
+        // Remove live region
+        if (this.liveRegion && this.liveRegion.parentNode) {
+            this.liveRegion.parentNode.removeChild(this.liveRegion);
+        }
+    }
+}
+
+// Initialize components when DOM is ready
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialize navbar with enhanced performance
+    initModernNavbar();
+    
+    // Initialize feature slider with proper class-based encapsulation
+    const featureSlider = new FeatureSlider({
+        sliderId: 'features-slider',
+        slideSelector: '.feature-slide',
+        navId: 'slider-nav',
+        prevBtnId: 'prev-slide',
+        nextBtnId: 'next-slide',
+        autoplayInterval: 6000,
+        animationDuration: 500
+    });
+    featureSlider.init();
+    
+    // Make it globally available for debugging and script extensibility
+    window.featureSlider = featureSlider;
+    
+    // ... existing code ...
+});
+
+// Ensure any necessary cleanup when page unloads
+window.addEventListener('beforeunload', () => {
+    if (window.featureSlider) {
+        window.featureSlider.cleanup();
     }
 });
